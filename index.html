@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
-    <title>Manor of Shadows 4.0: 3D Multiplayer Clue & Chills</title>
+    <title>Manor of Shadows 4.2: 3D Multiplayer Clue & Chills</title>
     <!-- Tailwind CSS -->
     <script src="https://cdn.tailwindcss.com"></script>
     <!-- Three.js r128 & OrbitControls -->
@@ -41,113 +41,13 @@
             }
         }
     </script>
-    <style>
-        * {
-            user-select: none;
-            -webkit-user-select: none;
-            box-sizing: border-box;
-            -webkit-tap-highlight-color: transparent;
-        }
-        body {
-            background-color: #090610;
-            color: #f3e8ff;
-            font-family: 'Inter', sans-serif;
-            overflow: hidden;
-            touch-action: none;
-        }
-        .font-cartoon {
-            font-family: 'Fredoka', sans-serif;
-            letter-spacing: 0.02em;
-        }
-        .md-elevation-1 {
-            box-shadow: 0 2px 10px -1px rgba(0, 0, 0, 0.7), 0 1px 4px -1px rgba(192, 132, 252, 0.14);
-        }
-        .md-elevation-2 {
-            box-shadow: 0 8px 24px -4px rgba(0, 0, 0, 0.85), 0 4px 12px -2px rgba(192, 132, 252, 0.22);
-        }
-        .md-elevation-3 {
-            box-shadow: 0 16px 38px -6px rgba(0, 0, 0, 0.95), 0 6px 22px -3px rgba(45, 212, 191, 0.28);
-        }
-        .md-btn {
-            position: relative;
-            overflow: hidden;
-            transition: all 0.16s cubic-bezier(0.4, 0, 0.2, 1);
-        }
-        .md-btn:active:not(:disabled) {
-            transform: scale(0.94);
-        }
-        @keyframes diceShake {
-            0% { transform: rotate(0deg) scale(1); }
-            25% { transform: rotate(-16deg) scale(1.12); }
-            50% { transform: rotate(16deg) scale(1.16); }
-            75% { transform: rotate(-12deg) scale(1.08); }
-            100% { transform: rotate(0deg) scale(1); }
-        }
-        .dice-rolling {
-            animation: diceShake 0.35s infinite ease-in-out;
-        }
-        @keyframes horrorShake {
-            0%, 100% { transform: translate(0, 0) rotate(0deg); }
-            12% { transform: translate(-18px, -12px) rotate(-2.5deg); }
-            25% { transform: translate(18px, 10px) rotate(2.5deg); }
-            38% { transform: translate(-14px, 14px) rotate(-2deg); }
-            50% { transform: translate(14px, -10px) rotate(2deg); }
-            65% { transform: translate(-10px, 8px) rotate(-1.5deg); }
-            80% { transform: translate(8px, -6px) rotate(1deg); }
-        }
-        .screen-shake {
-            animation: horrorShake 0.65s cubic-bezier(0.36, 0.07, 0.19, 0.97) both;
-        }
-        @keyframes jumpScareLunge {
-            0% { transform: scale(0.18) rotate(-12deg); opacity: 0; }
-            35% { transform: scale(1.32) rotate(5deg); opacity: 1; }
-            55% { transform: scale(1.1) rotate(-4deg); }
-            75% { transform: scale(1.26) rotate(3deg); }
-            100% { transform: scale(1.15) rotate(0deg); opacity: 1; }
-        }
-        .jumpscare-lunge {
-            animation: jumpScareLunge 0.55s cubic-bezier(0.18, 0.89, 0.32, 1.28) forwards;
-        }
-        @keyframes flashStrobe {
-            0%, 100% { background-color: rgba(15, 5, 25, 0.94); }
-            20% { background-color: rgba(225, 29, 72, 0.55); }
-            40% { background-color: rgba(15, 5, 25, 0.96); }
-            60% { background-color: rgba(45, 212, 191, 0.45); }
-        }
-        .strobe-bg {
-            animation: flashStrobe 0.45s 2 ease-in-out;
-        }
-        @keyframes ectoPulse {
-            0%, 100% { box-shadow: 0 0 8px rgba(45, 212, 191, 0.45); }
-            50% { box-shadow: 0 0 22px rgba(45, 212, 191, 0.95); }
-        }
-        .ecto-glow {
-            animation: ectoPulse 1.5s infinite ease-in-out;
-        }
-        @keyframes amberPulse {
-            0%, 100% { box-shadow: 0 0 8px rgba(251, 191, 36, 0.45); }
-            50% { box-shadow: 0 0 22px rgba(251, 191, 36, 0.95); }
-        }
-        .amber-glow {
-            animation: amberPulse 1.5s infinite ease-in-out;
-        }
-        ::-webkit-scrollbar {
-            width: 5px;
-            height: 5px;
-        }
-        ::-webkit-scrollbar-track {
-            background: #120c1c;
-        }
-        ::-webkit-scrollbar-thumb {
-            background: #3b2d54;
-            border-radius: 9999px;
-        }
-    </style>
+    <!-- Modular Stylesheet -->
+    <link rel="stylesheet" href="css/styles.css" />
 </head>
 <body class="h-screen w-screen flex flex-col select-none bg-md-bg text-purple-50 overflow-hidden">
 
     <!-- ==================== TOP APP BAR ==================== -->
-    <header class="h-13 sm:h-14 bg-md-surface1 border-b border-purple-900/40 px-2.5 sm:px-4 flex items-center justify-between z-30 shrink-0 md-elevation-1">
+    <header id="topAppBar" class="h-13 sm:h-14 bg-md-surface1 border-b border-purple-900/40 px-2.5 sm:px-4 flex items-center justify-between z-30 shrink-0 md-elevation-1 transition-all duration-300">
         <!-- Left: Brand, Active Room & Online Badge -->
         <div class="flex items-center gap-2 sm:gap-3 min-w-0">
             <div class="w-8 h-8 sm:w-9 sm:h-9 rounded-xl bg-gradient-to-br from-purple-500 via-indigo-600 to-teal-400 flex items-center justify-center shadow-md shrink-0">
@@ -156,7 +56,7 @@
             <div class="min-w-0">
                 <div class="flex items-center gap-1.5 sm:gap-2">
                     <h1 class="font-cartoon text-sm sm:text-lg font-bold tracking-wide bg-gradient-to-r from-purple-300 via-teal-200 to-amber-200 bg-clip-text text-transparent truncate">
-                        MANOR OF SHADOWS <span class="text-[10px] sm:text-xs font-mono text-amber-400">v4.0</span>
+                        MANOR OF SHADOWS <span class="text-[10px] sm:text-xs font-mono text-amber-400">v4.2</span>
                     </h1>
                     <span id="onlineRoomPill" onclick="copyRoomCode()" class="hidden cursor-pointer items-center gap-1 px-2 py-0.5 rounded-full text-[10px] font-mono font-bold bg-teal-950 text-teal-300 border border-teal-400/50" title="Click to copy Room Code">
                         <span class="w-1.5 h-1.5 rounded-full bg-teal-400 animate-ping"></span>
@@ -170,7 +70,7 @@
                 <div class="flex items-center gap-2 text-[10px] text-purple-300/80 truncate">
                     <span id="activePlayerBannerTop" class="font-bold text-amber-300">P1: Milo's Turn</span>
                     <span class="hidden sm:inline">•</span>
-                    <span id="subStatusText" class="hidden sm:inline truncate">Tap glowing 3D tiles to move, search props (F), or use stairs!</span>
+                    <span id="subStatusText" class="hidden sm:inline truncate">Tap glowing 3D tiles to move, flip Room Lights (K), search props (F), or use stairs!</span>
                 </div>
             </div>
         </div>
@@ -205,6 +105,10 @@
 
         <!-- Right: Utility Buttons -->
         <div class="flex items-center gap-1 sm:gap-1.5">
+            <button onclick="toggleCleanViewport()" id="btnCleanViewTop" class="md-btn px-2 py-1.5 rounded-xl bg-teal-500/20 hover:bg-teal-500/30 border border-teal-400/50 flex items-center gap-1 text-xs font-semibold text-teal-200" title="Toggle Clean 3D Viewport (Hide/Show HUD & Tools)">
+                <span class="material-symbols-rounded text-base">visibility</span>
+                <span class="hidden xl:inline">Clean View</span>
+            </button>
             <button onclick="openSuspectsModal('matrix')" class="md-btn px-2 sm:px-2.5 py-1.5 rounded-xl bg-md-surface2 hover:bg-md-surface3 border border-amber-500/40 flex items-center gap-1 text-xs font-semibold text-amber-300" title="8-Suspect Deduction Matrix & Portraits (R)">
                 <span class="material-symbols-rounded text-base">frame_person</span>
                 <span class="hidden lg:inline">Matrix (R)</span>
@@ -212,10 +116,10 @@
             <button onclick="openBlueprintsModal()" class="md-btn p-1.5 rounded-xl bg-md-surface2 hover:bg-md-surface3 border border-teal-600/40 text-teal-300" title="Secret Passage Blueprints">
                 <span class="material-symbols-rounded text-base">architecture</span>
             </button>
-            <button onclick="openHelpModal()" class="md-btn p-1.5 rounded-xl bg-md-surface2 hover:bg-md-surface3 border border-purple-700/40 text-purple-200" title="How to Play v4.0">
+            <button onclick="openHelpModal()" class="md-btn p-1.5 rounded-xl bg-md-surface2 hover:bg-md-surface3 border border-purple-700/40 text-purple-200" title="How to Play v4.2">
                 <span class="material-symbols-rounded text-base">help</span>
             </button>
-            <button onclick="toggleAudio()" class="md-btn p-1.5 rounded-xl bg-md-surface2 hover:bg-md-surface3 border border-purple-700/40 text-teal-300" title="Mute / Unmute Sound (M)">
+            <button onclick="toggleAudio()" class="md-btn p-1.5 rounded-xl bg-md-surface2 hover:bg-md-surface3 border border-purple-700/40 text-teal-300" title="Mute / Unmute Sound">
                 <span id="soundIcon" class="material-symbols-rounded text-base">volume_up</span>
             </button>
             <button onclick="openLobbyModal()" class="md-btn px-2 py-1.5 rounded-xl bg-rose-950/80 hover:bg-rose-900 border border-rose-500/40 text-rose-200 text-xs font-semibold flex items-center gap-1" title="Lobby / Setup">
@@ -228,13 +132,13 @@
     <!-- ==================== MAIN WORKSPACE (3D Viewport + Responsive Drawer) ==================== -->
     <main id="gameWorkspace" class="flex-1 flex flex-col lg:flex-row overflow-hidden relative">
 
-        <!-- 3D VIEWPORT -->
-        <div id="viewportContainer" class="flex-1 relative bg-[#07050c] overflow-hidden">
+        <!-- 3D VIEWPORT (Brighter Default Baseline #120d22 for Mobile & Tablet Readability) -->
+        <div id="viewportContainer" class="flex-1 relative bg-[#120d22] overflow-hidden">
 
-            <!-- Top Floating Overlay: Turn Status, 2-Story Floor Switcher & Contextual Prompts -->
+            <!-- Top Floating Overlay: Turn Status, 2-Story Floor Switcher, Clean View Restore & Contextual Prompts -->
             <div class="absolute top-2.5 left-2.5 right-2.5 flex flex-wrap items-center justify-between gap-2 pointer-events-none z-20">
                 <!-- Active Player & Turn Phase Pill -->
-                <div class="pointer-events-auto flex items-center gap-2 px-3 py-1.5 rounded-2xl bg-md-surface1/90 backdrop-blur-md border border-purple-500/40 md-elevation-2">
+                <div id="topFloatingTurnPill" class="pointer-events-auto flex items-center gap-2 px-3 py-1.5 rounded-2xl bg-md-surface1/90 backdrop-blur-md border border-purple-500/40 md-elevation-2">
                     <div id="turnPlayerAvatar" class="w-7 h-7 rounded-lg bg-purple-700/50 border border-purple-400/50 flex items-center justify-center text-base">🕵️</div>
                     <div>
                         <div id="turnPhaseTitle" class="font-cartoon text-xs sm:text-sm font-bold text-white leading-none">P1 MILO: ROLL DICE</div>
@@ -242,18 +146,35 @@
                     </div>
                 </div>
 
-                <!-- 2-Story Floor Switcher Pill (Shown on 2-Story Map: Ravenwood Clocktower Estate) -->
-                <div id="floorSwitcherBar" class="pointer-events-auto hidden items-center gap-1 p-1 rounded-2xl bg-md-surface1/95 backdrop-blur-md border border-amber-400/50 md-elevation-2">
-                    <span class="text-[10px] font-bold uppercase tracking-wider text-amber-300 px-2">Floor:</span>
-                    <button onclick="setViewFloor(0)" id="btnFloor1" class="md-btn px-2.5 py-1 rounded-xl bg-amber-400 text-slate-950 text-xs font-cartoon font-bold">
-                        1F Ground
+                <div class="flex items-center gap-1.5 pointer-events-auto">
+                    <!-- 2-Story Floor Switcher Pill (Shown on 2-Story Map: Ravenwood Clocktower Estate) -->
+                    <div id="floorSwitcherBar" class="hidden items-center gap-1 p-1 rounded-2xl bg-md-surface1/95 backdrop-blur-md border border-amber-400/50 md-elevation-2">
+                        <span class="text-[10px] font-bold uppercase tracking-wider text-amber-300 px-2">Floor:</span>
+                        <button onclick="setViewFloor(0)" id="btnFloor1" class="md-btn px-2.5 py-1 rounded-xl bg-amber-400 text-slate-950 text-xs font-cartoon font-bold">
+                            1F Ground
+                        </button>
+                        <button onclick="setViewFloor(1)" id="btnFloor2" class="md-btn px-2.5 py-1 rounded-xl bg-md-surface2 text-purple-200 text-xs font-cartoon font-bold">
+                            2F Upper
+                        </button>
+                        <button onclick="setViewFloor('auto')" id="btnFloorAuto" class="md-btn px-2 py-1 rounded-xl bg-md-surface2 text-teal-300 text-[10px] font-bold border border-teal-500/30">
+                            Auto
+                        </button>
+                    </div>
+
+                    <!-- Floating Clean View Toggle Pill (Always accessible to maximize 3D screen space to 92%+) -->
+                    <button onclick="toggleCleanViewport()" id="btnFloatingCleanView" class="md-btn px-2.5 py-1.5 rounded-2xl bg-md-surface1/90 backdrop-blur-md border border-teal-400/50 text-teal-200 text-xs font-cartoon font-bold flex items-center gap-1 md-elevation-2" title="Collapse/Expand HUD & Tools for 92%+ 3D Viewport">
+                        <span id="cleanViewFloatingIcon" class="material-symbols-rounded text-sm text-teal-300">visibility</span>
+                        <span id="cleanViewFloatingText" class="hidden sm:inline">Clean View</span>
                     </button>
-                    <button onclick="setViewFloor(1)" id="btnFloor2" class="md-btn px-2.5 py-1 rounded-xl bg-md-surface2 text-purple-200 text-xs font-cartoon font-bold">
-                        2F Upper
-                    </button>
-                    <button onclick="setViewFloor('auto')" id="btnFloorAuto" class="md-btn px-2 py-1 rounded-xl bg-md-surface2 text-teal-300 text-[10px] font-bold border border-teal-500/30">
-                        Auto
-                    </button>
+                </div>
+
+                <!-- Master Circuit Breaker Active Banner -->
+                <div id="masterBreakerBanner" class="pointer-events-auto hidden items-center gap-2 px-3.5 py-1.5 rounded-2xl bg-amber-950/95 border-2 border-amber-400 md-elevation-3 amber-glow">
+                    <span class="material-symbols-rounded text-amber-300 text-lg animate-pulse">bolt</span>
+                    <div class="text-xs">
+                        <div class="font-cartoon font-bold text-amber-200">⚡ MASTER BREAKER OVERLOAD ACTIVE (<span id="breakerRoundsText">2</span> ROUNDS LEFT)</div>
+                        <div class="text-[10px] text-amber-300">All rooms are Ghost-proof safe zones, but bright glare hides Clues until switches are flipped OFF!</div>
+                    </div>
                 </div>
 
                 <!-- Escape Sprint Banner (Appears when Vault is Unsealed!) -->
@@ -275,12 +196,12 @@
             </div>
 
             <!-- MOBILE / TABLET 1-TAP FLOATING CONTEXT ACTION BAR (Above Bottom Controls) -->
-            <div id="floatingContextBar" class="absolute bottom-14 left-1/2 -translate-x-1/2 z-20 flex flex-wrap items-center justify-center gap-1.5 w-[95%] max-w-lg pointer-events-none">
-                <!-- Populated dynamically with 1-Tap Pills: Search Prop, Use Stairs, Pull Secret Lever, Share Intel, Accuse Portrait -->
+            <div id="floatingContextBar" class="absolute bottom-14 left-1/2 -translate-x-1/2 z-20 flex flex-wrap items-center justify-center gap-1.5 w-[96%] max-w-2xl pointer-events-none">
+                <!-- Populated dynamically with 1-Tap Pills -->
             </div>
 
-            <!-- Bottom-Left Camera Controls Bar -->
-            <div class="absolute bottom-2.5 left-2.5 z-20 flex items-center gap-1 p-1 rounded-2xl bg-md-surface1/90 backdrop-blur-md border border-purple-700/40 md-elevation-2">
+            <!-- Bottom-Left Camera & Room Header Controls Bar (Collapsible in Clean View) -->
+            <div id="bottomLeftCameraBar" class="absolute bottom-2.5 left-2.5 z-20 flex items-center gap-1 p-1 rounded-2xl bg-md-surface1/90 backdrop-blur-md border border-purple-700/40 md-elevation-2 transition-all duration-300">
                 <button onclick="setCameraPreset('iso')" id="camBtnIso" class="md-btn px-2 py-1 rounded-xl bg-purple-600 text-white text-[11px] font-semibold flex items-center gap-1" title="Dollhouse 45° View">
                     <span class="material-symbols-rounded text-sm">deployed_code</span>
                     <span class="hidden sm:inline">45°</span>
@@ -297,14 +218,28 @@
                     <span class="material-symbols-rounded text-sm">foundation</span>
                     <span id="wallModeText" class="hidden md:inline">Auto Walls</span>
                 </button>
+                <button onclick="toggleRoomLabels()" id="btnToggleLabels" class="md-btn px-2 py-1 rounded-xl bg-amber-500/25 border border-amber-400/50 text-amber-200 text-[11px] font-semibold flex items-center gap-1" title="Toggle North-Wall Room Headers">
+                    <span class="material-symbols-rounded text-sm">label</span>
+                    <span class="hidden md:inline">Labels</span>
+                </button>
             </div>
 
-            <!-- Mobile Bottom-Right Drawer Toggle Button (Visible on <lg screens) -->
-            <button onclick="toggleMobileDrawer()" class="lg:hidden absolute bottom-2.5 right-2.5 z-20 md-btn px-3 py-1.5 rounded-2xl bg-gradient-to-r from-purple-600 to-teal-500 text-slate-950 font-cartoon font-bold text-xs flex items-center gap-1.5 md-elevation-3">
-                <span class="material-symbols-rounded text-base">folder_eye</span>
-                <span id="mobileDrawerBtnText">Case File & Clues</span>
-                <span id="mobileClueBadge" class="px-1.5 py-0.2 rounded-full bg-slate-950 text-teal-300 text-[10px] font-mono">0/3</span>
-            </button>
+            <!-- COMPACT FLOATING BOTTOM PILL FOR MOBILE / TABLET & CLEAN VIEW (🎲 Roll Dice | AP: 4 | 🛠️ Open Tools) -->
+            <div id="compactBottomPill" class="absolute bottom-2.5 right-2.5 z-20 flex items-center gap-1.5 p-1.5 rounded-2xl bg-md-surface1/95 backdrop-blur-md border-2 border-teal-400/60 md-elevation-3">
+                <button id="compactRollOrEndBtn" onclick="handleCompactPrimaryAction()" class="md-btn px-3 py-1.5 rounded-xl bg-gradient-to-r from-purple-500 to-teal-400 text-slate-950 font-cartoon font-bold text-xs flex items-center gap-1 shadow">
+                    <span id="compactPrimaryIcon" class="material-symbols-rounded text-sm">casino</span>
+                    <span id="compactPrimaryText">🎲 Roll Dice</span>
+                </button>
+                <div class="px-2 py-1 rounded-xl bg-md-surface2 border border-purple-700/50 text-xs font-mono font-bold text-teal-300 flex items-center gap-1">
+                    <span>AP:</span>
+                    <span id="compactApText">0</span>
+                </div>
+                <button onclick="toggleMobileDrawer()" class="md-btn px-2.5 py-1.5 rounded-xl bg-md-surface3 hover:bg-purple-800/70 text-amber-200 font-cartoon font-bold text-xs flex items-center gap-1 border border-amber-400/40">
+                    <span class="material-symbols-rounded text-sm text-amber-300">build</span>
+                    <span id="mobileDrawerBtnText">🛠️ Open Tools</span>
+                    <span id="mobileClueBadge" class="px-1.5 py-0.2 rounded-full bg-slate-950 text-teal-300 text-[10px] font-mono">0/3</span>
+                </button>
+            </div>
 
             <!-- Three.js WebGL Mount -->
             <div id="threeCanvasMount" class="w-full h-full cursor-grab active:cursor-grabbing"></div>
@@ -313,15 +248,27 @@
             <div id="toastBanner" class="pointer-events-none fixed lg:absolute top-28 left-1/2 -translate-x-1/2 z-30 transition-all duration-300 opacity-0 -translate-y-3 w-[92%] max-w-md">
                 <div class="px-4 py-2.5 rounded-2xl bg-md-surface2/95 backdrop-blur-md border border-teal-400/60 md-elevation-3 flex items-center gap-2.5 text-xs sm:text-sm font-semibold text-white text-center justify-center">
                     <span id="toastIcon" class="material-symbols-rounded text-teal-300 shrink-0">auto_awesome</span>
-                    <span id="toastMessage">Welcome to Manor of Shadows v4.0!</span>
+                    <span id="toastMessage">Welcome to Manor of Shadows v4.2!</span>
                 </div>
             </div>
         </div>
 
-        <!-- RIGHT SIDEBAR / MOBILE SLIDE-UP DRAWER: Controls, Dice, Pocket Gadgets, Case File & Scores -->
-        <aside id="controlDeckDrawer" class="w-full lg:w-96 bg-md-surface1 border-t lg:border-t-0 lg:border-l border-purple-900/40 flex flex-col justify-between p-2.5 sm:p-3.5 gap-2 z-30 shrink-0 max-h-[54vh] lg:max-h-full overflow-y-auto transition-all duration-300">
+        <!-- RIGHT SIDEBAR / MOBILE SLIDE-UP DRAWER: Starts minimized on <lg screens for Clean Viewport! -->
+        <aside id="controlDeckDrawer" class="hidden lg:flex w-full lg:w-96 bg-md-surface1 border-t lg:border-t-0 lg:border-l border-purple-900/40 flex-col justify-between p-2.5 sm:p-3.5 gap-2 z-30 shrink-0 max-h-[56vh] lg:max-h-full overflow-y-auto transition-all duration-300">
 
-            <!-- 1. Active Player Card + Flashlight + Pocket Gadget Slot -->
+            <!-- Mobile Drawer Header with 1-Tap Minimize Button -->
+            <div class="flex lg:hidden items-center justify-between pb-1.5 border-b border-purple-800/40">
+                <span class="font-cartoon text-xs font-bold text-teal-300 flex items-center gap-1">
+                    <span class="material-symbols-rounded text-sm">dashboard_customize</span>
+                    SLEUTH CONTROL DECK & CASE FILE
+                </span>
+                <button onclick="toggleMobileDrawer()" class="px-2.5 py-0.5 rounded-lg bg-rose-950/80 text-rose-200 border border-rose-500/40 text-[11px] font-bold flex items-center gap-1">
+                    <span class="material-symbols-rounded text-xs">visibility_off</span>
+                    <span>Minimize Drawer</span>
+                </button>
+            </div>
+
+            <!-- 1. Active Player Card + Flashlight + Room Light Switch + Pocket Gadget Slot -->
             <div class="bg-md-surface2 rounded-2xl p-2.5 border border-purple-800/40 md-elevation-1 flex flex-col gap-2">
                 <div class="flex items-center justify-between gap-2">
                     <div class="flex items-center gap-2 min-w-0">
@@ -344,21 +291,26 @@
                     </button>
                 </div>
 
-                <!-- Tactical Row: Flashlight (L), Pocket Gadget (G), and Vault Pipe Bang -->
-                <div class="grid grid-cols-3 gap-1.5 pt-1.5 border-t border-purple-800/30">
-                    <button id="btnFlashlight" onclick="toggleFlashlight()" class="md-btn py-1.5 px-2 rounded-xl bg-amber-400/20 border border-amber-400/60 text-amber-200 text-[11px] font-bold flex items-center justify-center gap-1" title="Toggle Flashlight (L Key, 0 AP)">
-                        <span id="flashlightIcon" class="material-symbols-rounded text-sm text-amber-300">flashlight_on</span>
-                        <span id="flashlightText">Light ON</span>
+                <!-- Tactical Row: Flashlight (L), Room Light Switch (K), Pocket Gadget (G), and Vault Pipe Bang -->
+                <div class="grid grid-cols-4 gap-1 pt-1.5 border-t border-purple-800/30">
+                    <button id="btnFlashlight" onclick="toggleFlashlight()" class="md-btn py-1.5 px-1.5 rounded-xl bg-amber-400/20 border border-amber-400/60 text-amber-200 text-[10px] font-bold flex items-center justify-center gap-1" title="Toggle Personal Flashlight (L Key, 0 AP)">
+                        <span id="flashlightIcon" class="material-symbols-rounded text-xs text-amber-300">flashlight_on</span>
+                        <span id="flashlightText" class="truncate">Beam ON</span>
                     </button>
 
-                    <button id="btnUseGadget" onclick="usePocketGadget()" disabled class="md-btn py-1.5 px-2 rounded-xl bg-teal-500/20 border border-teal-400/50 disabled:opacity-40 text-teal-200 text-[11px] font-bold flex items-center justify-center gap-1" title="Use Haunted Pocket Gadget (G Key)">
-                        <span class="material-symbols-rounded text-sm text-teal-300">backpack</span>
+                    <button id="btnRoomLightSwitch" onclick="flipCurrentRoomLight()" disabled class="md-btn py-1.5 px-1.5 rounded-xl bg-amber-500/20 border border-amber-400/60 disabled:opacity-40 text-amber-200 text-[10px] font-bold flex items-center justify-center gap-1" title="Flip Current Room Chandelier Switch (K Key, 0 AP, Once per Turn per Room)">
+                        <span id="roomSwitchIcon" class="material-symbols-rounded text-xs text-amber-300">lightbulb</span>
+                        <span id="roomSwitchText" class="truncate">Room OFF</span>
+                    </button>
+
+                    <button id="btnUseGadget" onclick="usePocketGadget()" disabled class="md-btn py-1.5 px-1.5 rounded-xl bg-teal-500/20 border border-teal-400/50 disabled:opacity-40 text-teal-200 text-[10px] font-bold flex items-center justify-center gap-1" title="Use Haunted Pocket Gadget (G Key)">
+                        <span class="material-symbols-rounded text-xs text-teal-300">backpack</span>
                         <span id="gadgetBtnText" class="truncate">No Gadget</span>
                     </button>
 
-                    <button id="btnFamilyDistract" onclick="triggerFamilyDistraction()" class="md-btn py-1.5 px-2 rounded-xl bg-purple-600/25 hover:bg-purple-600/40 border border-purple-400/50 text-purple-200 text-[11px] font-bold flex items-center justify-center gap-1" title="Command trapped family in Central Vault to bang pipes & lure Ghost!">
-                        <span class="material-symbols-rounded text-sm text-purple-300">notifications_active</span>
-                        <span id="familyDistractBadge">Vault 1x</span>
+                    <button id="btnFamilyDistract" onclick="triggerFamilyDistraction()" class="md-btn py-1.5 px-1.5 rounded-xl bg-purple-600/25 hover:bg-purple-600/40 border border-purple-400/50 text-purple-200 text-[10px] font-bold flex items-center justify-center gap-1" title="Command trapped family in Central Vault to bang pipes & lure Ghost!">
+                        <span class="material-symbols-rounded text-xs text-purple-300">notifications_active</span>
+                        <span id="familyDistractBadge" class="truncate">Vault 1x</span>
                     </button>
                 </div>
             </div>
@@ -476,17 +428,17 @@
         </aside>
     </main>
 
-    <!-- ==================== MODAL 1: V4.0 TRIPLE-MODE LOBBY, MAP & CHARACTER SETUP ==================== -->
+    <!-- ==================== MODAL 1: V4.2 TRIPLE-MODE LOBBY, STORY & RULES BANNER, MAP & CHARACTER SETUP ==================== -->
     <div id="lobbyModal" class="fixed inset-0 z-50 bg-black/85 backdrop-blur-md flex items-center justify-center p-2.5 sm:p-4">
         <div class="bg-md-surface1 border border-purple-500/40 rounded-3xl max-w-5xl w-full p-4 sm:p-6 md-elevation-3 max-h-[95vh] overflow-y-auto">
             <!-- Header -->
-            <div class="flex flex-col md:flex-row md:items-center justify-between gap-3 mb-4 pb-3 border-b border-purple-800/40">
+            <div class="flex flex-col md:flex-row md:items-center justify-between gap-3 mb-3.5 pb-3 border-b border-purple-800/40">
                 <div class="flex items-center gap-3">
                     <div class="w-11 h-11 rounded-2xl bg-gradient-to-br from-purple-500 via-teal-400 to-amber-300 flex items-center justify-center text-slate-950 shadow-lg shrink-0">
                         <span class="material-symbols-rounded text-3xl">castle</span>
                     </div>
                     <div>
-                        <span class="text-[10px] font-bold uppercase tracking-widest text-teal-300">Version 4.0 • 2-Story Mansion • 1-4P Couch & Online Multiplayer</span>
+                        <span class="text-[10px] font-bold uppercase tracking-widest text-teal-300">Version 4.2 • Storm & Lightning FX • Smarter Ghost AI • Vault Wall Breaker</span>
                         <h2 class="font-cartoon text-xl sm:text-2xl font-bold text-white">Manor of Shadows: Game Night Lobby</h2>
                     </div>
                 </div>
@@ -509,6 +461,60 @@
                         <button id="diffBtnNightmare" onclick="setDifficultyMode('nightmare')" class="px-2.5 py-1 rounded-lg text-purple-200 hover:text-white transition-all">
                             Nightmare Fog
                         </button>
+                    </div>
+                </div>
+            </div>
+
+            <!-- PROMINENT STORY & RULES EXPLAINER BANNER (3 Visual Cards) -->
+            <div class="grid grid-cols-1 md:grid-cols-3 gap-2.5 mb-4">
+                <!-- Card 1: The Story -->
+                <div class="p-3 rounded-2xl bg-gradient-to-br from-purple-950/90 to-md-surface2 border border-purple-500/40 flex flex-col justify-between">
+                    <div>
+                        <div class="flex items-center gap-1.5 text-purple-300 font-cartoon font-bold text-xs mb-1">
+                            <span class="text-sm">⚡</span>
+                            <span>The Story: The Storm & The Vault</span>
+                        </div>
+                        <p class="text-[11px] text-purple-100/90 leading-snug">
+                            Your family sought shelter from the thunderstorm, only for spectral chains to lock your unchosen family members inside the <strong>Central Ritual Vault</strong>!
+                        </p>
+                    </div>
+                    <div class="mt-2 text-[10px] font-semibold text-purple-300 flex items-center gap-1">
+                        <span class="material-symbols-rounded text-xs">notifications_active</span>
+                        <span>Tap <strong>Vault 1x</strong> to bang pipes & lure the Ghost!</span>
+                    </div>
+                </div>
+
+                <!-- Card 2: How to Win -->
+                <div class="p-3 rounded-2xl bg-gradient-to-br from-teal-950/80 to-md-surface2 border border-teal-400/50 flex flex-col justify-between">
+                    <div>
+                        <div class="flex items-center gap-1.5 text-teal-300 font-cartoon font-bold text-xs mb-1">
+                            <span class="text-sm">🔍</span>
+                            <span>How to Win: 3 Clues → Portrait → Escape</span>
+                        </div>
+                        <p class="text-[11px] text-purple-100/90 leading-snug">
+                            Roll dice to move, search shaking 3D furniture in the dark to uncover the Ghost's <strong>Era, Sign, & Relic</strong>, accuse their <strong>Wall Portrait</strong>, and sprint out the Front Door!
+                        </p>
+                    </div>
+                    <div class="mt-2 text-[10px] font-semibold text-teal-300 flex items-center gap-1">
+                        <span class="material-symbols-rounded text-xs">frame_person</span>
+                        <span>1st Clue = 4 Suspects • 2nd = 2 • 3rd = Exact Ghost!</span>
+                    </div>
+                </div>
+
+                <!-- Card 3: Light vs. Dark Rules -->
+                <div class="p-3 rounded-2xl bg-gradient-to-br from-amber-950/80 to-md-surface2 border border-amber-400/50 flex flex-col justify-between">
+                    <div>
+                        <div class="flex items-center gap-1.5 text-amber-300 font-cartoon font-bold text-xs mb-1">
+                            <span class="text-sm">💡</span>
+                            <span>Light vs. Dark: Switches & Vault Wall Breaker</span>
+                        </div>
+                        <p class="text-[11px] text-purple-100/90 leading-snug">
+                            Keep <strong>Room Lights OFF</strong> to see & search Clues. Flip <strong>Room Lights ON</strong> (once/turn) or pull the <strong>Vault Wall Breaker</strong> to create a Ghost-proof safe zone!
+                        </p>
+                    </div>
+                    <div class="mt-2 text-[10px] font-semibold text-amber-300 flex items-center gap-1">
+                        <span class="material-symbols-rounded text-xs">lightbulb</span>
+                        <span>Catch: Bright room lights wash out Clues until flipped OFF!</span>
                     </div>
                 </div>
             </div>
@@ -679,7 +685,7 @@
             </div>
 
             <p class="text-xs text-purple-200/85 mb-3">
-                Every suspect shares overlapping traits: <strong>1st Clue</strong> narrows to 4 suspects, <strong>2nd Clue</strong> narrows to 2 suspects, and <strong>all 3 Clues</strong> pinpoint the 1 true Ghost! Tap <strong>Cross Off</strong> to rule out suspects. Stand inside a suspect's room with your Flashlight ON (or Moonlight) to <strong>Accuse (+500 pts)</strong>!
+                Every suspect shares overlapping traits: <strong>1st Clue</strong> narrows to 4 suspects, <strong>2nd Clue</strong> narrows to 2 suspects, and <strong>all 3 Clues</strong> pinpoint the 1 true Ghost! Tap <strong>Cross Off</strong> to rule out suspects. Stand inside a suspect's room to <strong>Accuse (+500 pts)</strong>!
             </p>
 
             <div id="suspectsGrid" class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-3 mb-4"></div>
@@ -770,34 +776,34 @@
         </div>
     </div>
 
-    <!-- ==================== MODAL 7: HOW TO PLAY V4.0 ==================== -->
+    <!-- ==================== MODAL 7: HOW TO PLAY V4.2 ==================== -->
     <div id="helpModal" class="fixed inset-0 z-50 bg-black/80 backdrop-blur-md hidden items-center justify-center p-4">
         <div class="bg-md-surface1 border border-purple-500/40 rounded-3xl max-w-xl w-full p-5 sm:p-6 md-elevation-3 max-h-[90vh] overflow-y-auto">
             <div class="flex items-center justify-between mb-3">
                 <h2 class="font-cartoon text-xl font-bold text-teal-300 flex items-center gap-2">
                     <span class="material-symbols-rounded">castle</span>
-                    Manor of Shadows v4.0 Guide
+                    Manor of Shadows v4.2 Guide
                 </h2>
                 <button onclick="closeHelpModal()" class="md-btn p-1.5 rounded-full bg-md-surface2 text-purple-200">
                     <span class="material-symbols-rounded">close</span>
                 </button>
             </div>
             <div class="space-y-2.5 text-xs text-purple-100/90 leading-relaxed">
-                <div class="p-3 rounded-2xl bg-md-surface2 border border-purple-800/40">
-                    <strong class="text-teal-300 font-cartoon block mb-0.5">1. Touch, Tablet & PC Controls</strong>
-                    Tap any <strong>glowing teal floor square</strong> in 3D to walk there, or tap directly on shaking 3D furniture, stairs, or wall portraits! You can also use the on-screen D-Pad or <strong>WASD / Arrow Keys</strong>.
+                <div class="p-3 rounded-2xl bg-md-surface2 border border-amber-400/50">
+                    <strong class="text-amber-300 font-cartoon block mb-0.5">1. Room Light Switches (K) & Wall-Mounted Vault Breaker</strong>
+                    Inside any room, tap <strong>💡 Flip Room Switch</strong> (<code>K</code> key, 0 AP, <strong>once per turn per room</strong>). When a room light is <strong>ON</strong>, the Ghost cannot enter! However, bright electric glare washes out paranormal tells—you must flip the room light <strong>OFF</strong> to search furniture for Clues. Pull the <strong>⚡ Vault Wall Circuit Breaker</strong> bolted flush onto the Central Ritual Vault's West Wall at <code>(7,7)</code> (1 AP) to flood every room with light for 2 rounds and banish the Ghost far away!
+                </div>
+                <div class="p-3 rounded-2xl bg-md-surface2 border border-teal-500/40">
+                    <strong class="text-teal-300 font-cartoon block mb-0.5">2. Smarter Co-op Ghost AI & Ectoplasm Footprints</strong>
+                    The Ghost always spawns and respawns <strong>8+ tiles away</strong> from all players. When any player has their <strong>Flashlight Beam ON</strong>, the Ghost hunts that beam. In <strong>Stealth (Flashlights OFF)</strong>, the Ghost actively patrols between unsearched Clue rooms, leaving glowing <strong>3D Ectoplasm Footprints</strong> and rattling furniture as it passes!
                 </div>
                 <div class="p-3 rounded-2xl bg-md-surface2 border border-purple-800/40">
-                    <strong class="text-amber-300 font-cartoon block mb-0.5">2. Two-Story Mansion & On-Map Room Banners</strong>
-                    In <strong>Ravenwood Clocktower Estate</strong>, step onto the <strong>Grand Staircase</strong> or <strong>Service Stairs</strong> and press <strong>E</strong> (or tap the floating Stairs pill) to climb between <strong>1F Ground</strong> and <strong>2F Upper Floor</strong>! Use the top <code>[1F / 2F]</code> buttons to peek upstairs anytime.
+                    <strong class="text-purple-300 font-cartoon block mb-0.5">3. North-Wall Room Headers, Thunderstorm FX & Clean View</strong>
+                    Sleek brass room headers sit high on each room's back North wall and automatically fade to <strong>25% opacity</strong> when you step inside so they never block gameplay. Tap <strong>👁️ Clean View</strong> to expand the 3D mansion across 92%+ of the screen!
                 </div>
                 <div class="p-3 rounded-2xl bg-md-surface2 border border-purple-800/40">
-                    <strong class="text-purple-300 font-cartoon block mb-0.5">3. 8-Suspect Overlapping Matrix & Bonus Heirlooms</strong>
-                    Suspects share 3 overlapping traits (Era, Elemental Sign, Haunted Relic). Finding 1 clue narrows to 4 suspects; 2 clues narrows to 2 suspects; all 3 clues pinpoint the exact Ghost! Also hunt for <strong>3 Golden Heirlooms (+300 pts)</strong> and <strong>Pocket Gadgets</strong>!
-                </div>
-                <div class="p-3 rounded-2xl bg-md-surface2 border border-purple-800/40">
-                    <strong class="text-rose-400 font-cartoon block mb-0.5">4. Sleuth Points & Online Room Codes</strong>
-                    Earn points for searching props (+50), finding Secret Passages (+150), True Clues (+250), Golden Heirlooms (+300), High-Fiving another player in the same room (+100), and Accusing the Portrait (+500)!
+                    <strong class="text-rose-400 font-cartoon block mb-0.5">4. 8-Suspect Matrix, Bonus Heirlooms & Sleuth Points</strong>
+                    Uncover 3 overlapping traits (Era, Sign, Relic) to pinpoint the Ghost, accuse their Wall Portrait (+500 pts), collect 3 Golden Heirlooms (+300 pts each), and sprint out the Foyer Front Door (+300 pts)!
                 </div>
             </div>
             <div class="mt-4 flex justify-end">
@@ -808,2903 +814,13 @@
         </div>
     </div>
 
-    <!-- ==================== V4.0 COMPLETE ENGINE & MULTIPLAYER LOGIC ==================== -->
-    <script>
-        /* ============================================================================
-         * 1. WEB AUDIO SYNTHESIZER (Footsteps, Chimes, Jump Scare Shriek)
-         * ============================================================================ */
-        const SoundFX = {
-            ctx: null,
-            muted: false,
-            init() {
-                if (!this.ctx) {
-                    const AudioCtx = window.AudioContext || window.webkitAudioContext;
-                    if (AudioCtx) this.ctx = new AudioCtx();
-                }
-                if (this.ctx && this.ctx.state === 'suspended') this.ctx.resume();
-            },
-            playTone(freq, type, duration, vol = 0.12, slideTo = null) {
-                if (this.muted) return;
-                this.init();
-                if (!this.ctx) return;
-                try {
-                    const osc = this.ctx.createOscillator();
-                    const gain = this.ctx.createGain();
-                    osc.type = type;
-                    osc.frequency.setValueAtTime(freq, this.ctx.currentTime);
-                    if (slideTo) osc.frequency.exponentialRampToValueAtTime(slideTo, this.ctx.currentTime + duration);
-                    gain.gain.setValueAtTime(vol, this.ctx.currentTime);
-                    gain.gain.exponentialRampToValueAtTime(0.001, this.ctx.currentTime + duration);
-                    osc.connect(gain);
-                    gain.connect(this.ctx.destination);
-                    osc.start();
-                    osc.stop(this.ctx.currentTime + duration);
-                } catch (e) {}
-            },
-            step(floorType = 'hallway') {
-                if (floorType === 'marble_foyer' || floorType === 'checker_kitchen') {
-                    this.playTone(320 + Math.random() * 50, 'sine', 0.045, 0.07, 180);
-                } else {
-                    this.playTone(155 + Math.random() * 40, 'triangle', 0.05, 0.07, 90);
-                }
-            },
-            clickSwitch() { this.playTone(620, 'sine', 0.04, 0.08, 420); },
-            dice() {
-                [280, 360, 440, 580].forEach((f, idx) => setTimeout(() => this.playTone(f, 'sine', 0.06, 0.09), idx * 42));
-            },
-            secretMechanism() {
-                this.playTone(145, 'sawtooth', 0.3, 0.1, 230);
-                setTimeout(() => this.playTone(520, 'triangle', 0.25, 0.12, 780), 150);
-            },
-            clueFound() {
-                [523.25, 659.25, 783.99, 1046.5].forEach((f, idx) => setTimeout(() => this.playTone(f, 'triangle', 0.2, 0.13), idx * 70));
-            },
-            pipeBang() {
-                [180, 250, 190, 280].forEach((f, idx) => setTimeout(() => this.playTone(f, 'square', 0.13, 0.11, 90), idx * 100));
-            },
-            jumpScareShriek(intensity = 'fun') {
-                const vol = intensity === 'full' ? 0.24 : 0.12;
-                [880, 932, 622, 1174, 415, 220].forEach((f, idx) => {
-                    setTimeout(() => this.playTone(f, 'sawtooth', 0.34, vol, f * 0.45), idx * 55);
-                });
-            },
-            victory() {
-                [440, 554.37, 659.25, 880, 1108.73, 1318.5].forEach((f, idx) => setTimeout(() => this.playTone(f, 'triangle', 0.3, 0.15), idx * 90));
-            }
-        };
-
-        function toggleAudio() {
-            SoundFX.muted = !SoundFX.muted;
-            document.getElementById('soundIcon').textContent = SoundFX.muted ? 'volume_off' : 'volume_up';
-        }
-
-        /* ============================================================================
-         * 2. 4 PLAYABLE HEROES, 8 OVERLAPPING SUSPECTS & POCKET GADGETS
-         * ============================================================================ */
-        const CHARACTERS = [
-            {
-                id: 'sleuth',
-                name: 'Milo the Sleuth',
-                shortName: 'Milo',
-                emoji: '🕵️',
-                color: '#c084fc',
-                suitHex: 0x7e22ce,
-                capeHex: 0x581c87,
-                hatType: 'deerstalker',
-                badge: '+1 Dice & Reach',
-                maxHearts: 3,
-                diceBonus: 1,
-                minRoll: 1,
-                searchRange: 2,
-                skillName: 'Eagle Eye',
-                skillIcon: 'visibility',
-                description: 'Deerstalker cap & magnifier. Adds +1 to every Dice Roll and searches props from 2 tiles away.',
-                skillDesc: 'Highlights the nearest True Clue prop in gold (3-turn cooldown).'
-            },
-            {
-                id: 'sprinter',
-                name: 'Zoe the Sprinter',
-                shortName: 'Zoe',
-                emoji: '👟',
-                color: '#2dd4bf',
-                suitHex: 0x0d9488,
-                capeHex: 0x115e59,
-                hatType: 'visor',
-                badge: 'Min Roll 3 + Dash',
-                maxHearts: 3,
-                diceBonus: 0,
-                minRoll: 3,
-                searchRange: 1,
-                skillName: 'Turbo Dash',
-                skillIcon: 'sprint',
-                description: 'Varsity jacket & winged sneakers. Never rolls lower than a 3 on the dice!',
-                skillDesc: 'Instantly gain +3 Bonus Action Points this turn (3-turn cooldown).'
-            },
-            {
-                id: 'medium',
-                name: 'Luna the Medium',
-                shortName: 'Luna',
-                emoji: '🔮',
-                color: '#fbbf24',
-                suitHex: 0xd97706,
-                capeHex: 0x78350f,
-                hatType: 'witch',
-                badge: '4 Hearts & Ward',
-                maxHearts: 4,
-                diceBonus: 0,
-                minRoll: 2,
-                searchRange: 1,
-                skillName: 'Ecto Ward',
-                skillIcon: 'shield_moon',
-                description: 'Mystic witch hat & orb staff. Starts with 4 Hearts and senses teal aura rings on True Clues.',
-                skillDesc: 'Banishes the Ghost across the house & lowers Dread -30% (3-turn cooldown).'
-            },
-            {
-                id: 'inventor',
-                name: 'Theo the Inventor',
-                shortName: 'Theo',
-                emoji: '🥽',
-                color: '#38bdf8',
-                suitHex: 0x0284c7,
-                capeHex: 0x075985,
-                hatType: 'goggles',
-                badge: 'Free Gadget + Blueprint',
-                maxHearts: 3,
-                diceBonus: 0,
-                minRoll: 2,
-                searchRange: 1,
-                skillName: 'Gadget Craft',
-                skillIcon: 'precision_manufacturing',
-                description: 'Brass steampunk goggles. Starts with a Pocket Salt gadget & spots Secret Passages from 3 tiles away!',
-                skillDesc: 'Crafts a random Haunted Pocket Gadget immediately (3-turn cooldown).'
-            }
-        ];
-
-        // 8-Suspect Overlapping Trait Matrix (2^3 = 8 exact combinations of Era, Sign, Relic!)
-        // Finding 1 clue narrows to 4 suspects; 2 clues narrows to 2 suspects; 3 clues = 1 exact culprit!
-        const SUSPECTS = [
-            {
-                id: 'evelyn',
-                name: 'Lady Evelyn',
-                title: 'The Poison Botanist',
-                roomId: 'conservatory',
-                emoji: '🌿',
-                portraitColor: '#10b981',
-                skinColor: '#fde68a',
-                hairColor: '#7c2d12',
-                accessory: 'emerald_vines',
-                traits: { era: 'Colonial 1700s', curse: 'Freezing Frost', relic: 'Silver Locket' }
-            },
-            {
-                id: 'alistair',
-                name: 'Lord Alistair',
-                title: 'The Greedy Aristocrat',
-                roomId: 'dining',
-                emoji: '🎩',
-                portraitColor: '#f97316',
-                skinColor: '#fed7aa',
-                hairColor: '#475569',
-                accessory: 'tophat_monocle',
-                traits: { era: 'Colonial 1700s', curse: 'Freezing Frost', relic: 'Crystal Vial' }
-            },
-            {
-                id: 'marcel',
-                name: 'Chef Marcel',
-                title: 'The Phantom Sous-Chef',
-                roomId: 'kitchen',
-                emoji: '👨‍🍳',
-                portraitColor: '#14b8a6',
-                skinColor: '#fde68a',
-                hairColor: '#1e293b',
-                accessory: 'chef_toque',
-                traits: { era: 'Colonial 1700s', curse: 'Cursed Melody', relic: 'Silver Locket' }
-            },
-            {
-                id: 'victor',
-                name: 'Maestro Victor',
-                title: 'The Midnight Composer',
-                roomId: 'ballroom',
-                emoji: '🎼',
-                portraitColor: '#ec4899',
-                skinColor: '#e2e8f0',
-                hairColor: '#581c87',
-                accessory: 'baton_music',
-                traits: { era: 'Colonial 1700s', curse: 'Cursed Melody', relic: 'Crystal Vial' }
-            },
-            {
-                id: 'vance',
-                name: 'Professor Vance',
-                title: 'The Occult Archivist',
-                roomId: 'library',
-                emoji: '👓',
-                portraitColor: '#a855f7',
-                skinColor: '#fed7aa',
-                hairColor: '#94a3b8',
-                accessory: 'spectacles_tome',
-                traits: { era: 'Victorian 1800s', curse: 'Freezing Frost', relic: 'Silver Locket' }
-            },
-            {
-                id: 'sterling',
-                name: 'Captain Sterling',
-                title: 'The Cursed Navigator',
-                roomId: 'study',
-                emoji: '⚓',
-                portraitColor: '#eab308',
-                skinColor: '#fdba74',
-                hairColor: '#334155',
-                accessory: 'tricorn_compass',
-                traits: { era: 'Victorian 1800s', curse: 'Freezing Frost', relic: 'Crystal Vial' }
-            },
-            {
-                id: 'helena',
-                name: 'Duchess Helena',
-                title: 'The Clocktower Heiress',
-                roomId: 'clocktower',
-                fallbackRoomId: 'foyer',
-                emoji: '🕰️',
-                portraitColor: '#38bdf8',
-                skinColor: '#fef08a',
-                hairColor: '#1e1b4b',
-                accessory: 'emerald_vines',
-                traits: { era: 'Victorian 1800s', curse: 'Cursed Melody', relic: 'Silver Locket' }
-            },
-            {
-                id: 'mordecai',
-                name: 'Dr. Mordecai',
-                title: 'The Mad Alchemist',
-                roomId: 'alchemy',
-                fallbackRoomId: 'gallery',
-                emoji: '🧪',
-                portraitColor: '#a3e635',
-                skinColor: '#d9f99d',
-                hairColor: '#3f6212',
-                accessory: 'spectacles_tome',
-                traits: { era: 'Victorian 1800s', curse: 'Cursed Melody', relic: 'Crystal Vial' }
-            }
-        ];
-
-        const POCKET_GADGETS = [
-            { id: 'salt', name: 'Pocket Salt', emoji: '🧂', desc: 'Drops a Salt Ward on your tile that blocks the Ghost for 2 rounds!' },
-            { id: 'skates', name: 'Winged Skates', emoji: '🛼', desc: 'Instantly grants +4 Bonus Action Points!' },
-            { id: 'decoy', name: 'Ghost Decoy', emoji: '📻', desc: 'Lures the Ghost to the Central Vault for 2 turns!' }
-        ];
-
-        const BONUS_HEIRLOOMS = [
-            { id: 'will', name: 'The Stolen Blackwood Will', emoji: '📜' },
-            { id: 'musicbox', name: 'Gilded Starlight Music Box', emoji: '👑' },
-            { id: 'elixir', name: 'Vial of Eternal Aether', emoji: '⚗️' }
-        ];
-
-        /* ============================================================================
-         * 3. TWO SELECTABLE MANSION ARCHITECTURES (1-Story Classic & 2-Story Clocktower)
-         * ============================================================================ */
-        const GRID_COLS = 19;
-        const GRID_ROWS = 15;
-        const TILE_SIZE = 2.0;
-        const FLOOR_HEIGHT_3D = 4.6;
-
-        const MAP_DEFINITIONS = {
-            blackwood: {
-                id: 'blackwood',
-                name: 'Blackwood Manor (1-Story Classic)',
-                floors: 1,
-                rooms: [
-                    { id: 'conservatory', name: 'Conservatory', icon: '🌿', floor: 0, x1: 1, y1: 1, x2: 5, y2: 4, floorType: 'conservatory', accentHex: 0x10b981, portraitWall: { x: 3, y: 1 } },
-                    { id: 'dining', name: 'Formal Dining', icon: '🍽️', floor: 0, x1: 1, y1: 5, x2: 5, y2: 9, floorType: 'wood_warm', accentHex: 0xf97316, portraitWall: { x: 2, y: 5 } },
-                    { id: 'kitchen', name: 'Gourmet Kitchen', icon: '🍲', floor: 0, x1: 1, y1: 10, x2: 5, y2: 13, floorType: 'checker_kitchen', accentHex: 0x14b8a6, portraitWall: { x: 2, y: 10 } },
-                    { id: 'gallery', name: 'North Gallery', icon: '🕯️', floor: 0, x1: 7, y1: 1, x2: 11, y2: 3, floorType: 'parquet_gold', accentHex: 0xa3e635, portraitWall: { x: 9, y: 1 } },
-                    { id: 'vault', name: 'Central Ritual Vault', icon: '🔒', floor: 0, x1: 8, y1: 5, x2: 10, y2: 8, floorType: 'ritual_stone', accentHex: 0xf43f5e, isLockedVault: true },
-                    { id: 'foyer', name: 'Grand Foyer', icon: '🏛️', floor: 0, x1: 7, y1: 11, x2: 11, y2: 13, floorType: 'marble_foyer', accentHex: 0x38bdf8, portraitWall: { x: 7, y: 11 } },
-                    { id: 'ballroom', name: 'Grand Ballroom', icon: '🎹', floor: 0, x1: 13, y1: 1, x2: 17, y2: 4, floorType: 'parquet_gold', accentHex: 0xec4899, portraitWall: { x: 15, y: 1 } },
-                    { id: 'library', name: 'Two-Story Library', icon: '📚', floor: 0, x1: 13, y1: 5, x2: 17, y2: 9, floorType: 'herringbone', accentHex: 0xa855f7, portraitWall: { x: 16, y: 5 } },
-                    { id: 'study', name: 'Master Study', icon: '🎱', floor: 0, x1: 13, y1: 10, x2: 17, y2: 13, floorType: 'carpet_study', accentHex: 0xeab308, portraitWall: { x: 16, y: 10 } }
-                ],
-                doorways: [
-                    { floor: 0, x1: 3, y1: 4, x2: 3, y2: 5 },
-                    { floor: 0, x1: 5, y1: 3, x2: 6, y2: 3 },
-                    { floor: 0, x1: 5, y1: 7, x2: 6, y2: 7 },
-                    { floor: 0, x1: 3, y1: 9, x2: 3, y2: 10 },
-                    { floor: 0, x1: 5, y1: 11, x2: 6, y2: 11 },
-                    { floor: 0, x1: 9, y1: 3, x2: 9, y2: 4 },
-                    { floor: 0, x1: 13, y1: 3, x2: 12, y2: 3 },
-                    { floor: 0, x1: 15, y1: 4, x2: 15, y2: 5 },
-                    { floor: 0, x1: 13, y1: 7, x2: 12, y2: 7 },
-                    { floor: 0, x1: 15, y1: 9, x2: 15, y2: 10 },
-                    { floor: 0, x1: 13, y1: 11, x2: 12, y2: 11 },
-                    { floor: 0, x1: 8, y1: 11, x2: 8, y2: 10 },
-                    { floor: 0, x1: 9, y1: 11, x2: 9, y2: 10 },
-                    { floor: 0, x1: 10, y1: 11, x2: 10, y2: 10 },
-                    { floor: 0, x1: 7, y1: 12, x2: 6, y2: 12 },
-                    { floor: 0, x1: 11, y1: 12, x2: 12, y2: 12 }
-                ],
-                stairs: [],
-                passages: [
-                    {
-                        pairId: 'pairA',
-                        name: 'Gargoyle & False Bookcase Passage',
-                        blueprintTitle: 'Blueprint A: The Scholar’s Vine Tunnel',
-                        blueprintNote: 'Pull the Stone Gargoyle wing in the Conservatory (1F) to warp to the Master Study False Bookcase (1F)!',
-                        endpoints: [
-                            { roomId: 'conservatory', floor: 0, x: 1, y: 1, targetRoomId: 'study', targetFloor: 0, targetX: 17, targetY: 12, triggerName: 'Stone Gargoyle Lever', visualClue: 'Muddy footprints & worn wing', type: 'gargoyle' },
-                            { roomId: 'study', floor: 0, x: 17, y: 12, targetRoomId: 'conservatory', targetFloor: 0, targetX: 1, targetY: 1, triggerName: 'Revolving False Bookcase', visualClue: 'Floor scrape marks & cool draft', type: 'false_bookcase' }
-                        ]
-                    },
-                    {
-                        pairId: 'pairB',
-                        name: 'Dumbwaiter & Stage Sconce Lift',
-                        blueprintTitle: 'Blueprint B: The Banquet Service Shaft',
-                        blueprintNote: 'Ride the Brass Dumbwaiter in the Gourmet Kitchen (1F) straight to the Grand Ballroom Stage Curtain (1F)!',
-                        endpoints: [
-                            { roomId: 'kitchen', floor: 0, x: 1, y: 13, targetRoomId: 'ballroom', targetFloor: 0, targetX: 17, targetY: 1, triggerName: 'Brass Dumbwaiter Pulley', visualClue: 'Chalk label & taut pulley rope', type: 'dumbwaiter' },
-                            { roomId: 'ballroom', floor: 0, x: 17, y: 1, targetRoomId: 'kitchen', targetFloor: 0, targetX: 1, targetY: 13, triggerName: 'Tilted Brass Sconce', visualClue: '45° tilted candle lever', type: 'tilted_sconce' }
-                        ]
-                    }
-                ],
-                props: [
-                    { id: 'p1', roomId: 'conservatory', floor: 0, x: 4, y: 2, name: 'Snapping Venus Flytrap', emoji: '🪴', type: 'flytrap', animType: 'snap' },
-                    { id: 'p2', roomId: 'conservatory', floor: 0, x: 2, y: 3, name: 'Gargoyle Fountain', emoji: '⛲', type: 'terrarium', animType: 'bubble' },
-                    { id: 'p3', roomId: 'dining', floor: 0, x: 3, y: 7, name: '12-Seat Banquet Table', emoji: '🍽️', type: 'banquet', animType: 'cloche_float' },
-                    { id: 'p4', roomId: 'dining', floor: 0, x: 4, y: 6, name: 'Glass China Hutch', emoji: '🫖', type: 'hutch', animType: 'shake' },
-                    { id: 'p5', roomId: 'kitchen', floor: 0, x: 2, y: 12, name: 'Cast-Iron Cauldron Stove', emoji: '🍲', type: 'stove', animType: 'cauldron' },
-                    { id: 'p6', roomId: 'kitchen', floor: 0, x: 4, y: 12, name: 'Butcher Block & Cleaver', emoji: '🔪', type: 'butcher', animType: 'cleaver_chop' },
-                    { id: 'p7', roomId: 'ballroom', floor: 0, x: 14, y: 2, name: 'Concert Grand Piano', emoji: '🎹', type: 'piano', animType: 'piano_notes' },
-                    { id: 'p8', roomId: 'ballroom', floor: 0, x: 16, y: 3, name: 'Gilded Harp & Horn', emoji: '🪉', type: 'harp', animType: 'sway' },
-                    { id: 'p9', roomId: 'library', floor: 0, x: 16, y: 6, name: 'Haunted Bookcase', emoji: '📚', type: 'bookshelf', animType: 'flying_books' },
-                    { id: 'p10', roomId: 'library', floor: 0, x: 14, y: 8, name: 'Spinning World Globe', emoji: '🌍', type: 'globe_desk', animType: 'globe_spin' },
-                    { id: 'p11', roomId: 'study', floor: 0, x: 14, y: 12, name: 'Green-Felt Billiards Table', emoji: '🎱', type: 'billiards', animType: 'pool_balls' },
-                    { id: 'p12', roomId: 'study', floor: 0, x: 16, y: 11, name: 'Executive Clawfoot Desk', emoji: '📜', type: 'claw_desk', animType: 'float' },
-                    { id: 'p13', roomId: 'gallery', floor: 0, x: 10, y: 2, name: 'Cursed Suit of Armor', emoji: '⚔️', type: 'hutch', animType: 'shake' },
-                    { id: 'p14', roomId: 'foyer', floor: 0, x: 11, y: 11, name: 'Grandfather Clock', emoji: '🕰️', type: 'bookshelf', animType: 'shake' }
-                ]
-            },
-
-            // MAP 2: RAVENWOOD CLOCKTOWER ESTATE (Two-Story Vertical Mansion!)
-            ravenwood: {
-                id: 'ravenwood',
-                name: 'Ravenwood Clocktower (2-Story Estate)',
-                floors: 2,
-                rooms: [
-                    // 1F GROUND FLOOR
-                    { id: 'conservatory', name: '1F Conservatory', icon: '🌿', floor: 0, x1: 1, y1: 1, x2: 5, y2: 5, floorType: 'conservatory', accentHex: 0x10b981, portraitWall: { x: 3, y: 1 } },
-                    { id: 'dining', name: '1F Formal Dining', icon: '🍽️', floor: 0, x1: 1, y1: 6, x2: 5, y2: 9, floorType: 'wood_warm', accentHex: 0xf97316, portraitWall: { x: 2, y: 6 } },
-                    { id: 'kitchen', name: '1F Gourmet Kitchen', icon: '🍲', floor: 0, x1: 1, y1: 10, x2: 5, y2: 13, floorType: 'checker_kitchen', accentHex: 0x14b8a6, portraitWall: { x: 2, y: 10 } },
-                    { id: 'vault', name: '1F Ritual Vault', icon: '🔒', floor: 0, x1: 8, y1: 5, x2: 10, y2: 8, floorType: 'ritual_stone', accentHex: 0xf43f5e, isLockedVault: true },
-                    { id: 'foyer', name: '1F Grand Foyer', icon: '🏛️', floor: 0, x1: 7, y1: 11, x2: 11, y2: 13, floorType: 'marble_foyer', accentHex: 0x38bdf8 },
-                    { id: 'ballroom', name: '1F Grand Ballroom', icon: '🎹', floor: 0, x1: 13, y1: 1, x2: 17, y2: 6, floorType: 'parquet_gold', accentHex: 0xec4899, portraitWall: { x: 15, y: 1 } },
-                    { id: 'library', name: '1F Grand Library', icon: '📚', floor: 0, x1: 13, y1: 8, x2: 17, y2: 13, floorType: 'herringbone', accentHex: 0xa855f7, portraitWall: { x: 16, y: 8 } },
-
-                    // 2F UPPER FLOOR
-                    { id: 'clocktower', name: '2F Clocktower Attic', icon: '🕰️', floor: 1, x1: 7, y1: 1, x2: 11, y2: 5, floorType: 'parquet_gold', accentHex: 0x38bdf8, portraitWall: { x: 9, y: 1 } },
-                    { id: 'alchemy', name: '2F Alchemy Lab', icon: '🧪', floor: 1, x1: 1, y1: 2, x2: 5, y2: 7, floorType: 'checker_kitchen', accentHex: 0xa3e635, portraitWall: { x: 3, y: 2 } },
-                    { id: 'study', name: '2F Master Study', icon: '🎱', floor: 1, x1: 13, y1: 2, x2: 17, y2: 7, floorType: 'carpet_study', accentHex: 0xeab308, portraitWall: { x: 15, y: 2 } },
-                    { id: 'balcony', name: '2F Upper Landing', icon: '🕯️', floor: 1, x1: 7, y1: 9, x2: 11, y2: 12, floorType: 'marble_foyer', accentHex: 0xc084fc }
-                ],
-                doorways: [
-                    // 1F Doors
-                    { floor: 0, x1: 3, y1: 5, x2: 3, y2: 6 },
-                    { floor: 0, x1: 5, y1: 3, x2: 6, y2: 3 },
-                    { floor: 0, x1: 5, y1: 7, x2: 6, y2: 7 },
-                    { floor: 0, x1: 3, y1: 9, x2: 3, y2: 10 },
-                    { floor: 0, x1: 5, y1: 11, x2: 6, y2: 11 },
-                    { floor: 0, x1: 13, y1: 3, x2: 12, y2: 3 },
-                    { floor: 0, x1: 13, y1: 10, x2: 12, y2: 10 },
-                    { floor: 0, x1: 8, y1: 11, x2: 8, y2: 10 },
-                    { floor: 0, x1: 9, y1: 11, x2: 9, y2: 10 },
-                    { floor: 0, x1: 10, y1: 11, x2: 10, y2: 10 },
-                    { floor: 0, x1: 7, y1: 12, x2: 6, y2: 12 },
-                    { floor: 0, x1: 11, y1: 12, x2: 12, y2: 12 },
-                    // 2F Doors
-                    { floor: 1, x1: 9, y1: 5, x2: 9, y2: 6 },
-                    { floor: 1, x1: 5, y1: 5, x2: 6, y2: 5 },
-                    { floor: 1, x1: 13, y1: 5, x2: 12, y2: 5 },
-                    { floor: 1, x1: 9, y1: 9, x2: 9, y2: 8 },
-                    { floor: 1, x1: 7, y1: 10, x2: 6, y2: 10 },
-                    { floor: 1, x1: 11, y1: 10, x2: 12, y2: 10 }
-                ],
-                stairs: [
-                    {
-                        id: 'grand_stairs',
-                        name: 'Grand Foyer Staircase',
-                        fromFloor: 0, fromX: 9, fromY: 10,
-                        toFloor: 1, toX: 9, toY: 10
-                    },
-                    {
-                        id: 'service_stairs',
-                        name: 'West Wing Service Stairs',
-                        fromFloor: 0, fromX: 6, fromY: 2,
-                        toFloor: 1, toX: 6, toY: 2
-                    }
-                ],
-                passages: [
-                    {
-                        pairId: 'pairA',
-                        name: 'Vertical Dumbwaiter Shaft (1F ↔ 2F)',
-                        blueprintTitle: 'Blueprint A: 1F Kitchen to 2F Alchemy Lift',
-                        blueprintNote: 'Pull the Brass Dumbwaiter rope in the 1F Kitchen to ride straight up to the 2F Alchemy Lab!',
-                        endpoints: [
-                            { roomId: 'kitchen', floor: 0, x: 1, y: 13, targetRoomId: 'alchemy', targetFloor: 1, targetX: 1, targetY: 2, triggerName: '1F Kitchen Dumbwaiter', visualClue: 'Vertical rope shaft to 2F', type: 'dumbwaiter' },
-                            { roomId: 'alchemy', floor: 1, x: 1, y: 2, targetRoomId: 'kitchen', targetFloor: 0, targetX: 1, targetY: 13, triggerName: '2F Alchemy Lift Hatch', visualClue: 'Counterweight gears to 1F', type: 'dumbwaiter' }
-                        ]
-                    },
-                    {
-                        pairId: 'pairB',
-                        name: 'Clocktower Pendulum Chute (1F ↔ 2F)',
-                        blueprintTitle: 'Blueprint B: 1F Library to 2F Clocktower',
-                        blueprintNote: 'Pivot the False Bookcase in the 1F Library to climb the hidden spiral stairs into the 2F Clocktower Attic!',
-                        endpoints: [
-                            { roomId: 'library', floor: 0, x: 17, y: 12, targetRoomId: 'clocktower', targetFloor: 1, targetX: 10, targetY: 2, triggerName: '1F Library False Bookcase', visualClue: 'Floor scrape marks & spiral stair', type: 'false_bookcase' },
-                            { roomId: 'clocktower', floor: 1, x: 10, y: 2, targetRoomId: 'library', targetFloor: 0, targetX: 17, targetY: 12, triggerName: '2F Clocktower Gear Lever', visualClue: 'Worn brass cog lever', type: 'gargoyle' }
-                        ]
-                    }
-                ],
-                props: [
-                    // 1F Props
-                    { id: 'p1', roomId: 'conservatory', floor: 0, x: 4, y: 2, name: 'Snapping Venus Flytrap', emoji: '🪴', type: 'flytrap', animType: 'snap' },
-                    { id: 'p2', roomId: 'conservatory', floor: 0, x: 2, y: 4, name: 'Gargoyle Fountain', emoji: '⛲', type: 'terrarium', animType: 'bubble' },
-                    { id: 'p3', roomId: 'dining', floor: 0, x: 3, y: 7, name: '12-Seat Banquet Table', emoji: '🍽️', type: 'banquet', animType: 'cloche_float' },
-                    { id: 'p4', roomId: 'kitchen', floor: 0, x: 3, y: 12, name: 'Cast-Iron Cauldron Stove', emoji: '🍲', type: 'stove', animType: 'cauldron' },
-                    { id: 'p5', roomId: 'ballroom', floor: 0, x: 14, y: 3, name: 'Concert Grand Piano', emoji: '🎹', type: 'piano', animType: 'piano_notes' },
-                    { id: 'p6', roomId: 'ballroom', floor: 0, x: 16, y: 4, name: 'Gilded Harp & Horn', emoji: '🪉', type: 'harp', animType: 'sway' },
-                    { id: 'p7', roomId: 'library', floor: 0, x: 15, y: 9, name: 'Haunted Bookcase', emoji: '📚', type: 'bookshelf', animType: 'flying_books' },
-                    { id: 'p8', roomId: 'library', floor: 0, x: 14, y: 11, name: 'Spinning World Globe', emoji: '🌍', type: 'globe_desk', animType: 'globe_spin' },
-                    // 2F Props
-                    { id: 'p9', roomId: 'clocktower', floor: 1, x: 8, y: 3, name: 'Giant Clockwork Pendulum', emoji: '🕰️', type: 'hutch', animType: 'shake' },
-                    { id: 'p10', roomId: 'clocktower', floor: 1, x: 10, y: 4, name: 'Celestial Telescope', emoji: '🔭', type: 'globe_desk', animType: 'globe_spin' },
-                    { id: 'p11', roomId: 'alchemy', floor: 1, x: 2, y: 4, name: 'Bubbling Alembic Table', emoji: '🧪', type: 'stove', animType: 'cauldron' },
-                    { id: 'p12', roomId: 'alchemy', floor: 1, x: 4, y: 6, name: 'apothecary Specimen Chest', emoji: '🏺', type: 'claw_desk', animType: 'float' },
-                    { id: 'p13', roomId: 'study', floor: 1, x: 14, y: 4, name: 'Green-Felt Billiards Table', emoji: '🎱', type: 'billiards', animType: 'pool_balls' },
-                    { id: 'p14', roomId: 'study', floor: 1, x: 16, y: 6, name: 'Executive Clawfoot Desk', emoji: '📜', type: 'claw_desk', animType: 'float' }
-                ]
-            }
-        };
-
-        const MOONLIGHT_WINDOWS = [
-            { wallX: 2, wallY: 1, lightTiles: [{ x: 2, y: 1 }, { x: 2, y: 2 }] },
-            { wallX: 16, wallY: 1, lightTiles: [{ x: 16, y: 1 }, { x: 16, y: 2 }] },
-            { wallX: 1, wallY: 6, lightTiles: [{ x: 1, y: 6 }, { x: 2, y: 6 }] },
-            { wallX: 17, wallY: 6, lightTiles: [{ x: 17, y: 6 }, { x: 16, y: 6 }] }
-        ];
-
-        /* ============================================================================
-         * 4. MULTIPLAYER GAME STATE & PEERJS WEBRTC NETWORKING
-         * ============================================================================ */
-        let state = {
-            lobbyMode: 'solo',       // 'solo' | 'pass' | 'online'
-            mapId: 'blackwood',      // 'blackwood' | 'ravenwood'
-            playerCount: 1,
-            scareMode: 'fun',        // 'fun' | 'full'
-            difficulty: 'standard',  // 'standard' | 'nightmare'
-            viewFloor: 'auto',       // 0 | 1 | 'auto'
-
-            // Array of 1..4 active player states
-            players: [],
-            activePlayerIndex: 0,
-            trappedFamily: [],
-
-            ap: 0,
-            turnPhase: 'ROLL',       // 'ROLL' | 'MOVE' | 'GHOST' | 'HANDOFF' | 'RESCUE_CUTSCENE' | 'GAMEOVER'
-            turnNumber: 1,
-            dread: 0,
-            searchedThisTurn: false,
-            familyDistractAvailable: true,
-            ghostLuredToVaultTurns: 0,
-            saltWards: [],           // [{ floor, x, y, turnsLeft }]
-            cutawayMode: 'auto',
-            cameraPreset: 'iso',
-
-            ghost: { floor: 0, x: 3, y: 2, visualX: 3, visualY: 2, visualFloor: 0, rotY: 0, mode: 'PATROL' },
-            trueSuspect: null,
-            props: [],
-            discoveredBlueprints: [],
-            openedPassages: { pairA: false, pairB: false },
-            exploredRooms: new Set(['foyer', 'vault', 'balcony']),
-            vaultUnlocked: false,
-            escapeRoundsLeft: 0,
-            dreadInterval: null
-        };
-
-        // PeerJS Online Room State
-        const Net = {
-            peer: null,
-            isHost: false,
-            roomCode: null,
-            connections: [],
-            hostConn: null,
-            myPlayerIndex: 0
-        };
-
-        function generateRoomCode() {
-            return 'GHOST-' + Math.floor(1000 + Math.random() * 9000);
-        }
-
-        function hostOnlineRoom() {
-            if (typeof Peer === 'undefined') {
-                showToast('PeerJS library still loading—check internet connection!', 'wifi_off');
-                return;
-            }
-            const code = generateRoomCode();
-            Net.roomCode = code;
-            Net.isHost = true;
-            Net.myPlayerIndex = 0;
-
-            document.getElementById('hostCodeDisplay').textContent = `Connecting ${code}...`;
-            if (Net.peer) Net.peer.destroy();
-
-            Net.peer = new Peer(code);
-            Net.peer.on('open', id => {
-                document.getElementById('hostCodeDisplay').textContent = `Code: ${id} (Waiting for players...)`;
-                document.getElementById('onlineRoomPill').classList.remove('hidden');
-                document.getElementById('onlineRoomPill').classList.add('inline-flex');
-                document.getElementById('onlineRoomCodeText').textContent = id;
-                if (state.playerCount < 2) setPlayerCount(2);
-                showToast(`Online Room ${id} hosted! Share this code with other devices!`, 'cell_tower');
-            });
-
-            Net.peer.on('connection', conn => {
-                Net.connections.push(conn);
-                const assignedIdx = Math.min(state.playerCount - 1, Net.connections.length);
-                conn.on('open', () => {
-                    conn.send({ type: 'WELCOME', assignedPlayerIndex: assignedIdx, roomCode: Net.roomCode });
-                    showToast(`Player ${assignedIdx + 1} connected to ${Net.roomCode}!`, 'group_add');
-                    broadcastOnlineState();
-                });
-                conn.on('data', data => handleNetworkMessage(data, conn));
-            });
-
-            Net.peer.on('error', err => {
-                document.getElementById('hostCodeDisplay').textContent = `Peer Error: Try again`;
-            });
-        }
-
-        function joinOnlineRoom() {
-            let input = document.getElementById('joinCodeInput').value.trim().toUpperCase();
-            if (!input) {
-                showToast('Enter the 4-digit Room Code first!', 'warning');
-                return;
-            }
-            if (!input.startsWith('GHOST-')) input = 'GHOST-' + input;
-
-            Net.isHost = false;
-            Net.roomCode = input;
-            if (Net.peer) Net.peer.destroy();
-
-            Net.peer = new Peer();
-            Net.peer.on('open', () => {
-                const conn = Net.peer.connect(input);
-                Net.hostConn = conn;
-                conn.on('open', () => {
-                    document.getElementById('onlineRoomPill').classList.remove('hidden');
-                    document.getElementById('onlineRoomPill').classList.add('inline-flex');
-                    document.getElementById('onlineRoomCodeText').textContent = input;
-                    showToast(`Joined Room ${input}! Waiting for Host...`, 'wifi_tethering');
-                });
-                conn.on('data', data => handleNetworkMessage(data, conn));
-            });
-        }
-
-        function broadcastOnlineState() {
-            if (state.lobbyMode !== 'online' || !Net.isHost) return;
-            const payload = {
-                type: 'STATE_SYNC',
-                mapId: state.mapId,
-                playerCount: state.playerCount,
-                activePlayerIndex: state.activePlayerIndex,
-                ap: state.ap,
-                turnPhase: state.turnPhase,
-                turnNumber: state.turnNumber,
-                dread: state.dread,
-                vaultUnlocked: state.vaultUnlocked,
-                ghost: state.ghost,
-                players: state.players.map(p => ({
-                    index: p.index,
-                    charId: p.char.id,
-                    floor: p.floor,
-                    x: p.x,
-                    y: p.y,
-                    rotY: p.rotY,
-                    hearts: p.hearts,
-                    maxHearts: p.maxHearts,
-                    score: p.score,
-                    flashlightOn: p.flashlightOn,
-                    gadget: p.gadget,
-                    discoveredClues: p.discoveredClues,
-                    heirlooms: p.heirlooms,
-                    crossedOffSuspectIds: p.crossedOffSuspectIds,
-                    escaped: p.escaped
-                })),
-                props: state.props.map(pr => ({ id: pr.id, searched: pr.searched, revealedBySleuth: pr.revealedBySleuth })),
-                openedPassages: state.openedPassages,
-                discoveredBlueprints: state.discoveredBlueprints
-            };
-            Net.connections.forEach(c => {
-                if (c.open) c.send(payload);
-            });
-        }
-
-        function handleNetworkMessage(data, conn) {
-            if (data.type === 'WELCOME') {
-                Net.myPlayerIndex = data.assignedPlayerIndex;
-                showToast(`Connected as Player ${Net.myPlayerIndex + 1}!`, 'verified');
-            } else if (data.type === 'STATE_SYNC') {
-                if (state.mapId !== data.mapId) {
-                    state.mapId = data.mapId;
-                    buildMansionArchitecture3D();
-                }
-                state.activePlayerIndex = data.activePlayerIndex;
-                state.ap = data.ap;
-                state.turnPhase = data.turnPhase;
-                state.turnNumber = data.turnNumber;
-                state.dread = data.dread;
-                state.vaultUnlocked = data.vaultUnlocked;
-                Object.assign(state.ghost, data.ghost);
-                state.openedPassages = data.openedPassages;
-                state.discoveredBlueprints = data.discoveredBlueprints;
-
-                data.players.forEach((np, idx) => {
-                    if (state.players[idx]) {
-                        Object.assign(state.players[idx], np);
-                    }
-                });
-                data.props.forEach(npr => {
-                    const localPr = state.props.find(p => p.id === npr.id);
-                    if (localPr) {
-                        localPr.searched = npr.searched;
-                        localPr.revealedBySleuth = npr.revealedBySleuth;
-                    }
-                });
-                syncAllUI();
-                rebuildStepHighlights3D();
-            } else if (data.type === 'REMOTE_ACTION' && Net.isHost) {
-                if (data.action === 'ROLL') handleRollDice();
-                else if (data.action === 'MOVE') movePlayerGrid(data.dx, data.dy);
-                else if (data.action === 'SEARCH') interactWithNearbyProp();
-                else if (data.action === 'PASSAGE') useSecretPassageOrStairs();
-                else if (data.action === 'END_TURN') endPlayerTurn();
-                broadcastOnlineState();
-            }
-        }
-
-        function copyRoomCode() {
-            if (!Net.roomCode) return;
-            const temp = document.createElement('textarea');
-            temp.value = Net.roomCode;
-            document.body.appendChild(temp);
-            temp.select();
-            document.execCommand('copy');
-            document.body.removeChild(temp);
-            showToast(`Copied Room Code ${Net.roomCode} to clipboard!`, 'content_copy');
-        }
-
-        /* ============================================================================
-         * 5. CURRENT MAP & FLOOR HELPERS
-         * ============================================================================ */
-        function getCurrentMap() {
-            return MAP_DEFINITIONS[state.mapId] || MAP_DEFINITIONS.blackwood;
-        }
-
-        function getActivePlayer() {
-            return state.players[state.activePlayerIndex] || state.players[0];
-        }
-
-        function getActiveDisplayedFloor() {
-            if (getCurrentMap().floors === 1) return 0;
-            if (state.viewFloor === 'auto') {
-                const p = getActivePlayer();
-                return p ? p.floor : 0;
-            }
-            return state.viewFloor;
-        }
-
-        function setViewFloor(fl) {
-            state.viewFloor = fl;
-            SoundFX.clickSwitch();
-            updateFloorSwitcherUI();
-            rebuildStepHighlights3D();
-        }
-
-        function updateFloorSwitcherUI() {
-            const bar = document.getElementById('floorSwitcherBar');
-            if (getCurrentMap().floors < 2) {
-                bar.classList.add('hidden');
-                bar.classList.remove('flex');
-                return;
-            }
-            bar.classList.remove('hidden');
-            bar.classList.add('flex');
-
-            const activeFl = getActiveDisplayedFloor();
-            document.getElementById('btnFloor1').className = activeFl === 0 && state.viewFloor !== 'auto'
-                ? 'md-btn px-2.5 py-1 rounded-xl bg-amber-400 text-slate-950 text-xs font-cartoon font-bold'
-                : 'md-btn px-2.5 py-1 rounded-xl bg-md-surface2 text-purple-200 text-xs font-cartoon font-bold';
-            document.getElementById('btnFloor2').className = activeFl === 1 && state.viewFloor !== 'auto'
-                ? 'md-btn px-2.5 py-1 rounded-xl bg-amber-400 text-slate-950 text-xs font-cartoon font-bold'
-                : 'md-btn px-2.5 py-1 rounded-xl bg-md-surface2 text-purple-200 text-xs font-cartoon font-bold';
-            document.getElementById('btnFloorAuto').className = state.viewFloor === 'auto'
-                ? 'md-btn px-2 py-1 rounded-xl bg-teal-400 text-slate-950 text-[10px] font-bold'
-                : 'md-btn px-2 py-1 rounded-xl bg-md-surface2 text-teal-300 text-[10px] font-bold border border-teal-500/30';
-        }
-
-        function getRoomAt(floor, x, y) {
-            const rooms = getCurrentMap().rooms;
-            for (const r of rooms) {
-                if (r.floor === floor && x >= r.x1 && x <= r.x2 && y >= r.y1 && y <= r.y2) return r;
-            }
-            return null;
-        }
-
-        function isMoonlightTile(floor, x, y) {
-            return MOONLIGHT_WINDOWS.some(w => w.lightTiles.some(t => t.x === x && t.y === y));
-        }
-
-        function hasDoorBetween(floor, x1, y1, x2, y2) {
-            return getCurrentMap().doorways.some(d =>
-                d.floor === floor &&
-                ((d.x1 === x1 && d.y1 === y1 && d.x2 === x2 && d.y2 === y2) ||
-                 (d.x2 === x1 && d.y2 === y1 && d.x1 === x2 && d.y1 === y2))
-            );
-        }
-
-        function isWallBetween(floor, x1, y1, x2, y2) {
-            const r1 = getRoomAt(floor, x1, y1);
-            const r2 = getRoomAt(floor, x2, y2);
-            if (r1 === r2) return false;
-            if (hasDoorBetween(floor, x1, y1, x2, y2)) return false;
-            return true;
-        }
-
-        function canMoveBetween(floor, x1, y1, x2, y2) {
-            if (x2 <= 0 || x2 >= GRID_COLS - 1 || y2 <= 0 || y2 >= GRID_ROWS - 1) return false;
-            const targetRoom = getRoomAt(floor, x2, y2);
-            if (targetRoom && targetRoom.isLockedVault && !state.vaultUnlocked) return false;
-
-            const blockingProp = state.props.find(p => p.floor === floor && p.x === x2 && p.y === y2);
-            if (blockingProp) return false;
-
-            if (isWallBetween(floor, x1, y1, x2, y2)) return false;
-            return true;
-        }
-
-        function getNearbyStaircase(player) {
-            for (const st of getCurrentMap().stairs) {
-                if (player.floor === st.fromFloor && Math.abs(player.x - st.fromX) + Math.abs(player.y - st.fromY) <= 1) {
-                    return { stair: st, targetFloor: st.toFloor, targetX: st.toX, targetY: st.toY, dirLabel: 'Climb Upstairs to 2F' };
-                }
-                if (player.floor === st.toFloor && Math.abs(player.x - st.toX) + Math.abs(player.y - st.toY) <= 1) {
-                    return { stair: st, targetFloor: st.fromFloor, targetX: st.fromX, targetY: st.fromY, dirLabel: 'Descend Stairs to 1F' };
-                }
-            }
-            return null;
-        }
-
-        function getNearbySecretPassageEndpoint(player) {
-            const detectRange = player.char.id === 'inventor' ? 3 : 2;
-            for (const pair of getCurrentMap().passages) {
-                for (const ep of pair.endpoints) {
-                    if (ep.floor !== player.floor) continue;
-                    const dist = Math.abs(player.x - ep.x) + Math.abs(player.y - ep.y);
-                    if (dist <= detectRange) {
-                        const isKnown = state.discoveredBlueprints.includes(pair.pairId) || state.openedPassages[pair.pairId] || player.char.id === 'inventor';
-                        const hasLight = player.flashlightOn || isMoonlightTile(player.floor, player.x, player.y);
-                        if (isKnown || hasLight) {
-                            return { pair, ep, dist };
-                        }
-                    }
-                }
-            }
-            return null;
-        }
-
-        /* ============================================================================
-         * 6. PROCEDURAL TEXTURES, 3D BILLBOARD ROOM NAMEPLATES & JUMP SCARE CANVAS
-         * ============================================================================ */
-        function createFloorTexture(type) {
-            const c = document.createElement('canvas');
-            c.width = 256;
-            c.height = 256;
-            const g = c.getContext('2d');
-
-            if (type === 'marble_foyer') {
-                for (let y = 0; y < 2; y++) {
-                    for (let x = 0; x < 2; x++) {
-                        const isLight = (x + y) % 2 === 0;
-                        g.fillStyle = isLight ? '#d8b4fe' : '#191326';
-                        g.fillRect(x * 128, y * 128, 128, 128);
-                    }
-                }
-            } else if (type === 'checker_kitchen') {
-                for (let y = 0; y < 4; y++) {
-                    for (let x = 0; x < 4; x++) {
-                        g.fillStyle = (x + y) % 2 === 0 ? '#16353a' : '#265359';
-                        g.fillRect(x * 64, y * 64, 64, 64);
-                    }
-                }
-            } else if (type === 'herringbone') {
-                g.fillStyle = '#3b2314';
-                g.fillRect(0, 0, 256, 256);
-                g.strokeStyle = '#221309';
-                g.lineWidth = 4;
-                for (let i = 0; i < 256; i += 32) {
-                    g.beginPath(); g.moveTo(0, i); g.lineTo(128, i + 48); g.lineTo(256, i); g.stroke();
-                }
-            } else if (type === 'wood_warm') {
-                g.fillStyle = '#3c1e1e';
-                g.fillRect(0, 0, 256, 256);
-                g.fillStyle = 'rgba(249, 115, 22, 0.14)';
-                g.fillRect(16, 16, 224, 224);
-            } else if (type === 'parquet_gold') {
-                g.fillStyle = '#422818';
-                g.fillRect(0, 0, 256, 256);
-                g.strokeStyle = '#fbbf2455';
-                g.lineWidth = 4;
-                g.strokeRect(14, 14, 228, 228);
-            } else if (type === 'conservatory') {
-                g.fillStyle = '#0f291e';
-                g.fillRect(0, 0, 256, 256);
-                g.strokeStyle = '#10b98166';
-                g.lineWidth = 6;
-                g.strokeRect(10, 10, 236, 236);
-            } else if (type === 'carpet_study') {
-                g.fillStyle = '#06372a';
-                g.fillRect(0, 0, 256, 256);
-                g.strokeStyle = '#eab30866';
-                g.lineWidth = 6;
-                g.strokeRect(16, 16, 224, 224);
-            } else if (type === 'ritual_stone') {
-                g.fillStyle = '#170d21';
-                g.fillRect(0, 0, 256, 256);
-                g.strokeStyle = '#2dd4bf99';
-                g.lineWidth = 5;
-                g.beginPath(); g.arc(128, 128, 92, 0, Math.PI * 2); g.stroke();
-            } else {
-                g.fillStyle = '#1e162e';
-                g.fillRect(0, 0, 256, 256);
-                g.fillStyle = '#4c1d3d';
-                g.fillRect(36, 36, 184, 184);
-            }
-            return new THREE.CanvasTexture(c);
-        }
-
-        function createWainscotWallTexture(isVault = false) {
-            const c = document.createElement('canvas');
-            c.width = 256;
-            c.height = 256;
-            const g = c.getContext('2d');
-            if (isVault) {
-                g.fillStyle = '#231230';
-                g.fillRect(0, 0, 256, 256);
-                g.strokeStyle = '#f43f5e66';
-                g.lineWidth = 4;
-                g.strokeRect(8, 8, 240, 240);
-            } else {
-                g.fillStyle = '#2d2142';
-                g.fillRect(0, 0, 256, 150);
-                g.fillStyle = '#b45309';
-                g.fillRect(0, 146, 256, 10);
-                g.fillStyle = '#3b2314';
-                g.fillRect(0, 156, 256, 100);
-            }
-            return new THREE.CanvasTexture(c);
-        }
-
-        // Create High-Contrast 3D Floating Room Nameplate Sprite
-        function createRoomNameplateSprite(room) {
-            const c = document.createElement('canvas');
-            c.width = 512;
-            c.height = 128;
-            const g = c.getContext('2d');
-
-            // Pill Background
-            g.fillStyle = 'rgba(15, 10, 28, 0.88)';
-            g.beginPath();
-            g.roundRect(16, 18, 480, 92, 46);
-            g.fill();
-
-            // Glowing Accent Border
-            g.strokeStyle = '#' + room.accentHex.toString(16).padStart(6, '0');
-            g.lineWidth = 6;
-            g.stroke();
-
-            // Room Icon + Name Text
-            g.font = 'bold 38px Fredoka, sans-serif';
-            g.textAlign = 'center';
-            g.textBaseline = 'middle';
-            g.fillStyle = '#ffffff';
-            g.fillText(`${room.icon} ${room.name.toUpperCase()}`, 256, 66);
-
-            const tex = new THREE.CanvasTexture(c);
-            const mat = new THREE.SpriteMaterial({ map: tex, transparent: true, depthTest: false });
-            const sprite = new THREE.Sprite(mat);
-            sprite.scale.set(4.6, 1.15, 1);
-            return sprite;
-        }
-
-        function paintSuspectPortraitCanvas(suspect) {
-            const c = document.createElement('canvas');
-            c.width = 256;
-            c.height = 256;
-            const g = c.getContext('2d');
-
-            const grad = g.createRadialGradient(128, 105, 18, 128, 128, 140);
-            grad.addColorStop(0, suspect.portraitColor);
-            grad.addColorStop(1, '#0f0a19');
-            g.fillStyle = grad;
-            g.fillRect(0, 0, 256, 256);
-
-            g.strokeStyle = '#f59e0b';
-            g.lineWidth = 14;
-            g.strokeRect(7, 7, 242, 242);
-
-            g.fillStyle = '#1e1b2e';
-            g.beginPath();
-            g.arc(128, 210, 68, Math.PI, 0, false);
-            g.fill();
-
-            g.fillStyle = suspect.skinColor;
-            g.beginPath();
-            g.arc(128, 112, 40, 0, Math.PI * 2);
-            g.fill();
-
-            g.fillStyle = suspect.hairColor;
-            g.beginPath();
-            g.arc(128, 98, 42, Math.PI, 0, false);
-            g.fill();
-
-            g.fillStyle = '#ffffff';
-            g.beginPath();
-            g.arc(113, 112, 8, 0, Math.PI * 2);
-            g.arc(143, 112, 8, 0, Math.PI * 2);
-            g.fill();
-
-            g.fillStyle = '#090514';
-            g.beginPath();
-            g.arc(114, 112, 4, 0, Math.PI * 2);
-            g.arc(144, 112, 4, 0, Math.PI * 2);
-            g.fill();
-
-            g.fillStyle = 'rgba(13, 9, 22, 0.92)';
-            g.fillRect(20, 198, 216, 42);
-            g.strokeStyle = '#fbbf24';
-            g.lineWidth = 2;
-            g.strokeRect(20, 198, 216, 42);
-
-            g.font = 'bold 20px Fredoka, sans-serif';
-            g.textAlign = 'center';
-            g.fillStyle = '#fde68a';
-            g.fillText(suspect.name, 128, 224);
-
-            return c;
-        }
-
-        // Paint Full-Screen Jump Scare Phantom Face
-        function drawJumpScareCanvas(scareMode) {
-            const c = document.getElementById('jumpScareCanvas');
-            if (!c) return;
-            const g = c.getContext('2d');
-            g.clearRect(0, 0, 280, 280);
-
-            const grad = g.createRadialGradient(140, 140, 20, 140, 140, 140);
-            grad.addColorStop(0, scareMode === 'full' ? '#dc2626' : '#2dd4bf');
-            grad.addColorStop(1, '#090412');
-            g.fillStyle = grad;
-            g.fillRect(0, 0, 280, 280);
-
-            // Spectral Shroud Head
-            g.fillStyle = scareMode === 'full' ? '#1e1b2e' : '#134e4a';
-            g.beginPath();
-            g.arc(140, 135, 95, 0, Math.PI * 2);
-            g.fill();
-
-            // Glowing Eyes
-            g.fillStyle = scareMode === 'full' ? '#ef4444' : '#fef08a';
-            g.beginPath();
-            g.arc(102, 118, 22, 0, Math.PI * 2);
-            g.arc(178, 118, 22, 0, Math.PI * 2);
-            g.fill();
-
-            g.fillStyle = '#ffffff';
-            g.beginPath();
-            g.arc(102, 118, 8, 0, Math.PI * 2);
-            g.arc(178, 118, 8, 0, Math.PI * 2);
-            g.fill();
-
-            // Roaring Spectral Jaw
-            g.fillStyle = '#05020a';
-            g.beginPath();
-            g.ellipse(140, 190, 42, scareMode === 'full' ? 46 : 28, 0, 0, Math.PI * 2);
-            g.fill();
-
-            if (scareMode === 'full') {
-                // Spectral Fangs for Full Fright mode
-                g.fillStyle = '#f8fafc';
-                for (let x = 108; x <= 172; x += 16) {
-                    g.beginPath();
-                    g.moveTo(x, 154); g.lineTo(x + 8, 174); g.lineTo(x + 16, 154);
-                    g.fill();
-                }
-            }
-        }
-
-        /* ============================================================================
-         * 7. THREE.JS 3D SCENE, TWO-STORY FLOORS & ARTICULATED CHARACTERS
-         * ============================================================================ */
-        let scene, camera, renderer, controls;
-        let architectureGroup;
-        let floorGroups = { 0: null, 1: null };
-        let wallMeshes = [];
-        let propMeshes = {};
-        let playerMeshes = [];
-        let ghostGroup, ghostPointLight;
-        let trappedFamilyGroups = [];
-        let stepHighlightMeshes = [];
-        let vaultChainMeshes = [];
-        let secretTriggerMeshes = {};
-        let scrapeMarkMeshes = {};
-        let roomFogMeshes = {};
-        let soundRippleRings = [];
-        let raycaster = new THREE.Raycaster();
-        let mouseVec = new THREE.Vector2();
-
-        function gridToWorld(gx, gy, floor = 0) {
-            const wx = (gx - (GRID_COLS - 1) / 2) * TILE_SIZE;
-            const wz = (gy - (GRID_ROWS - 1) / 2) * TILE_SIZE;
-            const wy = floor * FLOOR_HEIGHT_3D;
-            return { x: wx, y: wy, z: wz };
-        }
-
-        function suspectRoomIdForCurrentMap(suspect) {
-            const mapRooms = getCurrentMap().rooms;
-            if (mapRooms.some(r => r.id === suspect.roomId)) return suspect.roomId;
-            return suspect.fallbackRoomId || 'foyer';
-        }
-
-        function buildCartoonHeroMesh(charData, includeFlashlight = false) {
-            const group = new THREE.Group();
-            const suitMat = new THREE.MeshStandardMaterial({ color: charData.suitHex, roughness: 0.45 });
-            const capeMat = new THREE.MeshStandardMaterial({ color: charData.capeHex, roughness: 0.6 });
-            const skinMat = new THREE.MeshStandardMaterial({ color: 0xfde68a, roughness: 0.45 });
-            const shoeMat = new THREE.MeshStandardMaterial({ color: 0x1e1b2e, roughness: 0.5 });
-
-            const leftLeg = new THREE.Mesh(new THREE.CylinderGeometry(0.11, 0.1, 0.42, 12), shoeMat);
-            leftLeg.position.set(-0.15, 0.22, 0);
-            group.add(leftLeg);
-
-            const rightLeg = new THREE.Mesh(new THREE.CylinderGeometry(0.11, 0.1, 0.42, 12), shoeMat);
-            rightLeg.position.set(0.15, 0.22, 0);
-            group.add(rightLeg);
-
-            const body = new THREE.Mesh(new THREE.CylinderGeometry(0.3, 0.4, 0.68, 16), suitMat);
-            body.position.y = 0.68;
-            body.castShadow = true;
-            group.add(body);
-
-            const leftArm = new THREE.Mesh(new THREE.CylinderGeometry(0.09, 0.08, 0.45, 12), capeMat);
-            leftArm.position.set(-0.38, 0.72, 0);
-            group.add(leftArm);
-
-            const rightArm = new THREE.Mesh(new THREE.CylinderGeometry(0.09, 0.08, 0.45, 12), capeMat);
-            rightArm.position.set(0.38, 0.72, 0);
-            group.add(rightArm);
-
-            const head = new THREE.Mesh(new THREE.SphereGeometry(0.38, 20, 20), skinMat);
-            head.position.y = 1.3;
-            head.castShadow = true;
-            group.add(head);
-
-            const eyeWMat = new THREE.MeshBasicMaterial({ color: 0xffffff });
-            const pupilMat = new THREE.MeshBasicMaterial({ color: 0x090514 });
-            [-0.13, 0.13].forEach(ex => {
-                const ew = new THREE.Mesh(new THREE.SphereGeometry(0.068, 12, 12), eyeWMat);
-                ew.position.set(ex, 1.34, 0.33);
-                group.add(ew);
-                const p = new THREE.Mesh(new THREE.SphereGeometry(0.038, 10, 10), pupilMat);
-                p.position.set(ex, 1.34, 0.38);
-                group.add(p);
-            });
-
-            if (charData.hatType === 'deerstalker') {
-                const hatMat = new THREE.MeshStandardMaterial({ color: 0x9333ea });
-                const dome = new THREE.Mesh(new THREE.SphereGeometry(0.39, 16, 12, 0, Math.PI * 2, 0, Math.PI / 2), hatMat);
-                dome.position.y = 1.4;
-                group.add(dome);
-            } else if (charData.hatType === 'visor') {
-                const visorMat = new THREE.MeshStandardMaterial({ color: 0x2dd4bf });
-                const bill = new THREE.Mesh(new THREE.BoxGeometry(0.45, 0.05, 0.35), visorMat);
-                bill.position.set(0, 1.44, 0.32);
-                group.add(bill);
-            } else if (charData.hatType === 'witch') {
-                const hatMat = new THREE.MeshStandardMaterial({ color: 0xf59e0b });
-                const brim = new THREE.Mesh(new THREE.CylinderGeometry(0.54, 0.54, 0.05, 16), hatMat);
-                brim.position.y = 1.48;
-                group.add(brim);
-                const cone = new THREE.Mesh(new THREE.ConeGeometry(0.32, 0.65, 16), hatMat);
-                cone.position.y = 1.82;
-                group.add(cone);
-            } else {
-                // Theo's Steampunk Goggles
-                const gogMat = new THREE.MeshStandardMaterial({ color: 0xfbbf24, metalness: 0.8 });
-                const gog = new THREE.Mesh(new THREE.BoxGeometry(0.52, 0.16, 0.22), gogMat);
-                gog.position.set(0, 1.48, 0.3);
-                group.add(gog);
-            }
-
-            let spotLight = null;
-            let beamCone = null;
-            if (includeFlashlight) {
-                const coneGeo = new THREE.ConeGeometry(1.6, 5.4, 20, 1, true);
-                coneGeo.translate(0, -2.7, 0);
-                coneGeo.rotateX(-Math.PI / 2);
-                beamCone = new THREE.Mesh(coneGeo, new THREE.MeshBasicMaterial({
-                    color: 0xfef08a,
-                    transparent: true,
-                    opacity: 0.14,
-                    side: THREE.DoubleSide,
-                    depthWrite: false
-                }));
-                beamCone.position.set(0.36, 0.72, 0.42);
-                group.add(beamCone);
-
-                spotLight = new THREE.SpotLight(0xfef08a, 2.2, 13, Math.PI / 4, 0.45, 1.1);
-                spotLight.position.set(0.36, 1.15, 0.35);
-                group.add(spotLight);
-
-                const spotTarget = new THREE.Object3D();
-                spotTarget.position.set(0.36, 0.4, 6.0);
-                group.add(spotTarget);
-                spotLight.target = spotTarget;
-            }
-
-            group.userData = { leftLeg, rightLeg, leftArm, rightArm, spotLight, beamCone };
-            return group;
-        }
-
-        function buildCartoonGhostMesh() {
-            const group = new THREE.Group();
-            const sheetMat = new THREE.MeshStandardMaterial({
-                color: 0x2dd4bf,
-                emissive: 0x0d9488,
-                emissiveIntensity: 0.65,
-                transparent: true,
-                opacity: 0.86
-            });
-            const head = new THREE.Mesh(new THREE.SphereGeometry(0.46, 20, 16), sheetMat);
-            head.position.y = 1.28;
-            group.add(head);
-            const skirt = new THREE.Mesh(new THREE.CylinderGeometry(0.46, 0.66, 0.92, 16), sheetMat);
-            skirt.position.y = 0.82;
-            group.add(skirt);
-
-            const eyeMat = new THREE.MeshBasicMaterial({ color: 0xfef08a });
-            [-0.15, 0.15].forEach(ex => {
-                const eye = new THREE.Mesh(new THREE.SphereGeometry(0.08, 10, 10), eyeMat);
-                eye.position.set(ex, 1.32, 0.42);
-                group.add(eye);
-            });
-
-            ghostPointLight = new THREE.PointLight(0x2dd4bf, 1.5, 7.0);
-            ghostPointLight.position.set(0, 1.4, 0);
-            group.add(ghostPointLight);
-            return group;
-        }
-
-        function buildHauntedProp3D(prop) {
-            const group = new THREE.Group();
-            const ringGeo = new THREE.RingGeometry(0.55, 0.76, 24);
-            ringGeo.rotateX(-Math.PI / 2);
-            const ringMat = new THREE.MeshBasicMaterial({ color: 0x2dd4bf, side: THREE.DoubleSide, transparent: true, opacity: 0.55 });
-            const ring = new THREE.Mesh(ringGeo, ringMat);
-            ring.position.y = 0.03;
-            group.add(ring);
-
-            const innerGroup = new THREE.Group();
-            const tellGroup = new THREE.Group();
-            const woodMat = new THREE.MeshStandardMaterial({ color: 0x4a2c18, roughness: 0.55 });
-            const darkWoodMat = new THREE.MeshStandardMaterial({ color: 0x29180e, roughness: 0.45 });
-            const goldMat = new THREE.MeshStandardMaterial({ color: 0xfbbf24, metalness: 0.7, roughness: 0.25 });
-
-            if (prop.type === 'piano') {
-                const body = new THREE.Mesh(new THREE.BoxGeometry(1.3, 0.65, 1.0), new THREE.MeshStandardMaterial({ color: 0x171717 }));
-                body.position.y = 0.48;
-                innerGroup.add(body);
-                const note = new THREE.Mesh(new THREE.OctahedronGeometry(0.18), new THREE.MeshBasicMaterial({ color: 0xfbbf24 }));
-                note.position.set(0, 1.35, 0);
-                tellGroup.add(note);
-            } else if (prop.type === 'billiards') {
-                const frame = new THREE.Mesh(new THREE.BoxGeometry(1.45, 0.65, 1.0), darkWoodMat);
-                frame.position.y = 0.33;
-                innerGroup.add(frame);
-                const felt = new THREE.Mesh(new THREE.BoxGeometry(1.3, 0.06, 0.85), new THREE.MeshStandardMaterial({ color: 0x059669 }));
-                felt.position.y = 0.67;
-                innerGroup.add(felt);
-                const ball = new THREE.Mesh(new THREE.SphereGeometry(0.1, 10, 10), goldMat);
-                ball.position.set(0, 0.78, 0);
-                tellGroup.add(ball);
-            } else if (prop.type === 'stove') {
-                const box = new THREE.Mesh(new THREE.BoxGeometry(1.2, 0.8, 0.9), new THREE.MeshStandardMaterial({ color: 0x1e293b }));
-                box.position.y = 0.4;
-                innerGroup.add(box);
-                const brew = new THREE.Mesh(new THREE.SphereGeometry(0.28, 12, 12), new THREE.MeshBasicMaterial({ color: 0x4ade80 }));
-                brew.position.y = 1.05;
-                tellGroup.add(brew);
-            } else if (prop.type === 'flytrap') {
-                const pot = new THREE.Mesh(new THREE.CylinderGeometry(0.42, 0.3, 0.5, 14), new THREE.MeshStandardMaterial({ color: 0xb45309 }));
-                pot.position.y = 0.25;
-                innerGroup.add(pot);
-                const jaw = new THREE.Mesh(new THREE.SphereGeometry(0.36, 12, 12), new THREE.MeshStandardMaterial({ color: 0x22c55e }));
-                jaw.position.y = 0.95;
-                tellGroup.add(jaw);
-            } else {
-                const cab = new THREE.Mesh(new THREE.BoxGeometry(1.15, 1.25, 0.7), woodMat);
-                cab.position.y = 0.62;
-                innerGroup.add(cab);
-                const orb = new THREE.Mesh(new THREE.OctahedronGeometry(0.18), goldMat);
-                orb.position.y = 1.45;
-                tellGroup.add(orb);
-            }
-
-            group.add(innerGroup);
-            group.add(tellGroup);
-            group.traverse(c => {
-                if (c.isMesh) c.userData = { propId: prop.id };
-            });
-            group.userData = { ring, innerGroup, tellGroup, propId: prop.id };
-            return group;
-        }
-
-        function initThreeScene() {
-            const mount = document.getElementById('threeCanvasMount');
-            scene = new THREE.Scene();
-            scene.background = new THREE.Color(0x07050c);
-            scene.fog = new THREE.FogExp2(0x07050c, 0.012);
-
-            camera = new THREE.PerspectiveCamera(44, mount.clientWidth / mount.clientHeight, 0.1, 160);
-            camera.position.set(0, 26, 22);
-
-            renderer = new THREE.WebGLRenderer({ antialias: true });
-            renderer.setSize(mount.clientWidth, mount.clientHeight);
-            renderer.setPixelRatio(Math.min(window.devicePixelRatio, 2));
-            renderer.shadowMap.enabled = true;
-            mount.innerHTML = '';
-            mount.appendChild(renderer.domElement);
-
-            controls = new THREE.OrbitControls(camera, renderer.domElement);
-            controls.enableDamping = true;
-            controls.dampingFactor = 0.08;
-            controls.maxPolarAngle = Math.PI / 2 - 0.06;
-            controls.minDistance = 8;
-            controls.maxDistance = 48;
-
-            const hemiLight = new THREE.HemisphereLight(0x8b5cf6, 0x1e1b4b, 0.68);
-            scene.add(hemiLight);
-
-            const dirLight = new THREE.DirectionalLight(0x93c5fd, 0.62);
-            dirLight.position.set(-14, 32, -16);
-            dirLight.castShadow = true;
-            scene.add(dirLight);
-
-            architectureGroup = new THREE.Group();
-            scene.add(architectureGroup);
-
-            let pointerDownPos = { x: 0, y: 0 };
-            renderer.domElement.addEventListener('pointerdown', e => {
-                pointerDownPos = { x: e.clientX, y: e.clientY };
-            });
-            renderer.domElement.addEventListener('pointerup', e => {
-                const dist = Math.hypot(e.clientX - pointerDownPos.x, e.clientY - pointerDownPos.y);
-                if (dist > 9) return;
-                handle3DViewportClick(e);
-            });
-
-            window.addEventListener('resize', onWindowResize);
-        }
-
-        function onWindowResize() {
-            const mount = document.getElementById('threeCanvasMount');
-            if (!mount || !renderer) return;
-            camera.aspect = mount.clientWidth / mount.clientHeight;
-            camera.updateProjectionMatrix();
-            renderer.setSize(mount.clientWidth, mount.clientHeight);
-        }
-
-        function buildMansionArchitecture3D() {
-            if (!architectureGroup) return;
-            while (architectureGroup.children.length > 0) {
-                architectureGroup.remove(architectureGroup.children[0]);
-            }
-
-            wallMeshes = [];
-            vaultChainMeshes = [];
-            secretTriggerMeshes = {};
-            scrapeMarkMeshes = {};
-            roomFogMeshes = {};
-            floorGroups = { 0: new THREE.Group(), 1: new THREE.Group() };
-            architectureGroup.add(floorGroups[0]);
-            architectureGroup.add(floorGroups[1]);
-
-            const mapDef = getCurrentMap();
-            const floorMats = {
-                marble_foyer: new THREE.MeshStandardMaterial({ map: createFloorTexture('marble_foyer'), roughness: 0.2 }),
-                checker_kitchen: new THREE.MeshStandardMaterial({ map: createFloorTexture('checker_kitchen'), roughness: 0.35 }),
-                herringbone: new THREE.MeshStandardMaterial({ map: createFloorTexture('herringbone'), roughness: 0.5 }),
-                wood_warm: new THREE.MeshStandardMaterial({ map: createFloorTexture('wood_warm'), roughness: 0.45 }),
-                parquet_gold: new THREE.MeshStandardMaterial({ map: createFloorTexture('parquet_gold'), roughness: 0.25 }),
-                conservatory: new THREE.MeshStandardMaterial({ map: createFloorTexture('conservatory'), roughness: 0.65 }),
-                carpet_study: new THREE.MeshStandardMaterial({ map: createFloorTexture('carpet_study'), roughness: 0.75 }),
-                ritual_stone: new THREE.MeshStandardMaterial({ map: createFloorTexture('ritual_stone'), roughness: 0.35 }),
-                hallway: new THREE.MeshStandardMaterial({ map: createFloorTexture('hallway'), roughness: 0.55 })
-            };
-
-            const tileGeo = new THREE.BoxGeometry(TILE_SIZE, 0.2, TILE_SIZE);
-            const wallHeight = 2.55;
-            const wallThickness = 0.22;
-            const wainscotTex = createWainscotWallTexture(false);
-            const vaultWallTex = createWainscotWallTexture(true);
-
-            for (let fl = 0; fl < mapDef.floors; fl++) {
-                const fGroup = floorGroups[fl];
-                const yBase = fl * FLOOR_HEIGHT_3D;
-
-                // Floor Tiles
-                for (let gy = 1; gy < GRID_ROWS - 1; gy++) {
-                    for (let gx = 1; gx < GRID_COLS - 1; gx++) {
-                        const room = getRoomAt(fl, gx, gy);
-                        // On 2F of Ravenwood, only render floor tiles inside defined 2F rooms or connecting 2F corridors
-                        if (fl === 1 && !room && (gx < 5 || gx > 13 || gy < 2 || gy > 11)) continue;
-
-                        const mat = room ? floorMats[room.floorType] : floorMats.hallway;
-                        const tile = new THREE.Mesh(tileGeo, mat);
-                        const pos = gridToWorld(gx, gy, fl);
-                        tile.position.set(pos.x, yBase - 0.1, pos.z);
-                        tile.receiveShadow = true;
-                        tile.userData = { isFloor: true, floor: fl, gx, gy };
-                        fGroup.add(tile);
-                    }
-                }
-
-                // Shared Room Walls
-                function addWall(wx, wz, len, isHoriz, normX, normZ, isVault) {
-                    const geo = isHoriz
-                        ? new THREE.BoxGeometry(len, wallHeight, wallThickness)
-                        : new THREE.BoxGeometry(wallThickness, wallHeight, len);
-                    geo.translate(0, wallHeight / 2, 0);
-                    const mat = new THREE.MeshStandardMaterial({ map: isVault ? vaultWallTex : wainscotTex, roughness: 0.6 });
-                    const mesh = new THREE.Mesh(geo, mat);
-                    mesh.position.set(wx, yBase, wz);
-                    fGroup.add(mesh);
-                    wallMeshes.push({ mesh, floor: fl, normalX: normX, normalZ: normZ, isVaultWall: isVault });
-
-                    if (isVault) {
-                        const barMat = new THREE.MeshStandardMaterial({ color: 0xf43f5e, emissive: 0x9f1239 });
-                        const chain = new THREE.Mesh(new THREE.CylinderGeometry(0.05, 0.05, len * 0.95, 8), barMat);
-                        if (isHoriz) chain.rotateZ(Math.PI / 2);
-                        else chain.rotateX(Math.PI / 2);
-                        chain.position.set(wx, yBase + 1.35, wz);
-                        fGroup.add(chain);
-                        vaultChainMeshes.push(chain);
-                    }
-                }
-
-                for (let gy = 0; gy < GRID_ROWS - 1; gy++) {
-                    for (let gx = 1; gx < GRID_COLS - 1; gx++) {
-                        const r1 = getRoomAt(fl, gx, gy);
-                        const r2 = getRoomAt(fl, gx, gy + 1);
-                        if (fl === 1 && !r1 && !r2) continue;
-                        const isOuter = (fl === 0 && (gy === 0 || gy === GRID_ROWS - 2));
-                        if (isOuter || (r1 !== r2 && !hasDoorBetween(fl, gx, gy, gx, gy + 1))) {
-                            const p1 = gridToWorld(gx, gy, fl);
-                            const isV = (r1 && r1.isLockedVault) || (r2 && r2.isLockedVault);
-                            addWall(p1.x, p1.z + TILE_SIZE / 2, TILE_SIZE, true, 0, gy === 0 ? -1 : 1, isV);
-                        }
-                    }
-                }
-
-                for (let gx = 0; gx < GRID_COLS - 1; gx++) {
-                    for (let gy = 1; gy < GRID_ROWS - 1; gy++) {
-                        const r1 = getRoomAt(fl, gx, gy);
-                        const r2 = getRoomAt(fl, gx + 1, gy);
-                        if (fl === 1 && !r1 && !r2) continue;
-                        const isOuter = (fl === 0 && (gx === 0 || gx === GRID_COLS - 2));
-                        if (isOuter || (r1 !== r2 && !hasDoorBetween(fl, gx, gy, gx + 1, gy))) {
-                            const p1 = gridToWorld(gx, gy, fl);
-                            const isV = (r1 && r1.isLockedVault) || (r2 && r2.isLockedVault);
-                            addWall(p1.x + TILE_SIZE / 2, p1.z, TILE_SIZE, false, gx === 0 ? -1 : 1, 0, isV);
-                        }
-                    }
-                }
-
-                // 3D Floating Room Nameplates + Painted Suspect Portraits
-                for (const room of mapDef.rooms.filter(r => r.floor === fl)) {
-                    const cPos = gridToWorld((room.x1 + room.x2) / 2, (room.y1 + room.y2) / 2, fl);
-                    const nameplate = createRoomNameplateSprite(room);
-                    nameplate.position.set(cPos.x, yBase + 2.85, cPos.z);
-                    fGroup.add(nameplate);
-
-                    // Suspect Portrait on Room's North Wall
-                    const suspect = SUSPECTS.find(s => suspectRoomIdForCurrentMap(s) === room.id);
-                    if (suspect && room.portraitWall) {
-                        const pPos = gridToWorld(room.portraitWall.x, room.portraitWall.y, fl);
-                        const frameGeo = new THREE.BoxGeometry(1.5, 1.5, 0.14);
-                        const tex = new THREE.CanvasTexture(paintSuspectPortraitCanvas(suspect));
-                        const frameMesh = new THREE.Mesh(frameGeo, new THREE.MeshBasicMaterial({ map: tex }));
-                        frameMesh.position.set(pPos.x, yBase + 1.45, pPos.z - TILE_SIZE * 0.4);
-                        frameMesh.userData = { isPortrait: true, roomId: room.id, suspectId: suspect.id };
-                        fGroup.add(frameMesh);
-                    }
-                }
-            }
-
-            // Build 3D Staircases for 2-Story Map
-            for (const st of mapDef.stairs) {
-                const pos1 = gridToWorld(st.fromX, st.fromY, 0);
-                const stairGroup = new THREE.Group();
-                for (let step = 0; step < 6; step++) {
-                    const stepMesh = new THREE.Mesh(
-                        new THREE.BoxGeometry(1.5, 0.25, 0.35),
-                        new THREE.MeshStandardMaterial({ color: 0xfbbf24, roughness: 0.4 })
-                    );
-                    stepMesh.position.set(pos1.x, step * 0.32 + 0.15, pos1.z - 0.6 + step * 0.24);
-                    stepMesh.userData = { isStairs: true };
-                    stairGroup.add(stepMesh);
-                }
-                floorGroups[0].add(stairGroup);
-
-                // Matching 2F Stair Landing Marker
-                const pos2 = gridToWorld(st.toX, st.toY, 1);
-                const landingRing = new THREE.Mesh(
-                    new THREE.RingGeometry(0.45, 0.78, 24),
-                    new THREE.MeshBasicMaterial({ color: 0xfbbf24, side: THREE.DoubleSide })
-                );
-                landingRing.rotateX(-Math.PI / 2);
-                landingRing.position.set(pos2.x, FLOOR_HEIGHT_3D + 0.05, pos2.z);
-                landingRing.userData = { isStairs: true };
-                floorGroups[1].add(landingRing);
-            }
-
-            // Build Disguised Secret Passages
-            for (const pair of mapDef.passages) {
-                for (const ep of pair.endpoints) {
-                    const pos = gridToWorld(ep.x, ep.y, ep.floor);
-                    const g = new THREE.Group();
-                    g.position.set(pos.x, pos.y, pos.z);
-
-                    const scrapeGeo = new THREE.RingGeometry(0.35, 0.82, 24, 1, 0, Math.PI);
-                    scrapeGeo.rotateX(-Math.PI / 2);
-                    const scrapeMat = new THREE.MeshBasicMaterial({ color: 0xfbbf24, transparent: true, opacity: 0.25, side: THREE.DoubleSide });
-                    const scrapeMesh = new THREE.Mesh(scrapeGeo, scrapeMat);
-                    scrapeMesh.position.y = 0.03;
-                    g.add(scrapeMesh);
-                    scrapeMarkMeshes[`${pair.pairId}_${ep.roomId}`] = scrapeMesh;
-
-                    const pivot = new THREE.Mesh(
-                        new THREE.BoxGeometry(0.85, 1.5, 0.45),
-                        new THREE.MeshStandardMaterial({ color: 0x14b8a6, metalness: 0.5 })
-                    );
-                    pivot.position.y = 0.75;
-                    pivot.userData = { isSecretPassage: true, pairId: pair.pairId, roomId: ep.roomId };
-                    g.add(pivot);
-                    g.userData = { pivotGroup: pivot };
-                    floorGroups[ep.floor].add(g);
-                    secretTriggerMeshes[`${pair.pairId}_${ep.roomId}`] = g;
-                }
-            }
-        }
-
-        /* ============================================================================
-         * 8. LOBBY CONFIGURATION & STARTING A NEW V4.0 MATCH
-         * ============================================================================ */
-        let selectedCharIdsByPlayer = ['sleuth', 'sprinter', 'medium', 'inventor'];
-
-        function selectLobbyMode(mode) {
-            state.lobbyMode = mode;
-            SoundFX.clickSwitch();
-
-            document.getElementById('modeBtnSolo').className = mode === 'solo'
-                ? 'p-2.5 rounded-xl border-2 text-left transition-all bg-md-surface3 border-teal-400'
-                : 'p-2.5 rounded-xl border-2 text-left transition-all bg-md-surface1 border-purple-800/50 hover:border-purple-500';
-            document.getElementById('modeBtnPass').className = mode === 'pass'
-                ? 'p-2.5 rounded-xl border-2 text-left transition-all bg-md-surface3 border-amber-400'
-                : 'p-2.5 rounded-xl border-2 text-left transition-all bg-md-surface1 border-purple-800/50 hover:border-purple-500';
-            document.getElementById('modeBtnOnline').className = mode === 'online'
-                ? 'p-2.5 rounded-xl border-2 text-left transition-all bg-md-surface3 border-purple-400'
-                : 'p-2.5 rounded-xl border-2 text-left transition-all bg-md-surface1 border-purple-800/50 hover:border-purple-500';
-
-            const onlinePanel = document.getElementById('onlineSubPanel');
-            if (mode === 'solo') {
-                setPlayerCount(1);
-                onlinePanel.classList.add('hidden');
-                onlinePanel.classList.remove('flex');
-            } else if (mode === 'pass') {
-                if (state.playerCount < 2) setPlayerCount(2);
-                onlinePanel.classList.add('hidden');
-                onlinePanel.classList.remove('flex');
-            } else {
-                if (state.playerCount < 2) setPlayerCount(2);
-                onlinePanel.classList.remove('hidden');
-                onlinePanel.classList.add('flex');
-            }
-        }
-
-        function setPlayerCount(count) {
-            state.playerCount = count;
-            SoundFX.clickSwitch();
-            [1, 2, 3, 4].forEach(n => {
-                const btn = document.getElementById('pCountBtn' + n);
-                btn.className = n === count
-                    ? 'px-3 py-1 rounded-lg text-xs font-bold bg-teal-400 text-slate-950'
-                    : 'px-3 py-1 rounded-lg text-xs font-bold bg-md-surface3 text-purple-200';
-            });
-            renderCharacterSelectionCards();
-        }
-
-        function selectMansionMap(mapId) {
-            state.mapId = mapId;
-            SoundFX.clickSwitch();
-            document.getElementById('mapCardBlackwood').className = mapId === 'blackwood'
-                ? 'cursor-pointer p-3 rounded-xl border-2 transition-all bg-md-surface3 border-amber-400 flex flex-col justify-between'
-                : 'cursor-pointer p-3 rounded-xl border-2 transition-all bg-md-surface1 border-purple-800/50 hover:border-purple-500 flex flex-col justify-between';
-            document.getElementById('mapCardRavenwood').className = mapId === 'ravenwood'
-                ? 'cursor-pointer p-3 rounded-xl border-2 transition-all bg-md-surface3 border-teal-400 flex flex-col justify-between'
-                : 'cursor-pointer p-3 rounded-xl border-2 transition-all bg-md-surface1 border-purple-800/50 hover:border-purple-500 flex flex-col justify-between';
-        }
-
-        function setScareMode(mode) {
-            state.scareMode = mode;
-            SoundFX.clickSwitch();
-            document.getElementById('scareBtnFun').className = mode === 'fun'
-                ? 'px-2.5 py-1 rounded-lg bg-amber-400 text-slate-950 transition-all'
-                : 'px-2.5 py-1 rounded-lg text-purple-200 hover:text-white transition-all';
-            document.getElementById('scareBtnFull').className = mode === 'full'
-                ? 'px-2.5 py-1 rounded-lg bg-rose-500 text-white transition-all'
-                : 'px-2.5 py-1 rounded-lg text-purple-200 hover:text-white transition-all';
-        }
-
-        function setDifficultyMode(mode) {
-            state.difficulty = mode;
-            SoundFX.clickSwitch();
-            document.getElementById('diffBtnStandard').className = mode === 'standard'
-                ? 'px-2.5 py-1 rounded-lg bg-teal-400 text-slate-950 transition-all'
-                : 'px-2.5 py-1 rounded-lg text-purple-200 hover:text-white transition-all';
-            document.getElementById('diffBtnNightmare').className = mode === 'nightmare'
-                ? 'px-2.5 py-1 rounded-lg bg-rose-500 text-white transition-all'
-                : 'px-2.5 py-1 rounded-lg text-purple-200 hover:text-white transition-all';
-        }
-
-        function selectHeroForP1(charId) {
-            const idx = selectedCharIdsByPlayer.indexOf(charId);
-            if (idx > 0) {
-                const temp = selectedCharIdsByPlayer[0];
-                selectedCharIdsByPlayer[0] = charId;
-                selectedCharIdsByPlayer[idx] = temp;
-            }
-            SoundFX.step();
-            renderCharacterSelectionCards();
-        }
-
-        function renderCharacterSelectionCards() {
-            const container = document.getElementById('characterCardsGrid');
-            container.innerHTML = CHARACTERS.map(c => {
-                const slotIdx = selectedCharIdsByPlayer.indexOf(c.id);
-                const isActiveHuman = slotIdx < state.playerCount;
-                const slotBadge = isActiveHuman
-                    ? `<span class="px-2 py-0.5 rounded-full text-[10px] font-bold bg-teal-400 text-slate-950">PLAYER ${slotIdx + 1}</span>`
-                    : `<span class="px-2 py-0.5 rounded-full text-[10px] font-bold bg-rose-950 text-rose-300 border border-rose-500/30">Trapped in Vault</span>`;
-
-                return `
-                    <div onclick="selectHeroForP1('${c.id}')" class="cursor-pointer rounded-2xl p-3.5 border-2 transition-all ${
-                        isActiveHuman
-                            ? 'bg-md-surface3 border-teal-400 shadow-lg'
-                            : 'bg-md-surface2 border-purple-800/40 opacity-75 hover:opacity-100'
-                    }">
-                        <div class="flex items-center justify-between mb-1.5">
-                            <div class="w-10 h-10 rounded-xl flex items-center justify-center text-2xl bg-md-surface1 border border-purple-600/30">
-                                ${c.emoji}
-                            </div>
-                            ${slotBadge}
-                        </div>
-                        <h4 class="font-cartoon text-sm font-bold text-white">${c.name}</h4>
-                        <span class="text-[10px] text-amber-300 font-semibold block mb-1">${c.badge}</span>
-                        <p class="text-[11px] text-purple-200/80 leading-snug">${c.description}</p>
-                    </div>
-                `;
-            }).join('');
-        }
-
-        function openLobbyModal() {
-            renderCharacterSelectionCards();
-            document.getElementById('endGameModal').classList.add('hidden');
-            document.getElementById('endGameModal').classList.remove('flex');
-            document.getElementById('lobbyModal').classList.remove('hidden');
-            document.getElementById('lobbyModal').classList.add('flex');
-        }
-
-        function startMatchFromLobby() {
-            SoundFX.init();
-            SoundFX.dice();
-            document.getElementById('lobbyModal').classList.add('hidden');
-            document.getElementById('lobbyModal').classList.remove('flex');
-
-            buildMansionArchitecture3D();
-
-            // Create Active Players (1 to 4)
-            const startCoords = [
-                { x: 8, y: 12 }, { x: 10, y: 12 }, { x: 8, y: 13 }, { x: 10, y: 13 }
-            ];
-            state.players = [];
-            for (let i = 0; i < state.playerCount; i++) {
-                const cObj = CHARACTERS.find(c => c.id === selectedCharIdsByPlayer[i]) || CHARACTERS[i];
-                const sc = startCoords[i];
-                state.players.push({
-                    index: i,
-                    name: `Player ${i + 1}`,
-                    char: cObj,
-                    floor: 0,
-                    x: sc.x,
-                    y: sc.y,
-                    visualX: sc.x,
-                    visualY: sc.y,
-                    visualFloor: 0,
-                    rotY: Math.PI,
-                    hearts: cObj.maxHearts,
-                    maxHearts: cObj.maxHearts,
-                    score: 0,
-                    skillCooldown: 0,
-                    flashlightOn: true,
-                    gadget: cObj.id === 'inventor' ? { ...POCKET_GADGETS[0] } : null,
-                    discoveredClues: [],
-                    heirlooms: [],
-                    crossedOffSuspectIds: [],
-                    escaped: false
-                });
-            }
-
-            // Remaining unchosen heroes appear visibly trapped inside the Central Ritual Vault!
-            state.trappedFamily = [];
-            for (let i = state.playerCount; i < 4; i++) {
-                const cObj = CHARACTERS.find(c => c.id === selectedCharIdsByPlayer[i]);
-                if (cObj) state.trappedFamily.push(cObj);
-            }
-            if (state.trappedFamily.length === 0) {
-                state.trappedFamily = [CHARACTERS[2]]; // Always show a captive figure in the Vault
-            }
-
-            state.activePlayerIndex = 0;
-            state.ap = 0;
-            state.turnPhase = 'ROLL';
-            state.turnNumber = 1;
-            state.dread = 0;
-            state.familyDistractAvailable = true;
-            state.ghostLuredToVaultTurns = 0;
-            state.vaultUnlocked = false;
-            state.escapeRoundsLeft = 0;
-            state.discoveredBlueprints = [];
-            state.openedPassages = { pairA: false, pairB: false };
-            state.viewFloor = 'auto';
-
-            state.trueSuspect = SUSPECTS[Math.floor(Math.random() * SUSPECTS.length)];
-            state.ghost = { floor: 0, x: 3, y: 2, visualX: 3, visualY: 2, visualFloor: 0, rotY: 0, mode: 'PATROL' };
-
-            // Populate 14 Props across current map: 6 True Clues, 3 Bonus Golden Heirlooms, 2 Blueprints, 3 Pocket Gadgets
-            const mapProps = getCurrentMap().props;
-            const shuffled = [...mapProps].sort(() => Math.random() - 0.5);
-            const clueCats = ['era', 'curse', 'relic', 'era', 'curse', 'relic'];
-
-            state.props = mapProps.map(t => {
-                const idx = shuffled.findIndex(p => p.id === t.id);
-                return {
-                    ...t,
-                    searched: false,
-                    hasClue: idx < 6,
-                    clueCategory: idx < 6 ? clueCats[idx] : null,
-                    heirloom: (idx >= 6 && idx < 9) ? BONUS_HEIRLOOMS[idx - 6] : null,
-                    blueprintPairId: idx === 9 ? 'pairA' : idx === 10 ? 'pairB' : null,
-                    gadgetReward: idx >= 11 ? POCKET_GADGETS[idx % POCKET_GADGETS.length] : null,
-                    revealedBySleuth: false
-                };
-            });
-
-            rebuildDynamic3DEntities();
-            updateFloorSwitcherUI();
-            syncAllUI();
-
-            showToast(`${getCurrentMap().name} loaded! ${getActivePlayer().char.shortName} is up first—Roll Dice!`, 'castle');
-            broadcastOnlineState();
-        }
-
-        function rebuildDynamic3DEntities() {
-            playerMeshes.forEach(m => scene.remove(m));
-            playerMeshes = [];
-            if (ghostGroup) scene.remove(ghostGroup);
-            trappedFamilyGroups.forEach(g => scene.remove(g));
-            trappedFamilyGroups = [];
-            Object.values(propMeshes).forEach(m => {
-                if (m.parent) m.parent.remove(m);
-            });
-            propMeshes = {};
-
-            // Build Active Player Meshes
-            state.players.forEach(p => {
-                const pMesh = buildCartoonHeroMesh(p.char, true);
-                const pos = gridToWorld(p.x, p.y, p.floor);
-                pMesh.position.set(pos.x, pos.y, pos.z);
-                scene.add(pMesh);
-                playerMeshes.push(pMesh);
-            });
-
-            // Build Trapped Family Meshes inside Central Vault (1F)
-            state.trappedFamily.forEach((famChar, idx) => {
-                const famMesh = buildCartoonHeroMesh(famChar, false);
-                const fPos = gridToWorld(8.5 + idx * 0.9, 6.5, 0);
-                famMesh.position.set(fPos.x, 0, fPos.z);
-                famMesh.userData = { ...famMesh.userData, baseX: fPos.x, baseZ: fPos.z, offset: idx * Math.PI };
-                floorGroups[0].add(famMesh);
-                trappedFamilyGroups.push(famMesh);
-            });
-
-            // Build Ghost Mesh
-            ghostGroup = buildCartoonGhostMesh();
-            const gPos = gridToWorld(state.ghost.x, state.ghost.y, state.ghost.floor);
-            ghostGroup.position.set(gPos.x, gPos.y, gPos.z);
-            scene.add(ghostGroup);
-
-            // Build Props on their respective Floor Group
-            for (const prop of state.props) {
-                const pMesh = buildHauntedProp3D(prop);
-                const pos = gridToWorld(prop.x, prop.y, prop.floor);
-                pMesh.position.set(pos.x, pos.y, pos.z);
-                floorGroups[prop.floor].add(pMesh);
-                propMeshes[prop.id] = pMesh;
-            }
-        }
-
-        /* ============================================================================
-         * 9. MOVEMENT, STAIRS (1F <-> 2F), SECRET PASSAGES, CLUES & GADGETS
-         * ============================================================================ */
-        function movePlayerCameraRelative(inputX, inputY) {
-            if (state.turnPhase !== 'MOVE') {
-                if (state.turnPhase === 'ROLL') showToast('Tap ROLL DICE first!', 'casino');
-                return;
-            }
-            const forward = new THREE.Vector3();
-            camera.getWorldDirection(forward);
-            forward.y = 0;
-            if (forward.lengthSq() < 0.001) forward.set(0, 0, -1);
-            forward.normalize();
-
-            const right = new THREE.Vector3().crossVectors(forward, new THREE.Vector3(0, 1, 0)).normalize();
-            const moveVec = new THREE.Vector3().addScaledVector(right, inputX).addScaledVector(forward, -inputY);
-
-            let dx = 0, dy = 0;
-            if (Math.abs(moveVec.x) > Math.abs(moveVec.z)) dx = Math.sign(moveVec.x);
-            else dy = Math.sign(moveVec.z);
-
-            movePlayerGrid(dx, dy);
-        }
-
-        function movePlayerGrid(dx, dy) {
-            if (state.lobbyMode === 'online' && !Net.isHost && state.activePlayerIndex === Net.myPlayerIndex) {
-                Net.hostConn.send({ type: 'REMOTE_ACTION', action: 'MOVE', dx, dy });
-                return;
-            }
-            if (state.turnPhase !== 'MOVE') return;
-            if (state.ap <= 0) {
-                showToast('0 AP remaining! Tap End Turn or use a Gadget.', 'hourglass_empty');
-                return;
-            }
-
-            const p = getActivePlayer();
-            const targetX = p.x + dx;
-            const targetY = p.y + dy;
-            p.rotY = Math.atan2(dx, dy);
-
-            const propAtTarget = state.props.find(pr => pr.floor === p.floor && pr.x === targetX && pr.y === targetY && !pr.searched);
-            if (propAtTarget) {
-                interactWithSpecificProp(propAtTarget);
-                return;
-            }
-
-            if (!canMoveBetween(p.floor, p.x, p.y, targetX, targetY)) {
-                SoundFX.playTone(110, 'sine', 0.06, 0.05);
-                return;
-            }
-
-            p.x = targetX;
-            p.y = targetY;
-            state.ap--;
-
-            const enteredRoom = getRoomAt(p.floor, targetX, targetY);
-            SoundFX.step(enteredRoom ? enteredRoom.floorType : 'hallway');
-            if (enteredRoom) state.exploredRooms.add(enteredRoom.id);
-
-            // Check Final Escape Sprint Victory at Foyer Front Door!
-            if (state.vaultUnlocked && p.floor === 0 && enteredRoom && enteredRoom.id === 'foyer' && !p.escaped) {
-                p.escaped = true;
-                p.score += 300;
-                SoundFX.victory();
-                showToast(`${p.char.shortName} escaped out the Front Door! +300 Escape Bonus Points!`, 'door_open');
-                if (state.players.every(pl => pl.escaped)) {
-                    finishMatchWithLeaderboard(true, 'Every sleuth escaped Blackwood Manor with the rescued family!');
-                    return;
-                }
-            }
-
-            if (p.floor === state.ghost.floor && p.x === state.ghost.x && p.y === state.ghost.y) {
-                triggerGhostCatch(p);
-                return;
-            }
-
-            syncAllUI();
-            rebuildStepHighlights3D();
-            broadcastOnlineState();
-        }
-
-        function handle3DViewportClick(event) {
-            const rect = renderer.domElement.getBoundingClientRect();
-            mouseVec.x = ((event.clientX - rect.left) / rect.width) * 2 - 1;
-            mouseVec.y = -((event.clientY - rect.top) / rect.height) * 2 + 1;
-
-            raycaster.setFromCamera(mouseVec, camera);
-            const intersects = raycaster.intersectObjects(scene.children, true);
-            const p = getActivePlayer();
-
-            for (const hit of intersects) {
-                let obj = hit.object;
-                while (obj) {
-                    if (obj.userData && obj.userData.isPortrait) {
-                        inspectCurrentRoomPortrait();
-                        return;
-                    }
-                    if (obj.userData && (obj.userData.isSecretPassage || obj.userData.isStairs)) {
-                        useSecretPassageOrStairs();
-                        return;
-                    }
-                    if (obj.userData && obj.userData.propId) {
-                        const prop = state.props.find(pr => pr.id === obj.userData.propId);
-                        if (prop && !prop.searched && prop.floor === p.floor) {
-                            const dist = Math.abs(prop.x - p.x) + Math.abs(prop.y - p.y);
-                            if (dist <= p.char.searchRange + 1) {
-                                interactWithSpecificProp(prop);
-                                return;
-                            }
-                        }
-                    }
-                    if (obj.userData && obj.userData.isFloor && obj.userData.floor === p.floor) {
-                        const gx = obj.userData.gx;
-                        const gy = obj.userData.gy;
-                        const dx = gx - p.x;
-                        const dy = gy - p.y;
-                        if (Math.abs(dx) + Math.abs(dy) === 1) {
-                            movePlayerGrid(dx, dy);
-                            return;
-                        }
-                    }
-                    obj = obj.parent;
-                }
-            }
-        }
-
-        function handleRollDice() {
-            if (state.lobbyMode === 'online' && !Net.isHost && state.activePlayerIndex === Net.myPlayerIndex) {
-                Net.hostConn.send({ type: 'REMOTE_ACTION', action: 'ROLL' });
-                return;
-            }
-            if (state.turnPhase !== 'ROLL') return;
-            SoundFX.dice();
-
-            const p = getActivePlayer();
-            const diceEl = document.getElementById('diceVisual');
-            document.getElementById('btnRollDice').disabled = true;
-            diceEl.classList.add('dice-rolling');
-
-            let ticks = 0;
-            const rollAnim = setInterval(() => {
-                diceEl.textContent = Math.floor(Math.random() * 6) + 1;
-                ticks++;
-                if (ticks >= 7) {
-                    clearInterval(rollAnim);
-                    diceEl.classList.remove('dice-rolling');
-
-                    const rawRoll = Math.max(p.char.minRoll, Math.floor(Math.random() * 6) + 1);
-                    const totalAP = rawRoll + p.char.diceBonus;
-                    diceEl.textContent = rawRoll + (p.char.diceBonus ? `+${p.char.diceBonus}` : '');
-
-                    state.ap = totalAP;
-                    state.turnPhase = 'MOVE';
-                    state.searchedThisTurn = false;
-
-                    syncAllUI();
-                    rebuildStepHighlights3D();
-                    broadcastOnlineState();
-                }
-            }, 45);
-        }
-
-        function getInteractableProp() {
-            const p = getActivePlayer();
-            if (!p) return null;
-            let best = null, bestDist = 999;
-            for (const pr of state.props) {
-                if (pr.searched || pr.floor !== p.floor) continue;
-                const dist = Math.abs(pr.x - p.x) + Math.abs(pr.y - p.y);
-                const cheb = Math.max(Math.abs(pr.x - p.x), Math.abs(pr.y - p.y));
-                if (dist <= p.char.searchRange || cheb <= 1) {
-                    if (dist < bestDist) {
-                        bestDist = dist;
-                        best = pr;
-                    }
-                }
-            }
-            return best;
-        }
-
-        function interactWithNearbyProp() {
-            const prop = getInteractableProp();
-            if (prop) interactWithSpecificProp(prop);
-        }
-
-        function interactWithSpecificProp(prop) {
-            if (state.lobbyMode === 'online' && !Net.isHost && state.activePlayerIndex === Net.myPlayerIndex) {
-                Net.hostConn.send({ type: 'REMOTE_ACTION', action: 'SEARCH' });
-                return;
-            }
-            if (state.turnPhase !== 'MOVE' || state.ap < 1 || prop.searched) return;
-
-            const p = getActivePlayer();
-            state.ap--;
-            state.searchedThisTurn = true;
-            prop.searched = true;
-            p.score += 50; // Base +50 Sleuth Points for searching
-
-            const pWorld = gridToWorld(prop.x, prop.y, prop.floor);
-
-            // Check Bonus Heirloom Relic (+300 pts)
-            if (prop.heirloom) {
-                p.heirlooms.push(prop.heirloom);
-                p.score += 300;
-                SoundFX.victory();
-                spawnSoundRipple3D(pWorld.x, pWorld.y, pWorld.z, 0xfbbf24);
-                showToast(`👑 BONUS HEIRLOOM FOUND: ${prop.heirloom.name}! (+350 Sleuth Points!)`, 'emoji_events');
-            }
-            // Check True Ghost Clue (+250 pts)
-            else if (prop.hasClue) {
-                const cats = [
-                    { key: 'era', label: 'Era' },
-                    { key: 'curse', label: 'Sign' },
-                    { key: 'relic', label: 'Relic' }
-                ];
-                const missing = cats.filter(c => !p.discoveredClues.some(dc => dc.category === c.key));
-                const chosenCat = missing.length > 0 ? missing[0] : cats[Math.floor(Math.random() * cats.length)];
-                const val = state.trueSuspect.traits[chosenCat.key];
-
-                if (!p.discoveredClues.some(dc => dc.category === chosenCat.key)) {
-                    p.discoveredClues.push({ category: chosenCat.key, label: chosenCat.label, value: val });
-                }
-                p.score += 250;
-                state.ap += 1;
-                addDread(-20);
-                SoundFX.clueFound();
-                spawnSoundRipple3D(pWorld.x, pWorld.y, pWorld.z, 0x2dd4bf);
-                showToast(`🔍 PRIVATE CLUE FOUND: ${chosenCat.label} is "${val}"! (+300 pts & +1 AP)`, 'auto_awesome');
-            }
-            // Check Architect Blueprint (+150 pts)
-            else if (prop.blueprintPairId) {
-                if (!state.discoveredBlueprints.includes(prop.blueprintPairId)) {
-                    state.discoveredBlueprints.push(prop.blueprintPairId);
-                }
-                p.score += 150;
-                SoundFX.secretMechanism();
-                spawnSoundRipple3D(pWorld.x, pWorld.y, pWorld.z, 0x38bdf8);
-                showToast(`📐 Architect Blueprint Found! Secret Passage unlocked (+200 pts)!`, 'architecture');
-            }
-            // Check Haunted Pocket Gadget
-            else if (prop.gadgetReward) {
-                p.gadget = { ...prop.gadgetReward };
-                p.score += 100;
-                SoundFX.clueFound();
-                showToast(`${prop.gadgetReward.emoji} Found Gadget: ${prop.gadgetReward.name}! (+150 pts)`, 'backpack');
-            }
-
-            syncAllUI();
-            rebuildStepHighlights3D();
-            broadcastOnlineState();
-        }
-
-        // Stairs (1F <-> 2F) OR Disguised Secret Passage Lever (`E` Key)
-        function useSecretPassageOrStairs() {
-            if (state.lobbyMode === 'online' && !Net.isHost && state.activePlayerIndex === Net.myPlayerIndex) {
-                Net.hostConn.send({ type: 'REMOTE_ACTION', action: 'PASSAGE' });
-                return;
-            }
-            if (state.turnPhase !== 'MOVE' || state.ap < 1) {
-                showToast('Need 1 AP during your Move phase!', 'warning');
-                return;
-            }
-
-            const p = getActivePlayer();
-
-            // Priority 1: Check 2-Story Staircase
-            const nearStair = getNearbyStaircase(p);
-            if (nearStair) {
-                state.ap--;
-                p.floor = nearStair.targetFloor;
-                p.x = nearStair.targetX;
-                p.y = nearStair.targetY;
-                SoundFX.secretMechanism();
-                updateFloorSwitcherUI();
-                syncAllUI();
-                rebuildStepHighlights3D();
-                showToast(`${p.char.shortName} used ${nearStair.stair.name} -> ${p.floor === 1 ? '2F Upper Floor' : '1F Ground Floor'}!`, 'stairs');
-                broadcastOnlineState();
-                return;
-            }
-
-            // Priority 2: Check Disguised Secret Passage
-            const nearSecret = getNearbySecretPassageEndpoint(p);
-            if (nearSecret) {
-                state.ap--;
-                const { pair, ep } = nearSecret;
-                if (!state.openedPassages[pair.pairId]) {
-                    p.score += 150; // +150 Discovery Bonus
-                }
-                state.openedPassages[pair.pairId] = true;
-                if (!state.discoveredBlueprints.includes(pair.pairId)) {
-                    state.discoveredBlueprints.push(pair.pairId);
-                }
-                p.floor = ep.targetFloor;
-                p.x = ep.targetX;
-                p.y = ep.targetY;
-                SoundFX.secretMechanism();
-                updateFloorSwitcherUI();
-                syncAllUI();
-                rebuildStepHighlights3D();
-                showToast(`Triggered ${ep.triggerName}! Warped to ${ep.targetFloor === 1 ? '2F' : '1F'} (+150 pts)!`, 'door_sliding');
-                broadcastOnlineState();
-            }
-        }
-
-        function usePocketGadget() {
-            const p = getActivePlayer();
-            if (!p || !p.gadget) return;
-            const g = p.gadget;
-            p.gadget = null;
-            SoundFX.clueFound();
-
-            if (g.id === 'skates') {
-                if (state.turnPhase === 'ROLL') state.turnPhase = 'MOVE';
-                state.ap += 4;
-                showToast(`🛼 Winged Skates used! +4 Bonus Action Points!`, 'sprint');
-            } else if (g.id === 'salt') {
-                state.saltWards.push({ floor: p.floor, x: p.x, y: p.y, turnsLeft: 3 });
-                showToast(`🧂 Salt Barrier dropped! The Ghost cannot cross this tile for 3 turns!`, 'shield');
-            } else if (g.id === 'decoy') {
-                state.ghostLuredToVaultTurns = 2;
-                showToast(`📻 Ghost Decoy thrown! The Ghost is lured toward the Central Vault!`, 'radio');
-            }
-            syncAllUI();
-            rebuildStepHighlights3D();
-        }
-
-        // High-Five / Share Intel with another player in the same room (+100 pts each!)
-        function shareIntelWithRoommate() {
-            const p = getActivePlayer();
-            const myRoom = getRoomAt(p.floor, p.x, p.y);
-            if (!myRoom) {
-                showToast('Stand inside a Room with another player to Share Intel!', 'meeting_room');
-                return;
-            }
-            const roommates = state.players.filter(other =>
-                other.index !== p.index &&
-                other.floor === p.floor &&
-                getRoomAt(other.floor, other.x, other.y)?.id === myRoom.id
-            );
-            if (roommates.length === 0) {
-                showToast('No other player is in this room right now! Meet up to Share Intel (+100 pts)!', 'group');
-                return;
-            }
-
-            let sharedCount = 0;
-            roommates.forEach(rm => {
-                p.discoveredClues.forEach(c => {
-                    if (!rm.discoveredClues.some(rc => rc.category === c.category)) {
-                        rm.discoveredClues.push({ ...c });
-                        sharedCount++;
-                    }
-                });
-                rm.discoveredClues.forEach(c => {
-                    if (!p.discoveredClues.some(pc => pc.category === c.category)) {
-                        p.discoveredClues.push({ ...c });
-                        sharedCount++;
-                    }
-                });
-                rm.score += 100;
-            });
-            p.score += 100;
-            SoundFX.victory();
-            showToast(`🤝 High-Five in ${myRoom.name}! Synced Case Files & earned +100 Teamwork Points!`, 'handshake');
-            syncAllUI();
-            if (!document.getElementById('suspectsModal').classList.contains('hidden')) {
-                openSuspectsModal();
-            }
-        }
-
-        function toggleFlashlight() {
-            const p = getActivePlayer();
-            p.flashlightOn = !p.flashlightOn;
-            SoundFX.clickSwitch();
-            syncAllUI();
-        }
-
-        function triggerFamilyDistraction() {
-            if (!state.familyDistractAvailable) return;
-            state.familyDistractAvailable = false;
-            state.ghostLuredToVaultTurns = 2;
-            getActivePlayer().score += 75;
-            SoundFX.pipeBang();
-            showToast('CLANG! Trapped family banged the Vault pipes—Ghost lured for 2 turns (+75 pts)!', 'notifications_active');
-            syncAllUI();
-        }
-
-        function useSpecialAbility() {
-            const p = getActivePlayer();
-            if (p.skillCooldown > 0) {
-                showToast(`Skill on cooldown (${p.skillCooldown} turns left)!`, 'timer');
-                return;
-            }
-            p.skillCooldown = 3;
-            p.score += 50;
-            SoundFX.clueFound();
-
-            if (p.char.id === 'sleuth') {
-                const target = state.props.find(pr => !pr.searched && pr.hasClue);
-                if (target) {
-                    target.revealedBySleuth = true;
-                    showToast(`Eagle Eye highlighted ${target.name} (${target.floor === 1 ? '2F' : '1F'}) in gold!`, 'visibility');
-                }
-            } else if (p.char.id === 'sprinter') {
-                if (state.turnPhase === 'ROLL') state.turnPhase = 'MOVE';
-                state.ap += 3;
-                showToast(`Turbo Dash! +3 Bonus AP!`, 'sprint');
-            } else if (p.char.id === 'medium') {
-                addDread(-30);
-                state.ghost.x = 2; state.ghost.y = 2;
-                showToast(`Ecto Ward banished the Ghost & reduced Dread -30%!`, 'shield_moon');
-            } else if (p.char.id === 'inventor') {
-                p.gadget = { ...POCKET_GADGETS[Math.floor(Math.random() * POCKET_GADGETS.length)] };
-                showToast(`Theo crafted ${p.gadget.emoji} ${p.gadget.name}!`, 'precision_manufacturing');
-            }
-            syncAllUI();
-            rebuildStepHighlights3D();
-        }
-
-        /* ============================================================================
-         * 10. TURN ROTATION, PASS & PLAY HANDOFF, GHOST AI & FULL-SCREEN JUMP SCARE
-         * ============================================================================ */
-        function addDread(amount) {
-            state.dread = Math.max(0, Math.min(100, state.dread + amount));
-            document.getElementById('dreadPercentText').textContent = `${Math.round(state.dread)}%`;
-            document.getElementById('dreadBar').style.width = `${state.dread}%`;
-        }
-
-        function endPlayerTurn() {
-            if (state.lobbyMode === 'online' && !Net.isHost && state.activePlayerIndex === Net.myPlayerIndex) {
-                Net.hostConn.send({ type: 'REMOTE_ACTION', action: 'END_TURN' });
-                return;
-            }
-            if (state.turnPhase !== 'MOVE') return;
-
-            const p = getActivePlayer();
-            if (p.skillCooldown > 0) p.skillCooldown--;
-            state.ap = 0;
-            rebuildStepHighlights3D();
-
-            // Rotate to next player, or run Ghost Turn after the last player finishes!
-            if (state.activePlayerIndex < state.players.length - 1) {
-                state.activePlayerIndex++;
-                if (state.lobbyMode === 'pass') {
-                    showPassAndPlayHandoffModal();
-                } else {
-                    state.turnPhase = 'ROLL';
-                    syncAllUI();
-                    broadcastOnlineState();
-                }
-            } else {
-                // All players moved this round -> Ghost Turn!
-                state.turnPhase = 'GHOST';
-                syncAllUI();
-                runGhostTurn();
-            }
-        }
-
-        function showPassAndPlayHandoffModal() {
-            state.turnPhase = 'HANDOFF';
-            const nextP = getActivePlayer();
-            document.getElementById('handoffAvatar').textContent = nextP.char.emoji;
-            document.getElementById('handoffTitle').textContent = `${nextP.name}'s Turn: ${nextP.char.name}`;
-            document.getElementById('handoffNameStrong').textContent = `${nextP.name} (${nextP.char.shortName})`;
-            document.getElementById('turnHandoffModal').classList.remove('hidden');
-            document.getElementById('turnHandoffModal').classList.add('flex');
-        }
-
-        function confirmTurnHandoff() {
-            SoundFX.clickSwitch();
-            document.getElementById('turnHandoffModal').classList.add('hidden');
-            document.getElementById('turnHandoffModal').classList.remove('flex');
-            state.turnPhase = 'ROLL';
-            updateFloorSwitcherUI();
-            syncAllUI();
-        }
-
-        function runGhostTurn() {
-            let steps = 3 + (state.dread >= 60 ? 1 : 0);
-            let taken = 0;
-
-            const gTimer = setInterval(() => {
-                if (state.turnPhase !== 'GHOST') {
-                    clearInterval(gTimer);
-                    return;
-                }
-                stepGhostMultiplayerAI();
-                taken++;
-
-                // Check if Ghost caught any player on its tile
-                const caughtPlayer = state.players.find(pl => !pl.escaped && pl.floor === state.ghost.floor && pl.x === state.ghost.x && pl.y === state.ghost.y);
-                if (caughtPlayer) {
-                    clearInterval(gTimer);
-                    triggerGhostCatch(caughtPlayer);
-                    return;
-                }
-
-                if (taken >= steps) {
-                    clearInterval(gTimer);
-                    state.turnNumber++;
-                    state.activePlayerIndex = 0;
-                    if (state.lobbyMode === 'pass' && state.players.length > 1) {
-                        showPassAndPlayHandoffModal();
-                    } else {
-                        state.turnPhase = 'ROLL';
-                        syncAllUI();
-                        broadcastOnlineState();
-                    }
-                }
-            }, 240);
-        }
-
-        function stepGhostMultiplayerAI() {
-            // Find nearest player on the same floor, or climb stairs if all players are on the other floor
-            let sameFloorPlayers = state.players.filter(pl => !pl.escaped && pl.floor === state.ghost.floor);
-            if (sameFloorPlayers.length === 0 && getCurrentMap().floors > 1) {
-                state.ghost.floor = state.ghost.floor === 0 ? 1 : 0;
-                sameFloorPlayers = state.players.filter(pl => !pl.escaped && pl.floor === state.ghost.floor);
-            }
-
-            let targetX = 9, targetY = 6;
-            if (state.ghostLuredToVaultTurns > 0) {
-                state.ghostLuredToVaultTurns--;
-            } else if (sameFloorPlayers.length > 0) {
-                sameFloorPlayers.sort((a, b) =>
-                    (Math.abs(a.x - state.ghost.x) + Math.abs(a.y - state.ghost.y)) -
-                    (Math.abs(b.x - state.ghost.x) + Math.abs(b.y - state.ghost.y))
-                );
-                targetX = sameFloorPlayers[0].x;
-                targetY = sameFloorPlayers[0].y;
-            }
-
-            const dx = Math.sign(targetX - state.ghost.x);
-            const dy = Math.sign(targetY - state.ghost.y);
-            let nx = state.ghost.x + (Math.abs(targetX - state.ghost.x) >= Math.abs(targetY - state.ghost.y) ? dx : 0);
-            let ny = state.ghost.y + (Math.abs(targetX - state.ghost.x) < Math.abs(targetY - state.ghost.y) ? dy : 0);
-
-            nx = Math.max(1, Math.min(GRID_COLS - 2, nx));
-            ny = Math.max(1, Math.min(GRID_ROWS - 2, ny));
-
-            // Respect Pocket Salt Wards!
-            if (state.saltWards.some(sw => sw.floor === state.ghost.floor && sw.x === nx && sw.y === ny)) {
-                return;
-            }
-
-            const r = getRoomAt(state.ghost.floor, nx, ny);
-            if (r && r.isLockedVault) return;
-
-            state.ghost.rotY = Math.atan2(nx - state.ghost.x, ny - state.ghost.y);
-            state.ghost.x = nx;
-            state.ghost.y = ny;
-        }
-
-        function triggerGhostCatch(victimPlayer) {
-            SoundFX.jumpScareShriek(state.scareMode);
-            victimPlayer.hearts = Math.max(1, victimPlayer.hearts - 1);
-            victimPlayer.score = Math.max(0, victimPlayer.score - 100);
-
-            // Knock player back to 1F Grand Foyer
-            victimPlayer.floor = 0;
-            victimPlayer.x = 9;
-            victimPlayer.y = 12;
-
-            // Teleport ghost to corner
-            state.ghost.x = 2;
-            state.ghost.y = 2;
-
-            const workspace = document.getElementById('gameWorkspace');
-            workspace.classList.remove('screen-shake');
-            void workspace.offsetWidth;
-            workspace.classList.add('screen-shake');
-
-            drawJumpScareCanvas(state.scareMode);
-            document.getElementById('scareTitle').textContent = state.scareMode === 'full'
-                ? `💀 SHRIEK! ${victimPlayer.char.shortName.toUpperCase()} WAS AMBUSHED!`
-                : `👻 BOO! ${victimPlayer.char.shortName.toUpperCase()} GOT SPOOKED!`;
-            document.getElementById('scareDesc').textContent =
-                `The Phantom lunged out of the dark at ${victimPlayer.name} (${victimPlayer.char.name})! Lost 1 Chance (-100 Sleuth Points) and knocked back to the 1F Grand Foyer!`;
-
-            document.getElementById('scareOverlay').classList.remove('hidden');
-            document.getElementById('scareOverlay').classList.add('flex');
-
-            state.turnPhase = 'ROLL';
-            syncAllUI();
-            broadcastOnlineState();
-        }
-
-        function closeScareOverlay() {
-            document.getElementById('scareOverlay').classList.add('hidden');
-            document.getElementById('scareOverlay').classList.remove('flex');
-        }
-
-        /* ============================================================================
-         * 11. 8-SUSPECT OVERLAPPING MATRIX ACCUSATION & FINAL ESCAPE SPRINT
-         * ============================================================================ */
-        function inspectCurrentRoomPortrait() {
-            openSuspectsModal();
-        }
-
-        function toggleCrossOffSuspect(suspectId) {
-            const p = getActivePlayer();
-            const idx = p.crossedOffSuspectIds.indexOf(suspectId);
-            if (idx >= 0) p.crossedOffSuspectIds.splice(idx, 1);
-            else p.crossedOffSuspectIds.push(suspectId);
-            SoundFX.clickSwitch();
-            openSuspectsModal();
-            syncAllUI();
-        }
-
-        function accuseSuspectPortrait(suspectId) {
-            const suspect = SUSPECTS.find(s => s.id === suspectId);
-            const p = getActivePlayer();
-            if (!suspect || !p) return;
-
-            const targetRoomId = suspectRoomIdForCurrentMap(suspect);
-            const currentRoom = getRoomAt(p.floor, p.x, p.y);
-            if (!currentRoom || currentRoom.id !== targetRoomId) {
-                const rObj = getCurrentMap().rooms.find(r => r.id === targetRoomId);
-                showToast(`Walk inside ${rObj ? rObj.name : suspect.roomId} to accuse ${suspect.name}'s Portrait!`, 'directions_walk');
-                closeSuspectsModal();
-                return;
-            }
-
-            closeSuspectsModal();
-
-            if (suspect.id === state.trueSuspect.id) {
-                // Correct Accusation! +500 Points & Unseal the Central Ritual Vault for the Final Escape Sprint!
-                p.score += 500;
-                state.vaultUnlocked = true;
-                vaultChainMeshes.forEach(c => { c.visible = false; });
-                SoundFX.victory();
-
-                document.getElementById('escapeSprintBanner').classList.remove('hidden');
-                document.getElementById('escapeSprintBanner').classList.add('flex');
-
-                if (state.ap < 3) state.ap = 4; // Give bonus sprint AP!
-                state.turnPhase = 'MOVE';
-                showToast(`🏆 ${p.char.shortName} BROKE THE CURSE (+500 pts)! Central Vault Unsealed—Sprint to the 1F Foyer Front Door (+300 pts) or Finish Now!`, 'celebration');
-
-                // Offer immediate win if already near Foyer, or let players sprint
-                setTimeout(() => {
-                    finishMatchWithLeaderboard(true, `${p.name} (${p.char.name}) correctly deduced ${suspect.name} from the Overlapping Trait Matrix, unsealing the Central Ritual Vault and rescuing the family!`);
-                }, 2600);
-            } else {
-                // False Accusation penalty (-200 pts)
-                p.score = Math.max(0, p.score - 200);
-                triggerGhostCatch(p);
-            }
-        }
-
-        function finishMatchWithLeaderboard(isWin, summaryText) {
-            state.turnPhase = 'GAMEOVER';
-            document.getElementById('endGameIcon').textContent = isWin ? '🏆' : '💀';
-            document.getElementById('endGameTitle').textContent = isWin ? 'Vault Unsealed & Family Saved!' : 'The Haunt Prevails!';
-            document.getElementById('endGameSummary').textContent = summaryText;
-
-            // Sort Players by Sleuth Points for 1st-4th Place Trophy Standings
-            const ranked = [...state.players].sort((a, b) => b.score - a.score);
-            const medals = ['🥇 1st', '🥈 2nd', '🥉 3rd', '🏅 4th'];
-            document.getElementById('endGameLeaderboardList').innerHTML = ranked.map((pl, idx) => `
-                <div class="p-2.5 rounded-xl bg-md-surface1 border ${idx === 0 ? 'border-amber-400' : 'border-purple-800/40'} flex items-center justify-between">
-                    <div class="flex items-center gap-2">
-                        <span class="font-cartoon font-bold text-xs text-amber-300 w-12">${medals[idx]}</span>
-                        <span class="text-lg">${pl.char.emoji}</span>
-                        <div>
-                            <div class="font-cartoon font-bold text-xs text-white">${pl.name}: ${pl.char.name}</div>
-                            <div class="text-[10px] text-purple-300">Clues: ${pl.discoveredClues.length}/3 • Heirlooms: 👑 ${pl.heirlooms.length}</div>
-                        </div>
-                    </div>
-                    <span class="font-mono font-bold text-sm text-teal-300">${pl.score} pts</span>
-                </div>
-            `).join('');
-
-            const s = state.trueSuspect;
-            const portraitUrl = paintSuspectPortraitCanvas(s).toDataURL();
-            document.getElementById('endGameGhostReveal').innerHTML = `
-                <img src="${portraitUrl}" alt="${s.name}" class="w-14 h-14 rounded-2xl border-2 shrink-0 object-cover" style="border-color:${s.portraitColor}" />
-                <div>
-                    <div class="text-[10px] uppercase tracking-wider text-amber-300 font-bold">The True Culprit Spirit</div>
-                    <div class="font-cartoon text-base font-bold text-white">${s.name} — ${s.title}</div>
-                    <div class="flex flex-wrap gap-1 mt-1">
-                        <span class="px-2 py-0.5 rounded bg-md-surface3 text-[10px] text-teal-300">${s.traits.era}</span>
-                        <span class="px-2 py-0.5 rounded bg-md-surface3 text-[10px] text-amber-300">${s.traits.curse}</span>
-                        <span class="px-2 py-0.5 rounded bg-md-surface3 text-[10px] text-purple-300">${s.traits.relic}</span>
-                    </div>
-                </div>
-            `;
-
-            document.getElementById('endGameModal').classList.remove('hidden');
-            document.getElementById('endGameModal').classList.add('flex');
-        }
-
-        /* ============================================================================
-         * 12. COMPREHENSIVE UI & FLOATING 1-TAP CONTEXT PILL SYNCHRONIZATION
-         * ============================================================================ */
-        function syncAllUI() {
-            const p = getActivePlayer();
-            if (!p) return;
-
-            // Top Bar & Active Player Info
-            document.getElementById('activePlayerBannerTop').textContent = `${p.name}: ${p.char.shortName}'s Turn (${p.floor === 1 ? '2F' : '1F'})`;
-            document.getElementById('topScoreText').textContent = `${p.score} pts`;
-            document.getElementById('turnPlayerAvatar').textContent = p.char.emoji;
-            document.getElementById('charAvatarBox').textContent = p.char.emoji;
-            document.getElementById('charNameDisplay').textContent = `${p.name}: ${p.char.name}`;
-            document.getElementById('charTraitPill').textContent = p.char.badge;
-            document.getElementById('specialSkillIcon').textContent = p.char.skillIcon;
-            document.getElementById('specialSkillLabel').textContent = p.skillCooldown > 0 ? `Wait ${p.skillCooldown}T` : p.char.skillName;
-
-            const currentRoom = getRoomAt(p.floor, p.x, p.y);
-            document.getElementById('currentRoomText').textContent = currentRoom ? currentRoom.name : `${p.floor === 1 ? '2F' : '1F'} Corridor`;
-
-            // Hearts
-            let heartsHtml = '';
-            for (let i = 0; i < p.maxHearts; i++) {
-                heartsHtml += `<span class="material-symbols-rounded text-base ${i < p.hearts ? 'text-rose-500' : 'text-purple-950'}">favorite</span>`;
-            }
-            document.getElementById('heartsContainer').innerHTML = heartsHtml;
-
-            // Flashlight & Pocket Gadget Button
-            document.getElementById('flashlightText').textContent = p.flashlightOn ? 'Light ON' : 'Stealth';
-            const btnGadget = document.getElementById('btnUseGadget');
-            const gadgetTxt = document.getElementById('gadgetBtnText');
-            if (p.gadget) {
-                btnGadget.disabled = false;
-                gadgetTxt.textContent = `${p.gadget.emoji} ${p.gadget.name}`;
-            } else {
-                btnGadget.disabled = true;
-                gadgetTxt.textContent = 'No Gadget';
-            }
-
-            // AP & Turn Title
-            document.getElementById('apCounter').textContent = state.ap;
-            const phaseTitle = document.getElementById('turnPhaseTitle');
-            if (state.turnPhase === 'ROLL') {
-                phaseTitle.textContent = `${p.name.toUpperCase()} (${p.char.shortName}): ROLL DICE`;
-                document.getElementById('btnRollDice').disabled = false;
-                document.getElementById('btnEndTurn').disabled = true;
-            } else if (state.turnPhase === 'MOVE') {
-                phaseTitle.textContent = `${p.char.shortName.toUpperCase()}: MOVE (${state.ap} AP LEFT)`;
-                document.getElementById('btnRollDice').disabled = true;
-                document.getElementById('btnEndTurn').disabled = false;
-            } else {
-                phaseTitle.textContent = `GHOST IS HUNTING...`;
-                document.getElementById('btnRollDice').disabled = true;
-                document.getElementById('btnEndTurn').disabled = true;
-            }
-
-            // Nearby Prop, Stairs & Secret Passage Context Buttons + Floating Mobile 1-Tap Pills!
-            const nearProp = getInteractableProp();
-            const nearStair = getNearbyStaircase(p);
-            const nearSecret = getNearbySecretPassageEndpoint(p);
-            const btnSearch = document.getElementById('btnSearchProp');
-            const btnSecret = document.getElementById('btnSecretPassage');
-
-            let floatingPillsHtml = '';
-
-            if (nearProp && state.turnPhase === 'MOVE' && state.ap >= 1) {
-                btnSearch.disabled = false;
-                document.getElementById('searchBtnText').textContent = `Search ${nearProp.emoji} (F)`;
-                floatingPillsHtml += `
-                    <button onclick="interactWithNearbyProp()" class="pointer-events-auto md-btn px-3.5 py-2 rounded-2xl bg-amber-400 text-slate-950 font-cartoon font-bold text-xs flex items-center gap-1.5 shadow-xl amber-glow">
-                        <span>🔍 Search ${nearProp.name} (1 AP)</span>
-                    </button>
-                `;
-            } else {
-                btnSearch.disabled = true;
-                document.getElementById('searchBtnText').textContent = 'Stand Near Prop (F)';
-            }
-
-            if ((nearStair || nearSecret) && state.turnPhase === 'MOVE' && state.ap >= 1) {
-                btnSecret.disabled = false;
-                const label = nearStair ? nearStair.dirLabel : nearSecret.ep.triggerName;
-                document.getElementById('secretPassageText').textContent = `${label} (E)`;
-                floatingPillsHtml += `
-                    <button onclick="useSecretPassageOrStairs()" class="pointer-events-auto md-btn px-3.5 py-2 rounded-2xl bg-teal-400 text-slate-950 font-cartoon font-bold text-xs flex items-center gap-1.5 shadow-xl ecto-glow">
-                        <span>🪜 ${label} (1 AP)</span>
-                    </button>
-                `;
-            } else {
-                btnSecret.disabled = true;
-                document.getElementById('secretPassageText').textContent = 'Stairs / Lever (E)';
-            }
-
-            // Check if standing in a Suspect's Room
-            if (currentRoom) {
-                const roomSuspect = SUSPECTS.find(s => suspectRoomIdForCurrentMap(s) === currentRoom.id);
-                if (roomSuspect) {
-                    floatingPillsHtml += `
-                        <button onclick="openSuspectsModal()" class="pointer-events-auto md-btn px-3 py-2 rounded-2xl bg-rose-500 text-white font-cartoon font-bold text-xs flex items-center gap-1 shadow-xl">
-                            <span>🖼️ Inspect ${roomSuspect.name} (R)</span>
-                        </button>
-                    `;
-                }
-            }
-
-            document.getElementById('floatingContextBar').innerHTML = floatingPillsHtml;
-
-            // Private Case File Clues & Bonus Heirlooms
-            document.getElementById('caseFileOwnerTitle').textContent = `${p.name.toUpperCase()} (${p.char.shortName}) CASE FILE`;
-            document.getElementById('cluesCountBadge').textContent = `🔍 ${p.discoveredClues.length}/3 CLUES`;
-            document.getElementById('mobileClueBadge').textContent = `${p.discoveredClues.length}/3`;
-            document.getElementById('heirloomCountBadge').textContent = `👑 ${p.heirlooms.length}/3`;
-
-            const slots = [
-                { category: 'era', label: 'Era', icon: 'history_edu' },
-                { category: 'curse', label: 'Sign', icon: 'ac_unit' },
-                { category: 'relic', label: 'Relic', icon: 'diamond' }
-            ];
-            document.getElementById('clueSlotsContainer').innerHTML = slots.map(sl => {
-                const found = p.discoveredClues.find(c => c.category === sl.category);
-                return found ? `
-                    <div class="px-2.5 py-1 rounded-xl bg-teal-950/60 border border-teal-500/40 flex items-center justify-between text-xs">
-                        <span class="text-teal-200">${sl.label}:</span>
-                        <strong class="font-cartoon text-amber-300">${found.value}</strong>
-                    </div>
-                ` : `
-                    <div class="px-2.5 py-1 rounded-xl bg-md-surface1/70 border border-purple-800/30 flex items-center justify-between text-[11px] text-purple-400">
-                        <span>${sl.label}:</span>
-                        <span class="italic">Unfound...</span>
-                    </div>
-                `;
-            }).join('');
-
-            // Remaining Suspects Calculation
-            const remaining = SUSPECTS.filter(s => {
-                if (p.crossedOffSuspectIds.includes(s.id)) return false;
-                return p.discoveredClues.every(c => s.traits[c.category] === c.value);
-            });
-            document.getElementById('deductionText').textContent = remaining.length === 1
-                ? `Culprit: ${remaining[0].name}!`
-                : `${remaining.length} Suspects Possible`;
-
-            // Mini Scoreboard Grid
-            document.getElementById('miniScoreboardGrid').innerHTML = state.players.map(pl => `
-                <div class="px-2 py-1 rounded-lg bg-md-surface2 border ${pl.index === state.activePlayerIndex ? 'border-teal-400' : 'border-purple-800/40'} flex items-center justify-between text-[11px]">
-                    <span class="truncate font-semibold text-white">${pl.char.emoji} ${pl.char.shortName}</span>
-                    <span class="font-mono font-bold text-amber-300">${pl.score}</span>
-                </div>
-            `).join('');
-        }
-
-        function openSuspectsModal() {
-            const p = getActivePlayer();
-            const currentRoom = getRoomAt(p.floor, p.x, p.y);
-
-            // Render Top Leaderboard Strip inside Modal
-            document.getElementById('modalLeaderboardStrip').innerHTML = state.players.map(pl => `
-                <div class="px-3 py-1.5 rounded-xl bg-md-surface1 border ${pl.index === state.activePlayerIndex ? 'border-amber-400' : 'border-purple-700/40'} flex items-center gap-2 text-xs">
-                    <span>${pl.char.emoji}</span>
-                    <span class="font-bold text-white">${pl.name} (${pl.char.shortName}):</span>
-                    <span class="font-mono font-bold text-teal-300">${pl.score} pts</span>
-                    <span class="text-[10px] text-amber-300">👑${pl.heirlooms.length}</span>
-                </div>
-            `).join('');
-
-            // Render 8-Suspect Overlapping Matrix Cards
-            document.getElementById('suspectsGrid').innerHTML = SUSPECTS.map(s => {
-                const targetRoomId = suspectRoomIdForCurrentMap(s);
-                const roomObj = getCurrentMap().rooms.find(r => r.id === targetRoomId);
-                const roomDisplayName = roomObj ? roomObj.name : s.roomId;
-
-                const matchesClues = p.discoveredClues.every(c => s.traits[c.category] === c.value);
-                const isManuallyCrossed = p.crossedOffSuspectIds.includes(s.id);
-                const isEliminated = !matchesClues || isManuallyCrossed;
-                const isPlayerHere = currentRoom && currentRoom.id === targetRoomId;
-                const portraitUrl = paintSuspectPortraitCanvas(s).toDataURL();
-
-                const checkTrait = (cat, val) => {
-                    const found = p.discoveredClues.find(c => c.category === cat);
-                    if (!found) return `<span class="text-purple-200">${val}</span>`;
-                    if (found.value === val) return `<span class="text-teal-300 font-bold">✓ ${val}</span>`;
-                    return `<span class="text-rose-400/75 line-through">✗ ${val}</span>`;
-                };
-
-                return `
-                    <div class="rounded-2xl p-3 border-2 transition-all flex flex-col justify-between ${
-                        !isEliminated ? 'bg-md-surface2 border-purple-500/60' : 'bg-md-surface1/40 border-purple-900/30 opacity-45'
-                    } ${isPlayerHere ? 'ring-2 ring-amber-400' : ''}">
-                        <div>
-                            <div class="flex items-center justify-between gap-1 mb-2">
-                                <div class="flex items-center gap-2 min-w-0">
-                                    <img src="${portraitUrl}" class="w-11 h-11 rounded-xl border object-cover shrink-0" style="border-color:${s.portraitColor}" />
-                                    <div class="min-w-0">
-                                        <h4 class="font-cartoon font-bold text-xs text-white truncate ${isEliminated ? 'line-through' : ''}">${s.name}</h4>
-                                        <span class="text-[10px] text-amber-300 font-semibold block truncate">${roomDisplayName}</span>
-                                    </div>
-                                </div>
-                                <button onclick="toggleCrossOffSuspect('${s.id}')" class="px-1.5 py-0.5 rounded text-[9px] font-bold border shrink-0 ${
-                                    isManuallyCrossed ? 'bg-rose-950 text-rose-300 border-rose-500/40' : 'bg-md-surface3 text-purple-200 border-purple-600/30'
-                                }">
-                                    ${isManuallyCrossed ? 'Undo' : 'Cross Off'}
-                                </button>
-                            </div>
-
-                            <div class="space-y-1 text-[11px] bg-md-surface1 p-2 rounded-xl border border-purple-800/40">
-                                <div class="flex justify-between"><span class="text-purple-400">Era:</span> ${checkTrait('era', s.traits.era)}</div>
-                                <div class="flex justify-between"><span class="text-purple-400">Sign:</span> ${checkTrait('curse', s.traits.curse)}</div>
-                                <div class="flex justify-between"><span class="text-purple-400">Relic:</span> ${checkTrait('relic', s.traits.relic)}</div>
-                            </div>
-                        </div>
-
-                        <button onclick="accuseSuspectPortrait('${s.id}')" ${!isPlayerHere ? 'disabled' : ''} class="md-btn mt-2 w-full py-1.5 rounded-xl font-cartoon font-bold text-[11px] flex items-center justify-center gap-1 ${
-                            isPlayerHere
-                                ? 'bg-gradient-to-r from-amber-400 to-rose-500 text-slate-950 shadow-md'
-                                : 'bg-md-surface3 text-purple-400 opacity-50'
-                        }">
-                            <span class="material-symbols-rounded text-xs">gavel</span>
-                            <span>${isPlayerHere ? 'ACCUSE (+500 PTS)' : `Go to ${roomDisplayName}`}</span>
-                        </button>
-                    </div>
-                `;
-            }).join('');
-
-            document.getElementById('suspectsModal').classList.remove('hidden');
-            document.getElementById('suspectsModal').classList.add('flex');
-        }
-
-        function closeSuspectsModal() {
-            document.getElementById('suspectsModal').classList.add('hidden');
-            document.getElementById('suspectsModal').classList.remove('flex');
-        }
-
-        function openBlueprintsModal() {
-            const mapDef = getCurrentMap();
-            document.getElementById('blueprintsListContainer').innerHTML = mapDef.passages.map(pair => {
-                const isFound = state.discoveredBlueprints.includes(pair.pairId);
-                return `
-                    <div class="p-3.5 rounded-2xl border-2 ${isFound ? 'bg-teal-950/40 border-teal-400/60' : 'bg-md-surface2 border-purple-800/40'}">
-                        <div class="font-cartoon font-bold text-sm text-teal-200 mb-1">${pair.blueprintTitle}</div>
-                        <p class="text-xs text-purple-200/90 mb-2">${pair.blueprintNote}</p>
-                    </div>
-                `;
-            }).join('');
-            document.getElementById('blueprintsModal').classList.remove('hidden');
-            document.getElementById('blueprintsModal').classList.add('flex');
-        }
-
-        function closeBlueprintsModal() {
-            document.getElementById('blueprintsModal').classList.add('hidden');
-            document.getElementById('blueprintsModal').classList.remove('flex');
-        }
-
-        function openHelpModal() {
-            document.getElementById('helpModal').classList.remove('hidden');
-            document.getElementById('helpModal').classList.add('flex');
-        }
-
-        function closeHelpModal() {
-            document.getElementById('helpModal').classList.add('hidden');
-            document.getElementById('helpModal').classList.remove('flex');
-        }
-
-        function toggleMobileDrawer() {
-            const drawer = document.getElementById('controlDeckDrawer');
-            drawer.classList.toggle('hidden');
-        }
-
-        /* ============================================================================
-         * 13. 3D STEP HIGHLIGHTS, CAMERA PRESETS & ANIMATION LOOP
-         * ============================================================================ */
-        function rebuildStepHighlights3D() {
-            stepHighlightMeshes.forEach(m => scene.remove(m));
-            stepHighlightMeshes = [];
-            if (state.turnPhase !== 'MOVE' || state.ap <= 0) return;
-
-            const p = getActivePlayer();
-            const dirs = [[0, -1], [0, 1], [-1, 0], [1, 0]];
-            for (const [dx, dy] of dirs) {
-                const nx = p.x + dx;
-                const ny = p.y + dy;
-                if (canMoveBetween(p.floor, p.x, p.y, nx, ny)) {
-                    const pos = gridToWorld(nx, ny, p.floor);
-                    const geo = new THREE.PlaneGeometry(TILE_SIZE * 0.76, TILE_SIZE * 0.76);
-                    geo.rotateX(-Math.PI / 2);
-                    const mat = new THREE.MeshBasicMaterial({ color: 0x2dd4bf, transparent: true, opacity: 0.38, side: THREE.DoubleSide });
-                    const mesh = new THREE.Mesh(geo, mat);
-                    mesh.position.set(pos.x, pos.y + 0.04, pos.z);
-                    scene.add(mesh);
-                    stepHighlightMeshes.push(mesh);
-                }
-            }
-        }
-
-        function setCameraPreset(preset) {
-            state.cameraPreset = preset;
-            SoundFX.clickSwitch();
-            const p = getActivePlayer();
-            const pWorld = gridToWorld(p.visualX, p.visualY, p.floor);
-
-            if (preset === 'iso') {
-                camera.position.set(pWorld.x, pWorld.y + 23, pWorld.z + 19);
-                controls.target.set(pWorld.x * 0.4, pWorld.y, pWorld.z * 0.4);
-            } else if (preset === 'top') {
-                camera.position.set(0, pWorld.y + 34, 3);
-                controls.target.set(0, pWorld.y, 0);
-            } else if (preset === 'follow') {
-                camera.position.set(pWorld.x, pWorld.y + 11, pWorld.z + 9);
-                controls.target.set(pWorld.x, pWorld.y + 0.8, pWorld.z);
-            }
-            controls.update();
-        }
-
-        function toggleCutawayWalls() {
-            const modes = ['auto', 'down', 'up'];
-            state.cutawayMode = modes[(modes.indexOf(state.cutawayMode) + 1) % modes.length];
-            document.getElementById('wallModeText').textContent = `Walls: ${state.cutawayMode.toUpperCase()}`;
-            SoundFX.clickSwitch();
-        }
-
-        function spawnSoundRipple3D(wx, wy, wz, colorHex) {
-            const ringGeo = new THREE.RingGeometry(0.3, 0.5, 32);
-            ringGeo.rotateX(-Math.PI / 2);
-            const ringMat = new THREE.MeshBasicMaterial({ color: colorHex, transparent: true, opacity: 0.9, side: THREE.DoubleSide });
-            const mesh = new THREE.Mesh(ringGeo, ringMat);
-            mesh.position.set(wx, wy + 0.15, wz);
-            scene.add(mesh);
-            soundRippleRings.push({ mesh, scale: 1, alpha: 0.9 });
-        }
-
-        let toastTimeout = null;
-        function showToast(msg, icon = 'auto_awesome') {
-            const banner = document.getElementById('toastBanner');
-            document.getElementById('toastMessage').textContent = msg;
-            document.getElementById('toastIcon').textContent = icon;
-            banner.classList.remove('opacity-0', '-translate-y-3');
-            banner.classList.add('opacity-100', 'translate-y-0');
-            if (toastTimeout) clearTimeout(toastTimeout);
-            toastTimeout = setTimeout(() => {
-                banner.classList.add('opacity-0', '-translate-y-3');
-                banner.classList.remove('opacity-100', 'translate-y-0');
-            }, 3600);
-        }
-
-        window.addEventListener('keydown', e => {
-            if (!document.getElementById('lobbyModal').classList.contains('hidden') ||
-                !document.getElementById('turnHandoffModal').classList.contains('hidden') ||
-                !document.getElementById('suspectsModal').classList.contains('hidden')) {
-                return;
-            }
-            switch (e.key) {
-                case 'ArrowUp': case 'w': case 'W': e.preventDefault(); movePlayerCameraRelative(0, -1); break;
-                case 'ArrowDown': case 's': case 'S': e.preventDefault(); movePlayerCameraRelative(0, 1); break;
-                case 'ArrowLeft': case 'a': case 'A': e.preventDefault(); movePlayerCameraRelative(-1, 0); break;
-                case 'ArrowRight': case 'd': case 'D': e.preventDefault(); movePlayerCameraRelative(1, 0); break;
-                case ' ': e.preventDefault(); if (state.turnPhase === 'ROLL') handleRollDice(); break;
-                case 'f': case 'F': case 'Enter': e.preventDefault(); interactWithNearbyProp(); break;
-                case 'e': case 'E': e.preventDefault(); useSecretPassageOrStairs(); break;
-                case 'r': case 'R': e.preventDefault(); openSuspectsModal(); break;
-                case 'l': case 'L': e.preventDefault(); toggleFlashlight(); break;
-                case 'g': case 'G': e.preventDefault(); usePocketGadget(); break;
-                case 'x': case 'X': e.preventDefault(); if (state.turnPhase === 'MOVE') endPlayerTurn(); break;
-            }
-        });
-
-        function animate3DLoop(timestamp) {
-            requestAnimationFrame(animate3DLoop);
-            const t = timestamp * 0.001;
-            if (!scene || !renderer) return;
-
-            const activeFl = getActiveDisplayedFloor();
-
-            // 1. Two-Story Floor Visibility & Smooth Cutaway
-            if (floorGroups[1]) {
-                floorGroups[1].visible = getCurrentMap().floors > 1 && activeFl === 1;
-            }
-
-            // 2. Animate All Active Players (1 to 4)
-            state.players.forEach((p, idx) => {
-                const mesh = playerMeshes[idx];
-                if (!mesh) return;
-                p.visualX += (p.x - p.visualX) * 0.22;
-                p.visualY += (p.y - p.visualY) * 0.22;
-                p.visualFloor += (p.floor - p.visualFloor) * 0.2;
-
-                const pWorld = gridToWorld(p.visualX, p.visualY, p.visualFloor);
-                const isMoving = Math.abs(p.x - p.visualX) + Math.abs(p.y - p.visualY) > 0.04;
-                const walkBob = isMoving ? Math.abs(Math.sin(t * 18)) * 0.18 : Math.sin(t * 3.5 + idx) * 0.03;
-
-                mesh.position.set(pWorld.x, pWorld.y + walkBob, pWorld.z);
-                mesh.rotation.y = p.rotY;
-                mesh.visible = p.floor <= activeFl;
-
-                if (mesh.userData.spotLight) mesh.userData.spotLight.intensity = p.flashlightOn ? 2.2 : 0;
-                if (mesh.userData.beamCone) mesh.userData.beamCone.visible = p.flashlightOn;
-            });
-
-            // 3. Animate Ghost
-            state.ghost.visualX += (state.ghost.x - state.ghost.visualX) * 0.15;
-            state.ghost.visualY += (state.ghost.y - state.ghost.visualY) * 0.15;
-            state.ghost.visualFloor += (state.ghost.floor - state.ghost.visualFloor) * 0.18;
-            if (ghostGroup) {
-                const gWorld = gridToWorld(state.ghost.visualX, state.ghost.visualY, state.ghost.visualFloor);
-                ghostGroup.position.set(gWorld.x, gWorld.y + 0.22 + Math.sin(t * 4.5) * 0.18, gWorld.z);
-                ghostGroup.rotation.y = state.ghost.rotY;
-                ghostGroup.visible = state.ghost.floor <= activeFl;
-            }
-
-            // 4. Animate Poltergeist Furniture Tells
-            for (const prop of state.props) {
-                const pGroup = propMeshes[prop.id];
-                if (!pGroup) continue;
-                const tell = pGroup.userData.tellGroup;
-                const ring = pGroup.userData.ring;
-                if (!prop.searched) {
-                    tell.position.y = Math.sin(t * 5 + prop.x) * 0.18;
-                    tell.rotation.y = t * 2.2;
-                    if (prop.revealedBySleuth) ring.material.color.setHex(0xfbbf24);
-                } else {
-                    ring.visible = false;
-                }
-            }
-
-            // 5. Cutaway Walls
-            const camDir = new THREE.Vector3();
-            camera.getWorldDirection(camDir);
-            for (const w of wallMeshes) {
-                let targetScaleY = 1.0;
-                if (state.cutawayMode === 'down') targetScaleY = 0.22;
-                else if (state.cutawayMode === 'auto') {
-                    const dot = w.normalX * camDir.x + w.normalZ * camDir.z;
-                    if (dot > 0.25 || w.isVaultWall) targetScaleY = 0.24;
-                }
-                w.mesh.scale.y += (targetScaleY - w.mesh.scale.y) * 0.18;
-            }
-
-            // 6. Sound Ripple Rings
-            for (let i = soundRippleRings.length - 1; i >= 0; i--) {
-                const r = soundRippleRings[i];
-                r.scale += 0.18;
-                r.alpha -= 0.025;
-                r.mesh.scale.set(r.scale, r.scale, 1);
-                r.mesh.material.opacity = Math.max(0, r.alpha);
-                if (r.alpha <= 0) {
-                    scene.remove(r.mesh);
-                    soundRippleRings.splice(i, 1);
-                }
-            }
-
-            controls.update();
-            renderer.render(scene, camera);
-        }
-
-        window.onload = function () {
-            initThreeScene();
-            renderCharacterSelectionCards();
-            startMatchFromLobby();
-            openLobbyModal();
-            requestAnimationFrame(animate3DLoop);
-        };
-    </script>
+    <!-- ==================== MODULAR V4.2 ENGINE SCRIPTS (Works on GitHub Pages AND Local file://) ==================== -->
+    <script defer src="js/audio.js"></script>
+    <script defer src="js/config.js"></script>
+    <script defer src="js/state-net.js"></script>
+    <script defer src="js/textures-3d.js"></script>
+    <script defer src="js/mansion-3d.js"></script>
+    <script defer src="js/gameplay-ai.js"></script>
+    <script defer src="js/ui-loop.js"></script>
 </body>
 </html>
