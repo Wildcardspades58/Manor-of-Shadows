@@ -7,6 +7,25 @@ function lerpAngleRadians(current, target, factor) {
     return current + diff * factor;
 }
 
+function handleTurnPillClick() {
+    if (state.turnPhase === 'ROLL') {
+        handleRollDice();
+    } else if (state.turnPhase === 'MOVE' && state.ap === 0) {
+        endPlayerTurn();
+    }
+}
+
+function cycleCameraPreset() {
+    const presets = ['iso', 'top', 'follow'];
+    const curIdx = presets.indexOf(state.cameraPreset);
+    const nextPreset = presets[(curIdx + 1) % presets.length];
+    setCameraPreset(nextPreset);
+    const names = { iso: '45°', top: 'Top', follow: 'Follow' };
+    const labelEl = document.getElementById('quickCameraLabel');
+    if (labelEl) labelEl.textContent = names[nextPreset] || nextPreset;
+    showToast(`Camera: ${nextPreset === 'iso' ? '45° Dollhouse' : nextPreset === 'top' ? 'Top-Down 3D' : 'Follow Player'}`, 'videocam');
+}
+
 function toggleRoomLabels() {
     state.showRoomLabels = !state.showRoomLabels;
     SoundFX.clickSwitch();
@@ -90,13 +109,13 @@ function syncAllUI() {
     const compactIcon = document.getElementById('compactPrimaryIcon');
 
     if (state.turnPhase === 'ROLL') {
-        phaseTitle.textContent = `${p.name.toUpperCase()} (${p.char.shortName}): ROLL DICE`;
+        phaseTitle.textContent = `${p.name.toUpperCase()} (${p.char.shortName}): TAP TO ROLL 🎲`;
         document.getElementById('btnRollDice').disabled = false;
         document.getElementById('btnEndTurn').disabled = true;
         compactBtn.disabled = false;
         compactIcon.textContent = 'casino';
         compactTxt.textContent = '🎲 Roll Dice';
-        compactBtn.className = 'md-btn px-3 py-1.5 rounded-xl bg-gradient-to-r from-purple-500 to-teal-400 text-slate-950 font-cartoon font-bold text-xs flex items-center gap-1 shadow';
+        compactBtn.className = 'md-btn px-3 py-1.5 rounded-xl bg-gradient-to-r from-amber-400 via-teal-300 to-emerald-400 text-slate-950 font-cartoon font-bold text-xs flex items-center gap-1 shadow-lg amber-glow animate-pulse';
     } else if (state.turnPhase === 'MOVE') {
         phaseTitle.textContent = `${p.char.shortName.toUpperCase()}: MOVE (${state.ap} AP LEFT)`;
         document.getElementById('btnRollDice').disabled = true;
@@ -124,6 +143,17 @@ function syncAllUI() {
     const btnSecret = document.getElementById('btnSecretPassage');
 
     let floatingPillsHtml = '';
+
+    // 0. Primary Roll Dice Floating Pill (Prominent on Mobile / Tablet!)
+    if (state.turnPhase === 'ROLL') {
+        const bonusStr = p.char.diceMod !== 0 ? ` (D6 ${p.char.diceMod > 0 ? '+' : ''}${p.char.diceMod} Bonus)` : ' (D6)';
+        floatingPillsHtml += `
+            <button onclick="handleRollDice()" class="pointer-events-auto md-btn px-4 py-2.5 rounded-2xl bg-gradient-to-r from-amber-400 via-teal-300 to-emerald-400 text-slate-950 font-cartoon font-bold text-xs sm:text-sm flex items-center gap-2 shadow-2xl amber-glow active:scale-95 transition-transform animate-pulse border-2 border-white/60">
+                <span class="material-symbols-rounded text-base sm:text-lg">casino</span>
+                <span>🎲 TAP TO ROLL DICE${bonusStr}</span>
+            </button>
+        `;
+    }
 
     // 1. Room Light Switch Floating Pill
     if (currentRoom && !currentRoom.isLockedVault && (state.turnPhase === 'MOVE' || state.turnPhase === 'ROLL')) {
@@ -390,28 +420,32 @@ function toggleCleanViewport() {
 
     const topBar = document.getElementById('topAppBar');
     const camBar = document.getElementById('bottomLeftCameraBar');
+    const dock = document.getElementById('mobileCommandDock');
     const drawer = document.getElementById('controlDeckDrawer');
     const iconEl = document.getElementById('cleanViewFloatingIcon');
     const txtEl = document.getElementById('cleanViewFloatingText');
 
     if (state.cleanViewportMode) {
-        topBar.classList.add('hidden');
-        camBar.classList.add('hidden');
-        drawer.classList.add('hidden');
-        drawer.classList.remove('flex', 'lg:flex');
-        iconEl.textContent = 'visibility_off';
-        txtEl.textContent = 'Show HUD';
-        document.getElementById('mobileDrawerBtnText').textContent = '🛠️ Open Tools';
-        showToast('👁️ Clean Viewport Active (92%+ 3D View)! Tap "Show HUD" or "🛠️ Open Tools" anytime.', 'visibility');
+        if (topBar) topBar.classList.add('hidden');
+        if (camBar) camBar.classList.add('hidden');
+        if (drawer) {
+            drawer.classList.add('hidden');
+            drawer.classList.remove('flex', 'lg:flex');
+        }
+        if (iconEl) iconEl.textContent = 'visibility_off';
+        if (txtEl) txtEl.textContent = 'Show HUD';
+        const mobileDrawerTxt = document.getElementById('mobileDrawerBtnText');
+        if (mobileDrawerTxt) mobileDrawerTxt.textContent = 'Tools';
+        showToast('👁️ Clean Viewport Active (92%+ 3D View)! Tap "Show HUD" or "🛠️ Tools" anytime.', 'visibility');
     } else {
-        topBar.classList.remove('hidden');
-        camBar.classList.remove('hidden');
-        if (window.innerWidth >= 1024) {
+        if (topBar) topBar.classList.remove('hidden');
+        if (camBar) camBar.classList.remove('hidden');
+        if (drawer && window.innerWidth >= 1024) {
             drawer.classList.remove('hidden');
             drawer.classList.add('flex', 'lg:flex');
         }
-        iconEl.textContent = 'visibility';
-        txtEl.textContent = 'Clean View';
+        if (iconEl) iconEl.textContent = 'visibility';
+        if (txtEl) txtEl.textContent = 'Clean View';
     }
     setTimeout(onWindowResize, 60);
 }
@@ -459,6 +493,17 @@ function setCameraPreset(preset) {
         controls.target.set(pWorld.x, pWorld.y + 0.8, pWorld.z);
     }
     controls.update();
+
+    const labelEl = document.getElementById('quickCameraLabel');
+    if (labelEl) {
+        const names = { iso: '45°', top: 'Top', follow: 'Follow' };
+        labelEl.textContent = names[preset] || preset;
+    }
+    const iconEl = document.getElementById('quickCamIcon');
+    if (iconEl) {
+        const icons = { iso: 'deployed_code', top: 'grid_view', follow: 'person_pin_circle' };
+        iconEl.textContent = icons[preset] || 'videocam';
+    }
 }
 
 function toggleCutawayWalls() {

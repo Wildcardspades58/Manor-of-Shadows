@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="en" class="dark">
+<html lang="en" class="dark h-[100dvh] overflow-hidden">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
@@ -44,7 +44,7 @@
     <!-- Modular Stylesheet -->
     <link rel="stylesheet" href="css/styles.css" />
 </head>
-<body class="h-screen w-screen flex flex-col select-none bg-md-bg text-purple-50 overflow-hidden">
+<body class="h-[100dvh] w-screen flex flex-col select-none bg-md-bg text-purple-50 overflow-hidden">
 
     <!-- ==================== TOP APP BAR ==================== -->
     <header id="topAppBar" class="h-13 sm:h-14 bg-md-surface1 border-b border-purple-900/40 px-2.5 sm:px-4 flex items-center justify-between z-30 shrink-0 md-elevation-1 transition-all duration-300">
@@ -137,12 +137,12 @@
 
             <!-- Top Floating Overlay: Turn Status, 2-Story Floor Switcher, Clean View Restore & Contextual Prompts -->
             <div class="absolute top-2.5 left-2.5 right-2.5 flex flex-wrap items-center justify-between gap-2 pointer-events-none z-20">
-                <!-- Active Player & Turn Phase Pill -->
-                <div id="topFloatingTurnPill" class="pointer-events-auto flex items-center gap-2 px-3 py-1.5 rounded-2xl bg-md-surface1/90 backdrop-blur-md border border-purple-500/40 md-elevation-2">
+                <!-- Active Player & Turn Phase Pill (Click to Roll or End Turn) -->
+                <div id="topFloatingTurnPill" onclick="handleTurnPillClick()" class="pointer-events-auto flex items-center gap-2 px-3 py-1.5 rounded-2xl bg-md-surface1/90 backdrop-blur-md border border-purple-500/40 md-elevation-2 cursor-pointer active:scale-95 transition-all hover:border-teal-400" title="Tap to Roll Dice or End Turn">
                     <div id="turnPlayerAvatar" class="w-7 h-7 rounded-lg bg-purple-700/50 border border-purple-400/50 flex items-center justify-center text-base">🕵️</div>
                     <div>
                         <div id="turnPhaseTitle" class="font-cartoon text-xs sm:text-sm font-bold text-white leading-none">P1 MILO: ROLL DICE</div>
-                        <div id="turnPhaseSub" class="text-[10px] text-purple-300">Tap 3D floor tiles to walk • Pinch/Drag to Orbit</div>
+                        <div id="turnPhaseSub" class="text-[10px] text-purple-300">Tap to Roll • Tap 3D floor to walk</div>
                     </div>
                 </div>
 
@@ -195,50 +195,49 @@
                 </div>
             </div>
 
-            <!-- MOBILE / TABLET 1-TAP FLOATING CONTEXT ACTION BAR (Above Bottom Controls) -->
-            <div id="floatingContextBar" class="absolute bottom-14 left-1/2 -translate-x-1/2 z-20 flex flex-wrap items-center justify-center gap-1.5 w-[96%] max-w-2xl pointer-events-none">
-                <!-- Populated dynamically with 1-Tap Pills -->
-            </div>
-
-            <!-- Bottom-Left Camera & Room Header Controls Bar (Collapsible in Clean View) -->
-            <div id="bottomLeftCameraBar" class="absolute bottom-2.5 left-2.5 z-20 flex items-center gap-1 p-1 rounded-2xl bg-md-surface1/90 backdrop-blur-md border border-purple-700/40 md-elevation-2 transition-all duration-300">
-                <button onclick="setCameraPreset('iso')" id="camBtnIso" class="md-btn px-2 py-1 rounded-xl bg-purple-600 text-white text-[11px] font-semibold flex items-center gap-1" title="Dollhouse 45° View">
-                    <span class="material-symbols-rounded text-sm">deployed_code</span>
-                    <span class="hidden sm:inline">45°</span>
-                </button>
-                <button onclick="setCameraPreset('top')" id="camBtnTop" class="md-btn px-2 py-1 rounded-xl bg-md-surface2 hover:bg-md-surface3 text-purple-200 text-[11px] font-semibold flex items-center gap-1" title="Top-Down 3D View">
-                    <span class="material-symbols-rounded text-sm">grid_view</span>
-                    <span class="hidden sm:inline">Top</span>
-                </button>
-                <button onclick="setCameraPreset('follow')" id="camBtnFollow" class="md-btn px-2 py-1 rounded-xl bg-md-surface2 hover:bg-md-surface3 text-purple-200 text-[11px] font-semibold flex items-center gap-1" title="Follow Active Player">
-                    <span class="material-symbols-rounded text-sm">person_pin_circle</span>
-                    <span class="hidden sm:inline">Follow</span>
-                </button>
-                <button onclick="toggleCutawayWalls()" id="btnWallMode" class="md-btn px-2 py-1 rounded-xl bg-md-surface2 hover:bg-md-surface3 text-teal-300 text-[11px] font-semibold flex items-center gap-1 border border-teal-500/30">
-                    <span class="material-symbols-rounded text-sm">foundation</span>
-                    <span id="wallModeText" class="hidden md:inline">Auto Walls</span>
-                </button>
-                <button onclick="toggleRoomLabels()" id="btnToggleLabels" class="md-btn px-2 py-1 rounded-xl bg-amber-500/25 border border-amber-400/50 text-amber-200 text-[11px] font-semibold flex items-center gap-1" title="Toggle North-Wall Room Headers">
-                    <span class="material-symbols-rounded text-sm">label</span>
-                    <span class="hidden md:inline">Labels</span>
-                </button>
-            </div>
-
-            <!-- COMPACT FLOATING BOTTOM PILL FOR MOBILE / TABLET & CLEAN VIEW (🎲 Roll Dice | AP: 4 | 🛠️ Open Tools) -->
-            <div id="compactBottomPill" class="absolute bottom-2.5 right-2.5 z-20 flex items-center gap-1.5 p-1.5 rounded-2xl bg-md-surface1/95 backdrop-blur-md border-2 border-teal-400/60 md-elevation-3">
-                <button id="compactRollOrEndBtn" onclick="handleCompactPrimaryAction()" class="md-btn px-3 py-1.5 rounded-xl bg-gradient-to-r from-purple-500 to-teal-400 text-slate-950 font-cartoon font-bold text-xs flex items-center gap-1 shadow">
-                    <span id="compactPrimaryIcon" class="material-symbols-rounded text-sm">casino</span>
-                    <span id="compactPrimaryText">🎲 Roll Dice</span>
-                </button>
-                <div class="px-2 py-1 rounded-xl bg-md-surface2 border border-purple-700/50 text-xs font-mono font-bold text-teal-300 flex items-center gap-1">
-                    <span>AP:</span>
-                    <span id="compactApText">0</span>
+            <!-- ==================== UNIFIED MOBILE / TABLET COMMAND DOCK ==================== -->
+            <!-- Positioned comfortably above mobile home gesture indicators and safe-area insets -->
+            <div id="mobileCommandDock" class="absolute bottom-3 sm:bottom-4 left-1/2 -translate-x-1/2 z-20 w-[95%] max-w-lg flex flex-col items-center gap-2 pointer-events-none pb-[env(safe-area-inset-bottom,4px)]">
+                
+                <!-- Dynamic Context Action Pills (Roll Dice Banner, Safe Room Switch, Breaker, Search, Stairs) -->
+                <div id="floatingContextBar" class="flex flex-wrap items-center justify-center gap-1.5 w-full pointer-events-none">
+                    <!-- Populated dynamically by syncAllUI() -->
                 </div>
-                <button onclick="toggleMobileDrawer()" class="md-btn px-2.5 py-1.5 rounded-xl bg-md-surface3 hover:bg-purple-800/70 text-amber-200 font-cartoon font-bold text-xs flex items-center gap-1 border border-amber-400/40">
-                    <span class="material-symbols-rounded text-sm text-amber-300">build</span>
-                    <span id="mobileDrawerBtnText">🛠️ Open Tools</span>
-                    <span id="mobileClueBadge" class="px-1.5 py-0.2 rounded-full bg-slate-950 text-teal-300 text-[10px] font-mono">0/3</span>
-                </button>
+
+                <!-- Persistent Floating Mobile Command Bar (Guaranteed visible on mobile and clean view) -->
+                <div id="persistentMobileBar" class="flex items-center justify-between gap-1.5 p-1.5 rounded-2xl bg-md-surface1/95 backdrop-blur-md border-2 border-teal-400/60 md-elevation-3 shadow-2xl w-full pointer-events-auto">
+                    <!-- Left: Roll / End Turn Action + AP Counter -->
+                    <div class="flex items-center gap-1.5 min-w-0">
+                        <button id="compactRollOrEndBtn" onclick="handleCompactPrimaryAction()" class="md-btn px-3 py-1.5 rounded-xl bg-gradient-to-r from-purple-500 to-teal-400 text-slate-950 font-cartoon font-bold text-xs flex items-center gap-1 shadow active:scale-95 transition-transform shrink-0">
+                            <span id="compactPrimaryIcon" class="material-symbols-rounded text-sm">casino</span>
+                            <span id="compactPrimaryText">🎲 Roll Dice</span>
+                        </button>
+                        <div class="px-2 py-1 rounded-xl bg-md-surface2 border border-purple-700/50 text-xs font-mono font-bold text-teal-300 flex items-center gap-1 shrink-0">
+                            <span class="text-[10px] text-purple-300">AP:</span>
+                            <span id="compactApText" class="text-amber-300">0</span>
+                        </div>
+                    </div>
+
+                    <!-- Right: Quick Camera Cycle, Room Labels Toggle, Cutaway Walls, and Tools Drawer -->
+                    <div class="flex items-center gap-1 shrink-0">
+                        <button id="btnQuickCamera" onclick="cycleCameraPreset()" class="md-btn px-2 py-1 rounded-xl bg-purple-600/80 hover:bg-purple-600 text-white text-[11px] font-semibold flex items-center gap-1" title="Cycle Camera Angle (45° / Top / Follow)">
+                            <span id="quickCamIcon" class="material-symbols-rounded text-sm">videocam</span>
+                            <span id="quickCameraLabel" class="text-[10px] font-bold">45°</span>
+                        </button>
+                        <button onclick="toggleRoomLabels()" id="btnToggleLabels" class="md-btn px-2 py-1 rounded-xl bg-amber-500/25 border border-amber-400/50 text-amber-200 text-[11px] font-semibold flex items-center gap-1" title="Toggle North-Wall Room Headers">
+                            <span class="material-symbols-rounded text-sm">label</span>
+                        </button>
+                        <button onclick="toggleCutawayWalls()" id="btnWallMode" class="md-btn px-1.5 py-1 rounded-xl bg-md-surface2 hover:bg-md-surface3 text-teal-300 text-[11px] font-semibold hidden xs:flex items-center gap-1 border border-teal-500/30" title="Toggle Cutaway Walls">
+                            <span class="material-symbols-rounded text-sm">foundation</span>
+                            <span id="wallModeText" class="hidden sm:inline">Auto</span>
+                        </button>
+                        <button onclick="toggleMobileDrawer()" class="md-btn px-2.5 py-1 rounded-xl bg-md-surface3 hover:bg-purple-800/70 text-amber-200 font-cartoon font-bold text-xs flex items-center gap-1 border border-amber-400/40">
+                            <span class="material-symbols-rounded text-sm text-amber-300">build</span>
+                            <span id="mobileDrawerBtnText" class="hidden xs:inline">Tools</span>
+                            <span id="mobileClueBadge" class="px-1.5 py-0.2 rounded-full bg-slate-950 text-teal-300 text-[10px] font-mono">0/3</span>
+                        </button>
+                    </div>
+                </div>
             </div>
 
             <!-- Three.js WebGL Mount -->
