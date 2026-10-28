@@ -299,6 +299,10 @@ function buildHauntedProp3D(prop) {
     return group;
 }
 
+function isMobileDevice() {
+    return /Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(navigator.userAgent) || window.innerWidth < 768;
+}
+
 function initThreeScene() {
     const mount = document.getElementById('threeCanvasMount');
     scene = new THREE.Scene();
@@ -308,12 +312,20 @@ function initThreeScene() {
     camera = new THREE.PerspectiveCamera(44, mount.clientWidth / mount.clientHeight, 0.1, 160);
     camera.position.set(0, 26, 22);
 
-    renderer = new THREE.WebGLRenderer({ antialias: true });
+    state.performanceMode = isMobileDevice();
+
+    renderer = new THREE.WebGLRenderer({
+        antialias: !state.performanceMode,
+        powerPreference: 'high-performance'
+    });
     renderer.setSize(mount.clientWidth, mount.clientHeight);
-    renderer.setPixelRatio(Math.min(window.devicePixelRatio, 2));
-    renderer.shadowMap.enabled = true;
+    renderer.setPixelRatio(state.performanceMode ? 1.0 : Math.min(window.devicePixelRatio, 1.5));
+    renderer.shadowMap.enabled = !state.performanceMode;
     mount.innerHTML = '';
     mount.appendChild(renderer.domElement);
+
+    const perfIcon = document.getElementById('perfIcon');
+    if (perfIcon) perfIcon.textContent = state.performanceMode ? 'bolt' : 'auto_awesome';
 
     controls = new THREE.OrbitControls(camera, renderer.domElement);
     controls.enableDamping = true;
@@ -361,6 +373,27 @@ function onWindowResize() {
     camera.aspect = mount.clientWidth / mount.clientHeight;
     camera.updateProjectionMatrix();
     renderer.setSize(mount.clientWidth, mount.clientHeight);
+}
+
+function togglePerformanceMode() {
+    state.performanceMode = !state.performanceMode;
+    SoundFX.clickSwitch();
+    if (renderer) {
+        renderer.setPixelRatio(state.performanceMode ? 1.0 : Math.min(window.devicePixelRatio, 1.5));
+        renderer.shadowMap.enabled = !state.performanceMode;
+        onWindowResize();
+    }
+    wallSconceLights.forEach(ws => {
+        if (ws.light) ws.light.visible = !state.performanceMode;
+    });
+    const iconEl = document.getElementById('perfIcon');
+    if (iconEl) iconEl.textContent = state.performanceMode ? 'bolt' : 'auto_awesome';
+    showToast(
+        state.performanceMode
+            ? '⚡ Smooth Eco Mode (1.0x Resolution & Fast Shaders for 60 FPS)'
+            : '💎 High Quality Mode (Full Resolution & Dynamic Shadows)',
+        state.performanceMode ? 'bolt' : 'auto_awesome'
+    );
 }
 
 function buildMansionArchitecture3D() {
@@ -634,14 +667,16 @@ function buildMansionArchitecture3D() {
 
         const sconceLight = new THREE.PointLight(0xfb923c, 0.55, 5.5);
         sconceLight.position.y = 0.25;
+        sconceLight.visible = !state.performanceMode;
         sconceGroup.add(sconceLight);
 
         floorGroups[loc.floor].add(sconceGroup);
         wallSconceLights.push({ light: sconceLight, flameMesh, phase: idx * 1.3 });
     });
 
-    // 44 Floating Spectral Dust Motes / Fireflies across the Mansion
-    for (let i = 0; i < 44; i++) {
+    // Floating Spectral Dust Motes / Fireflies across the Mansion (16 in Eco mode, 40 in HQ)
+    const dustMoteCount = state.performanceMode ? 16 : 40;
+    for (let i = 0; i < dustMoteCount; i++) {
         const isGold = i % 2 === 0;
         const moteMesh = new THREE.Mesh(
             new THREE.SphereGeometry(isGold ? 0.055 : 0.048, 6, 6),

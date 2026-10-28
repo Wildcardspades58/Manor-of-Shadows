@@ -122,6 +122,9 @@
             <button onclick="toggleAudio()" class="md-btn p-1.5 rounded-xl bg-md-surface2 hover:bg-md-surface3 border border-purple-700/40 text-teal-300" title="Mute / Unmute Sound">
                 <span id="soundIcon" class="material-symbols-rounded text-base">volume_up</span>
             </button>
+            <button onclick="togglePerformanceMode()" id="btnPerfMode" class="md-btn p-1.5 rounded-xl bg-md-surface2 hover:bg-md-surface3 border border-amber-400/40 text-amber-300" title="Toggle Smooth / Eco Mode (60 FPS on Mobile)">
+                <span id="perfIcon" class="material-symbols-rounded text-base">bolt</span>
+            </button>
             <button onclick="openLobbyModal()" class="md-btn px-2 py-1.5 rounded-xl bg-rose-950/80 hover:bg-rose-900 border border-rose-500/40 text-rose-200 text-xs font-semibold flex items-center gap-1" title="Lobby / Setup">
                 <span class="material-symbols-rounded text-base">settings_Accessibility</span>
                 <span class="hidden xl:inline">Lobby</span>
@@ -178,12 +181,17 @@
                 </div>
 
                 <!-- Escape Sprint Banner (Appears when Vault is Unsealed!) -->
-                <div id="escapeSprintBanner" class="pointer-events-auto hidden items-center gap-2 px-3.5 py-1.5 rounded-2xl bg-emerald-950/95 border-2 border-emerald-400 md-elevation-3 ecto-glow">
-                    <span class="material-symbols-rounded text-emerald-300 text-lg animate-bounce">door_open</span>
-                    <div class="text-xs">
-                        <div class="font-cartoon font-bold text-emerald-200">VAULT UNSEALED! FINAL ESCAPE SPRINT!</div>
-                        <div class="text-[10px] text-emerald-300">Reach the Front Door in the Foyer for +300 Escape Bonus!</div>
+                <div id="escapeSprintBanner" class="pointer-events-auto hidden items-center justify-between gap-3 px-3.5 py-1.5 rounded-2xl bg-emerald-950/95 border-2 border-emerald-400 md-elevation-3 ecto-glow shadow-2xl">
+                    <div class="flex items-center gap-2 min-w-0">
+                        <span class="material-symbols-rounded text-emerald-300 text-lg animate-bounce shrink-0">door_open</span>
+                        <div class="text-xs min-w-0">
+                            <div class="font-cartoon font-bold text-emerald-200 truncate">VAULT UNSEALED! ESCAPE SPRINT!</div>
+                            <div class="text-[10px] text-emerald-300">Sprint to 1F Foyer Front Door (+300 Bonus) or finish match!</div>
+                        </div>
                     </div>
+                    <button onclick="claimEscapeVictory()" class="md-btn px-2.5 py-1 rounded-xl bg-gradient-to-r from-emerald-400 to-teal-300 text-slate-950 font-cartoon font-bold text-[11px] shadow active:scale-95 transition-transform shrink-0">
+                        🏁 Finish Match
+                    </button>
                 </div>
             </div>
 

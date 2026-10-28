@@ -175,6 +175,11 @@ function startMatchFromLobby() {
     SoundFX.dice();
     document.getElementById('lobbyModal').classList.add('hidden');
     document.getElementById('lobbyModal').classList.remove('flex');
+    const sprintBanner = document.getElementById('escapeSprintBanner');
+    if (sprintBanner) {
+        sprintBanner.classList.add('hidden');
+        sprintBanner.classList.remove('flex');
+    }
 
     clearAllGhostFootprints3D();
     buildMansionArchitecture3D();
@@ -905,7 +910,7 @@ function confirmTurnHandoff() {
 }
 
 function runGhostTurn() {
-    let steps = 3 + (state.dread >= 60 ? 1 : 0);
+    let steps = state.vaultUnlocked ? 2 : (3 + (state.dread >= 60 ? 1 : 0));
     let taken = 0;
 
     const gTimer = setInterval(() => {
@@ -1157,20 +1162,27 @@ function accuseSuspectPortrait(suspectId) {
         vaultChainMeshes.forEach(c => { c.visible = false; });
         SoundFX.victory();
 
-        document.getElementById('escapeSprintBanner').classList.remove('hidden');
-        document.getElementById('escapeSprintBanner').classList.add('flex');
+        const sprintBanner = document.getElementById('escapeSprintBanner');
+        if (sprintBanner) {
+            sprintBanner.classList.remove('hidden');
+            sprintBanner.classList.add('flex');
+        }
 
         if (state.ap < 3) state.ap = 4;
         state.turnPhase = 'MOVE';
-        showToast(`🏆 ${p.char.shortName} BROKE THE CURSE (+500 pts)! Central Vault Unsealed—Sprint to the 1F Foyer Front Door (+300 pts) or Finish Now!`, 'celebration');
-
-        setTimeout(() => {
-            finishMatchWithLeaderboard(true, `${p.name} (${p.char.name}) correctly deduced ${suspect.name} from the Overlapping Trait Matrix, unsealing the Central Ritual Vault and rescuing the family!`);
-        }, 2600);
+        showToast(`🏆 ${p.char.shortName} BROKE THE CURSE (+500 pts)! Central Vault Unsealed! Sprint to the 1F Foyer Front Door (+300 pts) or tap Finish Match!`, 'celebration');
+        syncAllUI();
+        rebuildStepHighlights3D();
+        broadcastOnlineState();
     } else {
         p.score = Math.max(0, p.score - 200);
         triggerGhostCatch(p);
     }
+}
+
+function claimEscapeVictory() {
+    const p = getActivePlayer();
+    finishMatchWithLeaderboard(true, `${p.name} (${p.char.name}) broke the curse, unsealed the Central Ritual Vault, and escaped Blackwood Manor!`);
 }
 
 function finishMatchWithLeaderboard(isWin, summaryText) {

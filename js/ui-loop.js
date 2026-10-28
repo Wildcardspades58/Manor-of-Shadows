@@ -689,6 +689,7 @@ function animate3DLoop(timestamp) {
         const isLit = !!state.roomLights[roomId];
         const targetIntensity = isLit ? 2.1 : 0.0;
         ro.pointLight.intensity += (targetIntensity - ro.pointLight.intensity) * 0.18;
+        ro.pointLight.visible = isLit || ro.pointLight.intensity > 0.05;
         ro.bulbMesh.material.color.setHex(isLit ? 0xfef08a : 0x475569);
         ro.floorGlowMesh.material.opacity = isLit ? (0.24 + Math.sin(t * 3) * 0.04) : 0.0;
         if (ro.switchPlateMesh) {
@@ -713,7 +714,8 @@ function animate3DLoop(timestamp) {
 
     wallSconceLights.forEach(ws => {
         const flicker = 0.48 + Math.sin(t * 11 + ws.phase) * 0.1 + Math.cos(t * 19 + ws.phase) * 0.06;
-        ws.light.intensity = flicker;
+        ws.light.visible = !state.performanceMode;
+        if (!state.performanceMode) ws.light.intensity = flicker;
         ws.flameMesh.scale.setScalar(0.88 + Math.sin(t * 14 + ws.phase) * 0.14);
     });
 

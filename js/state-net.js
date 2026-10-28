@@ -53,6 +53,7 @@ let state = {
     masterBreakerPos: { floor: 0, x: 7, y: 7, wallMountX: 7.48, wallMountY: 7 },
     cleanViewportMode: false,
     showRoomLabels: true,
+    performanceMode: false,
 
     // v4.2 Thunderstorm Lightning State
     lightningFlashIntensity: 0,
